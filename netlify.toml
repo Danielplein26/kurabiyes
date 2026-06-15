@@ -1,0 +1,8 @@
+# Netlify yapılandırması — derleme yok, sadece fonksiyonlar
+[build]
+  publish = "."
+  command = ""
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
