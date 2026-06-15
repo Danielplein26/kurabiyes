@@ -1,0 +1,82 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# Yüklenen fotoğrafların kaydedileceği klasör
+media_folder: "images"
+public_folder: "/images"
+
+locale: "tr"
+
+collections:
+  - name: "site"
+    label: "Site İçeriği"
+    files:
+
+      - file: "content/site-data.json"
+        label: "Ana Sayfa İçeriği"
+        name: "anasayfa"
+        fields:
+
+          - label: "Ana Görsel (Hero)"
+            name: "hero"
+            widget: "object"
+            fields:
+              - { label: "Üst Etiket", name: "eyebrow", widget: "string" }
+              - { label: "Başlık (kalın/italik için <em>...</em> kullanabilirsiniz)", name: "titleHtml", widget: "string" }
+              - { label: "Açıklama Yazısı", name: "lead", widget: "text" }
+              - { label: "Arka Plan Fotoğrafı", name: "image", widget: "image" }
+
+          - label: "Ürünler"
+            name: "products"
+            widget: "list"
+            summary: "{{fields.name}} — {{fields.price}} TL"
+            fields:
+              - { label: "Kod (değiştirmeyin: p5, p10, p36)", name: "id", widget: "string" }
+              - { label: "Ürün Adı", name: "name", widget: "string" }
+              - { label: "İçerik / Birim Bilgisi", name: "unit", widget: "string" }
+              - { label: "Fiyat (TL)", name: "price", widget: "number", value_type: "int" }
+              - { label: "Fiyat Birimi Etiketi (örn: / 10 paket)", name: "priceUnit", widget: "string" }
+              - { label: "Rozet Yazısı (boş bırakılabilir)", name: "badge", widget: "string", required: false }
+              - { label: "Avantaj Yazısı (boş bırakılabilir)", name: "save", widget: "string", required: false }
+              - { label: "Açıklama", name: "desc", widget: "text" }
+              - { label: "Fotoğraf", name: "image", widget: "image" }
+              - { label: "Vurgulu Kart mı?", name: "featured", widget: "boolean", default: false }
+
+          - label: "Hakkımızda / Hikaye"
+            name: "about"
+            widget: "object"
+            fields:
+              - { label: "Üst Etiket", name: "eyebrow", widget: "string" }
+              - { label: "Başlık", name: "title", widget: "string" }
+              - { label: "Fotoğraf", name: "image", widget: "image" }
+              - label: "Paragraflar"
+                name: "paragraphs"
+                widget: "list"
+                field: { label: "Paragraf", name: "text", widget: "text" }
+              - label: "Zaman Çizelgesi"
+                name: "timeline"
+                widget: "list"
+                summary: "{{fields.year}}"
+                fields:
+                  - { label: "Dönem / Başlık", name: "year", widget: "string" }
+                  - { label: "Açıklama", name: "text", widget: "text" }
+              - { label: "Alt İmza Yazısı", name: "signoff", widget: "string" }
+
+          - label: "Galeri Fotoğrafları"
+            name: "gallery"
+            widget: "list"
+            field: { label: "Fotoğraf", name: "image", widget: "image" }
+
+          - label: "İletişim Bilgileri"
+            name: "contact"
+            widget: "object"
+            fields:
+              - { label: "Telefon (ekranda görünen, örn: 0539 289 16 30)", name: "phoneDisplay", widget: "string" }
+              - { label: "Telefon (rakamlarla, başında ülke kodu olmadan: 905392891630)", name: "phoneHref", widget: "string" }
+              - { label: "E-posta", name: "email", widget: "string" }
+              - label: "Adres Satırları"
+                name: "addressLines"
+                widget: "list"
+                field: { label: "Satır", name: "line", widget: "string" }
+              - { label: "Çalışma Saatleri", name: "hours", widget: "string" }

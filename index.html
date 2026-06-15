@@ -185,7 +185,7 @@
     min-height:88vh;
     display:flex;
     align-items:center;
-    background:url('images/33139.jpg') center 60% / cover no-repeat;
+    background:#3a0f16 center 60% / cover no-repeat;
   }
   .hero::before{
     content:"";
@@ -568,9 +568,9 @@
 <!-- ===================== HERO ===================== -->
 <section class="hero" id="top">
   <div class="hero-content">
-    <span class="eyebrow">Eskişehir Odunpazarı'ndan • 1986'dan Bugüne</span>
-    <h1>40 yıllık emeğin <em>tek lokmadaki</em> hali.</h1>
-    <p class="lead">Yunus Usta'nın yıllarca deneyerek bulduğu, hiçbir ustadan görmediği, sıfırdan keşfettiği eşsiz tarif. Bugün aynı sevgi ve titizlikle, elle şekillendirilip fırınlanıyor.</p>
+    <span class="eyebrow" id="heroEyebrow"></span>
+    <h1 id="heroTitle"></h1>
+    <p class="lead" id="heroLead"></p>
     <div class="hero-ctas">
       <a href="#urunler" class="btn btn-primary">Ürünleri İncele</a>
       <a href="#hakkimizda" class="btn btn-outline">Hikayemizi Oku</a>
@@ -598,68 +598,8 @@
       <p>200 gr'lık paketler halinde, en az 5 paketten oluşan setler ile satışa sunulur. Birim fiyatı 200 gr için 100 TL'dir; toplu alımlarda avantajlı fiyatlar geçerlidir.</p>
     </div>
 
-    <div class="product-grid">
-
-      <!-- 5'li Paket -->
-      <div class="product-card">
-        <div class="product-img"><img src="images/33144.jpg" alt="5'li Leblebi Kurabiyesi Paketi"></div>
-        <div class="product-body">
-          <h3>5'li Paket</h3>
-          <div class="unit">5 x 200 gr (toplam 1 kg) — minimum sipariş</div>
-          <div class="product-price">500 TL <small>/ 5 paket</small></div>
-          <p>İlk denemeniz için ideal. Paket başı 100 TL — sitemizdeki en küçük sipariş seçeneğidir.</p>
-          <div class="qty-row">
-            <div class="qty-control">
-              <button onclick="changeQty('p5',-1)" aria-label="azalt">−</button>
-              <span id="qty-p5">1</span>
-              <button onclick="changeQty('p5',1)" aria-label="arttır">+</button>
-            </div>
-            <button class="btn btn-dark" onclick="addToCart('p5')">Sepete Ekle</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- 10'lu Paket -->
-      <div class="product-card featured">
-        <div class="product-badge">En Çok Tercih Edilen</div>
-        <div class="product-img"><img src="images/33145.jpg" alt="10'lu Leblebi Kurabiyesi Paketi"></div>
-        <div class="product-body">
-          <h3>10'lu Paket</h3>
-          <div class="unit">10 x 200 gr (toplam 2 kg)</div>
-          <div class="product-price">900 TL <small>/ 10 paket</small></div>
-          <span class="product-save">100 TL avantaj</span>
-          <p>Paket başı 90 TL. Ailece tüketim veya hediyeleşmek için en dengeli seçenek.</p>
-          <div class="qty-row">
-            <div class="qty-control">
-              <button onclick="changeQty('p10',-1)" aria-label="azalt">−</button>
-              <span id="qty-p10">1</span>
-              <button onclick="changeQty('p10',1)" aria-label="arttır">+</button>
-            </div>
-            <button class="btn btn-dark" onclick="addToCart('p10')">Sepete Ekle</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- 36'lı Koli -->
-      <div class="product-card">
-        <div class="product-img"><img src="images/33143.jpg" alt="36'lı Koli Leblebi Kurabiyesi"></div>
-        <div class="product-body">
-          <h3>36'lı Koli</h3>
-          <div class="unit">36 x 200 gr (toplam 7,2 kg)</div>
-          <div class="product-price">2.700 TL <small>/ koli</small></div>
-          <span class="product-save">900 TL avantaj</span>
-          <p>Paket başı 75 TL. Toplu siparişler, işletmeler ve düzenli müşterilerimiz için.</p>
-          <div class="qty-row">
-            <div class="qty-control">
-              <button onclick="changeQty('p36',-1)" aria-label="azalt">−</button>
-              <span id="qty-p36">1</span>
-              <button onclick="changeQty('p36',1)" aria-label="arttır">+</button>
-            </div>
-            <button class="btn btn-dark" onclick="addToCart('p36')">Sepete Ekle</button>
-          </div>
-        </div>
-      </div>
-
+    <div class="product-grid" id="productGrid">
+      <!-- content/site-data.json içindeki "products" listesinden otomatik oluşturulur -->
     </div>
   </div>
 </section>
@@ -668,7 +608,7 @@
 <section id="hakkimizda" class="about">
   <div class="container about-grid">
     <div class="about-media">
-      <img src="images/33093.jpg" alt="Leblebi kurabiyesi ve çay">
+      <img id="aboutImage" src="" alt="Leblebi kurabiyesi ve çay">
       <div class="seal">
         <span class="seal-top">El Yapımı</span>
         <span class="seal-mid">1986</span>
@@ -676,32 +616,11 @@
       </div>
     </div>
     <div>
-      <span class="eyebrow">Hikayemiz</span>
-      <h2>Yunus Usta'nın 40 Yıllık Yolculuğu</h2>
-      <p>Her şey, sırtında küçük bir sepetle kasaba kasaba dolaşan, sokaklarda tatlı satan genç bir seyyar satıcı ile başladı. Merhum babamız Yunus Usta, elindeki imkânlarla insanlara küçük bir tatlılık ulaştırmanın peşindeydi. O günden bugüne kırk yıl geçti.</p>
-      <p>Bu işi ona kimse öğretmedi. Yanında çalıştığı bir usta, devraldığı bir defter ya da kopyaladığı bir tarif yoktu. Leblebi kurabiyesinin "doğru" halini bulana kadar, her hamuru kendi elleriyle yoğurdu, her ölçüyü kendi denedi, her fırın derecesini sayısız kez tekrar etti. Yıllar süren bu sabırlı deneme-yanılma süreci, sonunda piyasadaki hiçbir tarife benzemeyen, kendine has bir dokuya ve tada kavuştu.</p>
-      <p>Bugün Yunus Usta aramızda olmasa da, onun bu topraklardan, bu sabırdan ve bu sevgiden çıkardığı tarif yaşıyor. Eskişehir Odunpazarı'ndaki küçük fırınımızda, aynı titizlikle, aynı malzemelerle ve aynı kalpten üretmeye devam ediyoruz.</p>
-
-      <div class="timeline">
-        <div class="timeline-item">
-          <span class="t-year">1986 — Seyyar Satıcılık</span>
-          <p>Yunus Usta, elinde sepeti ile sokaklarda tatlı satarak bu yolculuğa başladı.</p>
-        </div>
-        <div class="timeline-item">
-          <span class="t-year">Yıllar İçinde — Tarifin Aranışı</span>
-          <p>Hiçbir ustadan ders almadan, leblebi kurabiyesinin kendine has tarifini bulana kadar sayısız deneme yaptı.</p>
-        </div>
-        <div class="timeline-item">
-          <span class="t-year">Eşsiz Tarif — Tamamlandı</span>
-          <p>Yıllar süren sabrın sonunda, piyasadaki diğer tariflerden tamamen farklı, kendine özgü bir leblebi kurabiyesi tarifi ortaya çıktı.</p>
-        </div>
-        <div class="timeline-item">
-          <span class="t-year">Bugün — Kurabiye's</span>
-          <p>Aynı tarif, aynı emek ve aynı sevgiyle, Eskişehir Odunpazarı'ndan tüm Türkiye'ye gönderiyoruz.</p>
-        </div>
-      </div>
-
-      <p class="signoff">— Yunus Usta'nın anısına, sevgiyle.</p>
+      <span class="eyebrow" id="aboutEyebrow"></span>
+      <h2 id="aboutTitle"></h2>
+      <div id="aboutParagraphs"></div>
+      <div class="timeline" id="aboutTimeline"></div>
+      <p class="signoff" id="aboutSignoff"></p>
     </div>
   </div>
 </section>
@@ -714,12 +633,8 @@
       <h2>Tazeliğin Görüntüsü</h2>
       <p>Her parti, elle şekillendirilip fırınlanır ve özenle paketlenir.</p>
     </div>
-    <div class="gallery-grid">
-      <img class="tall" src="images/33109.jpg" alt="Tabakta leblebi kurabiyesi">
-      <img src="images/33141.jpg" alt="Paketlenmiş leblebi kurabiyesi">
-      <img src="images/33142.jpg" alt="Leblebi kurabiyesi ve Türk çayı">
-      <img src="images/33145.jpg" alt="Leblebi kurabiyesi paketleri">
-      <img src="images/33144.jpg" alt="Leblebi kurabiyesi paketleri orman manzarası">
+    <div class="gallery-grid" id="galleryGrid">
+      <!-- content/site-data.json içindeki "gallery" listesinden otomatik oluşturulur -->
     </div>
   </div>
 </section>
@@ -739,34 +654,33 @@
           <div class="contact-icon">📞</div>
           <div>
             <h4>Telefon / WhatsApp</h4>
-            <a href="tel:+905392891630">0539 289 16 30</a>
+            <a id="contactPhone" href="#"></a>
           </div>
         </div>
         <div class="contact-row">
           <div class="contact-icon">📍</div>
           <div>
             <h4>Adres</h4>
-            <p>Yıldıztepe Mahallesi, Oruçkaptan Sokak No:2/A<br>Odunpazarı / Eskişehir</p>
+            <p id="contactAddress"></p>
           </div>
         </div>
         <div class="contact-row">
           <div class="contact-icon">✉️</div>
           <div>
             <h4>E-posta</h4>
-            <a href="mailto:siparis@kurabiyes.com">siparis@kurabiyes.com</a>
+            <a id="contactEmail" href="#"></a>
           </div>
         </div>
         <div class="contact-row">
           <div class="contact-icon">🕒</div>
           <div>
             <h4>Çalışma Saatleri</h4>
-            <p>Her gün 09:00 – 19:00</p>
+            <p id="contactHours"></p>
           </div>
         </div>
       </div>
       <div class="map-frame">
-        <iframe loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"
-          src="https://www.google.com/maps?q=Y%C4%B1ld%C4%B1ztepe%20Mahallesi%20Oru%C3%A7kaptan%20Sokak%20No%202%20Odunpazar%C4%B1%20Eski%C5%9Fehir&output=embed">
+        <iframe id="mapFrame" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="">
         </iframe>
       </div>
     </div>
@@ -790,8 +704,8 @@
       </div>
       <div>
         <h4>İletişim</h4>
-        <p><a href="tel:+905392891630">0539 289 16 30</a></p>
-        <p>Yıldıztepe Mah. Oruçkaptan Sk. No:2/A<br>Odunpazarı / Eskişehir</p>
+        <p><a id="footerPhone" href="#"></a></p>
+        <p id="footerAddress"></p>
       </div>
     </div>
     <div class="footer-bottom">
@@ -858,16 +772,119 @@
 </div>
 
 <script>
-  // ---------------------------------------------------------------
-  // ÜRÜN VERİLERİ
-  // ---------------------------------------------------------------
-  const PRODUCTS = {
-    p5:  { name: "5'li Paket",   desc: "5 x 200 gr (1 kg)",   price: 500,  img: "images/33144.jpg" },
-    p10: { name: "10'lu Paket",  desc: "10 x 200 gr (2 kg)",  price: 900,  img: "images/33145.jpg" },
-    p36: { name: "36'lı Koli",   desc: "36 x 200 gr (7,2 kg)", price: 2700, img: "images/33143.jpg" }
-  };
+  // =================================================================
+  // İÇERİĞİ YÜKLE (content/site-data.json) — Panel buradan düzenler
+  // =================================================================
+  let SITE_DATA = null;
+  const PRODUCTS = {}; // sepet hesaplamaları için id -> {name, price, image}
 
-  const qty = { p5: 1, p10: 1, p36: 1 };
+  async function loadContent(){
+    try{
+      const res = await fetch('content/site-data.json', { cache: 'no-store' });
+      if(!res.ok) throw new Error('site-data.json bulunamadı');
+      SITE_DATA = await res.json();
+    } catch(err){
+      console.error('İçerik yüklenemedi:', err);
+      return;
+    }
+    renderHero(SITE_DATA.hero);
+    renderProducts(SITE_DATA.products);
+    renderAbout(SITE_DATA.about);
+    renderGallery(SITE_DATA.gallery);
+    renderContact(SITE_DATA.contact);
+    renderCart();
+  }
+
+  function renderHero(hero){
+    if(!hero) return;
+    document.getElementById('heroEyebrow').textContent = hero.eyebrow || '';
+    document.getElementById('heroTitle').innerHTML = hero.titleHtml || '';
+    document.getElementById('heroLead').textContent = hero.lead || '';
+    if(hero.image){
+      document.querySelector('.hero').style.backgroundImage =
+        `linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url('${hero.image}')`;
+    }
+  }
+
+  function renderProducts(products){
+    if(!products) return;
+    const grid = document.getElementById('productGrid');
+    grid.innerHTML = products.map(p => {
+      Object.assign(PRODUCTS, { [p.id]: { name: p.name, price: p.price, desc: p.unit, image: p.image } });
+      return `
+      <div class="product-card${p.featured ? ' featured' : ''}">
+        ${p.badge ? `<div class="product-badge">${p.badge}</div>` : ''}
+        <div class="product-img"><img src="${p.image}" alt="${p.name}"></div>
+        <div class="product-body">
+          <h3>${p.name}</h3>
+          <div class="unit">${p.unit}</div>
+          <div class="product-price">${p.price.toLocaleString('tr-TR')} TL <small>${p.priceUnit}</small></div>
+          ${p.save ? `<span class="product-save">${p.save}</span>` : ''}
+          <p>${p.desc}</p>
+          <div class="qty-row">
+            <div class="qty-control">
+              <button onclick="changeQty('${p.id}',-1)" aria-label="azalt">−</button>
+              <span id="qty-${p.id}">1</span>
+              <button onclick="changeQty('${p.id}',1)" aria-label="arttır">+</button>
+            </div>
+            <button class="btn btn-dark" onclick="addToCart('${p.id}')">Sepete Ekle</button>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+    products.forEach(p => qty[p.id] = 1);
+  }
+
+  function renderAbout(about){
+    if(!about) return;
+    document.getElementById('aboutEyebrow').textContent = about.eyebrow || '';
+    document.getElementById('aboutTitle').textContent = about.title || '';
+    document.getElementById('aboutImage').src = about.image || '';
+    document.getElementById('aboutParagraphs').innerHTML =
+      (about.paragraphs || []).map(p => `<p>${p}</p>`).join('');
+    document.getElementById('aboutTimeline').innerHTML =
+      (about.timeline || []).map(t => `
+        <div class="timeline-item">
+          <span class="t-year">${t.year}</span>
+          <p>${t.text}</p>
+        </div>`).join('');
+    document.getElementById('aboutSignoff').textContent = about.signoff || '';
+  }
+
+  function renderGallery(gallery){
+    if(!gallery) return;
+    document.getElementById('galleryGrid').innerHTML = gallery.map((src, i) =>
+      `<img class="${i === 0 ? 'tall' : ''}" src="${src}" alt="Kurabiye's ürün fotoğrafı">`
+    ).join('');
+  }
+
+  function renderContact(contact){
+    if(!contact) return;
+    const phoneEl = document.getElementById('contactPhone');
+    phoneEl.textContent = contact.phoneDisplay || '';
+    phoneEl.href = 'tel:+' + (contact.phoneHref || '');
+
+    const footerPhone = document.getElementById('footerPhone');
+    footerPhone.textContent = contact.phoneDisplay || '';
+    footerPhone.href = 'tel:+' + (contact.phoneHref || '');
+
+    document.getElementById('contactEmail').textContent = contact.email || '';
+    document.getElementById('contactEmail').href = 'mailto:' + (contact.email || '');
+
+    const addrHtml = (contact.addressLines || []).join('<br>');
+    document.getElementById('contactAddress').innerHTML = addrHtml;
+    document.getElementById('footerAddress').innerHTML = addrHtml;
+
+    document.getElementById('contactHours').textContent = contact.hours || '';
+
+    const mapQuery = encodeURIComponent((contact.addressLines || []).join(' '));
+    document.getElementById('mapFrame').src = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
+  }
+
+  // =================================================================
+  // SEPET
+  // =================================================================
+  const qty = {};
   const cart = {}; // { p5: count, ... }
 
   function changeQty(id, delta){
@@ -876,7 +893,7 @@
   }
 
   function addToCart(id){
-    cart[id] = (cart[id] || 0) + qty[id];
+    cart[id] = (cart[id] || 0) + (qty[id] || 1);
     qty[id] = 1;
     document.getElementById('qty-' + id).textContent = 1;
     renderCart();
@@ -916,9 +933,10 @@
 
     body.innerHTML = Object.entries(cart).map(([id, q]) => {
       const p = PRODUCTS[id];
+      if(!p) return '';
       return `
         <div class="cart-item">
-          <img src="${p.img}" alt="${p.name}">
+          <img src="${p.image}" alt="${p.name}">
           <div class="cart-item-info">
             <h4>${p.name}</h4>
             <div class="ci-price">${p.desc} · ${p.price.toLocaleString('tr-TR')} TL</div>
@@ -933,9 +951,9 @@
     }).join('');
   }
 
-  // ---------------------------------------------------------------
+  // =================================================================
   // CART DRAWER & MOBİL MENÜ
-  // ---------------------------------------------------------------
+  // =================================================================
   function openCart(){
     document.getElementById('cartDrawer').classList.add('open');
     document.getElementById('overlay').classList.add('show');
@@ -949,9 +967,9 @@
     document.getElementById('navLinks').classList.toggle('open');
   });
 
-  // ---------------------------------------------------------------
+  // =================================================================
   // CHECKOUT MODAL
-  // ---------------------------------------------------------------
+  // =================================================================
   function openCheckout(){
     if(cartCount() === 0) return;
     const summary = document.getElementById('orderSummary');
@@ -968,9 +986,9 @@
     document.getElementById('checkoutOverlay').classList.remove('show');
   }
 
-  // ---------------------------------------------------------------
+  // =================================================================
   // ÖDEME (İYZİCO)
-  // ---------------------------------------------------------------
+  // =================================================================
   // ÖNEMLİ: iyzico ödeme başlatma işlemi, gizli API anahtarınızı
   // güvenle saklayabileceğiniz bir SUNUCU (backend) üzerinden yapılmalıdır.
   // API anahtarları tarayıcı (frontend) koduna asla yazılmamalıdır.
@@ -1031,11 +1049,20 @@
     } catch(err){
       // Bu demo sitede henüz bir ödeme sunucusu bağlı değil.
       resultEl.className = 'payment-result info';
-      resultEl.innerHTML = 'Sipariş bilgileriniz kaydedildi. <br>Bu site, ödeme adımını tamamlamak için bir iyzico sunucu entegrasyonu (backend) gerektirir — kurulum için "server-ornegi" klasörüne ve README dosyasına bakın. Şimdilik siparişinizi <a href="tel:+905392891630">0539 289 16 30</a> numarasından telefonla onaylatabilirsiniz.';
+      resultEl.innerHTML = 'Sipariş bilgileriniz kaydedildi. <br>Bu site, ödeme adımını tamamlamak için bir iyzico sunucu entegrasyonu (backend) gerektirir — kurulum için "server-ornegi" klasörüne ve README dosyasına bakın. Şimdilik siparişinizi ' +
+        (SITE_DATA && SITE_DATA.contact ? `<a href="tel:+${SITE_DATA.contact.phoneHref}">${SITE_DATA.contact.phoneDisplay}</a>` : 'telefon') +
+        ' numarasından telefonla onaylatabilirsiniz.';
     }
   }
 
-  renderCart();
+  loadContent();
+</script>
+
+<!-- Netlify Identity: davet / parola sıfırlama bağlantılarını panele yönlendirir -->
+<script>
+  if (/^#\/(invite|recovery|confirmation)\//.test(window.location.hash)) {
+    window.location.href = '/admin/' + window.location.hash;
+  }
 </script>
 
 </body>
