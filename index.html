@@ -418,7 +418,7 @@
 
   /* ===== Footer ===== */
   footer{background:var(--maroon-dark);color:var(--cream2);padding:3.5rem 0 2rem;}
-  .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;margin-bottom:2.4rem;}
+  .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;margin-bottom:2.4rem;}
   footer h4{color:var(--gold-light);font-size:1rem;font-family:'Mukta',sans-serif;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1rem;}
   footer p, footer a{color:#d9c6b6;font-size:0.92rem;text-decoration:none;line-height:1.8;}
   footer a:hover{color:var(--gold-light);}
@@ -429,6 +429,16 @@
     text-align:center;
     font-size:0.82rem;color:#b89c8c;
   }
+  .pay-logos{
+    display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+    padding:0 0 1.6rem;
+  }
+  .pay-logos .pay-label{
+    font-family:'Mukta',sans-serif;font-size:0.78rem;letter-spacing:0.12em;
+    text-transform:uppercase;color:var(--gold-light);margin-right:4px;
+  }
+  .pay-logos svg{height:30px;width:auto;box-shadow:0 2px 8px rgba(0,0,0,0.25);border-radius:6px;}
+  .pay-logos .pay-iyzico{height:30px;}
 
   /* ===== Cart Drawer ===== */
   .overlay{
@@ -707,9 +717,37 @@
         <p><a id="footerPhone" href="#"></a></p>
         <p id="footerAddress"></p>
       </div>
+      <div>
+        <h4>Bilgi</h4>
+        <p><a href="mesafeli-satis-sozlesmesi.html">Mesafeli Satış Sözleşmesi</a></p>
+        <p><a href="teslimat-ve-iade.html">Teslimat ve İade</a></p>
+        <p><a href="gizlilik-politikasi.html">Gizlilik Politikası</a></p>
+      </div>
     </div>
+
+    <div class="pay-logos">
+      <span class="pay-label">Güvenli ödeme</span>
+      <!-- iyzico -->
+      <svg class="pay-iyzico" viewBox="0 0 110 32" role="img" aria-label="iyzico ile öde">
+        <rect width="110" height="32" rx="6" fill="#ffffff"/>
+        <text x="12" y="21" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#1e64ff">iyzico</text>
+        <text x="62" y="21" font-family="Arial, sans-serif" font-size="11" font-weight="600" fill="#33201a">ile öde</text>
+      </svg>
+      <!-- Visa -->
+      <svg class="pay-card" viewBox="0 0 60 32" role="img" aria-label="Visa">
+        <rect width="60" height="32" rx="6" fill="#ffffff"/>
+        <text x="30" y="22" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" font-style="italic" font-weight="700" fill="#1a1f71">VISA</text>
+      </svg>
+      <!-- Mastercard -->
+      <svg class="pay-card" viewBox="0 0 60 32" role="img" aria-label="Mastercard">
+        <rect width="60" height="32" rx="6" fill="#ffffff"/>
+        <circle cx="26" cy="16" r="9" fill="#eb001b"/>
+        <circle cx="36" cy="16" r="9" fill="#f79e1b" fill-opacity="0.85"/>
+      </svg>
+    </div>
+
     <div class="footer-bottom">
-      © 2026 Kurabiye's — Tüm hakları saklıdır. Ödemeler iyzico güvencesi ile alınır.
+      © 2026 Kurabiye's — Tüm hakları saklıdır. Ödemeler iyzico güvencesi ile, 256-bit SSL üzerinden güvenle alınır.
     </div>
   </div>
 </footer>
@@ -761,6 +799,11 @@
       </div>
 
       <div class="order-summary" id="orderSummary"></div>
+
+      <label style="display:flex;gap:10px;align-items:flex-start;font-weight:500;font-size:0.85rem;color:#5d4536;margin-bottom:14px;cursor:pointer;">
+        <input type="checkbox" id="sozlesmeOnay" required style="width:auto;margin-top:3px;flex-shrink:0;">
+        <span><a href="mesafeli-satis-sozlesmesi.html" target="_blank">Mesafeli Satış Sözleşmesi</a>'ni, <a href="teslimat-ve-iade.html" target="_blank">Teslimat ve İade</a> şartlarını ve <a href="gizlilik-politikasi.html" target="_blank">Gizlilik Politikası</a>'nı okudum, onaylıyorum.</span>
+      </label>
 
       <button type="submit" class="btn btn-primary btn-block">iyzico ile Güvenli Ödeme Yap</button>
       <div class="iyzico-note">
@@ -1020,34 +1063,29 @@ const EMBEDDED_SITE_DATA = {"hero": {"eyebrow": "Eskişehir Odunpazarı'ndan •
     resultEl.textContent = 'Ödeme adımına yönlendiriliyorsunuz...';
 
     try{
-      const res = await fetch('/api/odeme/baslat', {
+      const res = await fetch('/.netlify/functions/odeme-baslat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(order)
       });
 
-      if(!res.ok) throw new Error('Sunucu yanıtı başarısız');
-
       const data = await res.json();
 
-      // iyzico Checkout Form genelde bir 'paymentPageUrl' veya
-      // gömülebilir 'checkoutFormContent' (HTML/script) döner.
+      if(!res.ok || data.error){
+        throw new Error(data.error || 'Ödeme başlatılamadı');
+      }
+
+      // iyzico ödeme sayfasına yönlendir
       if(data.paymentPageUrl){
         window.location.href = data.paymentPageUrl;
-      } else if(data.checkoutFormContent){
-        document.open();
-        document.write(data.checkoutFormContent);
-        document.close();
       } else {
-        resultEl.className = 'payment-result success';
-        resultEl.textContent = 'Siparişiniz alındı. Ödeme adımı için size dönüş yapılacaktır.';
+        throw new Error('Ödeme sayfası adresi alınamadı');
       }
     } catch(err){
-      // Bu demo sitede henüz bir ödeme sunucusu bağlı değil.
       resultEl.className = 'payment-result info';
-      resultEl.innerHTML = 'Sipariş bilgileriniz kaydedildi. <br>Bu site, ödeme adımını tamamlamak için bir iyzico sunucu entegrasyonu (backend) gerektirir — kurulum için "server-ornegi" klasörüne ve README dosyasına bakın. Şimdilik siparişinizi ' +
+      resultEl.innerHTML = 'Ödeme başlatılamadı. Lütfen birazdan tekrar deneyin ya da siparişinizi ' +
         (SITE_DATA && SITE_DATA.contact ? `<a href="tel:+${SITE_DATA.contact.phoneHref}">${SITE_DATA.contact.phoneDisplay}</a>` : 'telefon') +
-        ' numarasından telefonla onaylatabilirsiniz.';
+        ' numarasından verin.';
     }
   }
 
@@ -1061,5 +1099,19 @@ const EMBEDDED_SITE_DATA = {"hero": {"eyebrow": "Eskişehir Odunpazarı'ndan •
   }
 </script>
 
+
+<!-- Netlify Forms: siparişlerin toplandığı gizli form (kullanıcı görmez) -->
+<form name="siparisler" netlify netlify-honeypot="bot-field" hidden>
+  <input type="text" name="siparisNo" />
+  <input type="text" name="durum" />
+  <input type="text" name="ad" />
+  <input type="text" name="telefon" />
+  <input type="email" name="eposta" />
+  <textarea name="adres"></textarea>
+  <textarea name="urunler"></textarea>
+  <input type="text" name="toplam" />
+  <input type="text" name="tarih" />
+  <input type="text" name="bot-field" />
+</form>
 </body>
 </html>
