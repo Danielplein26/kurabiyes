@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kurabiye's — Yunus Usta'nın Leblebi Kurabiyesi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Mukta:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --maroon:#7d1f2c;
+    --maroon-dark:#3a0f16;
+    --gold:#cda154;
+    --gold-light:#ecd9b3;
+    --cream:#f9f1e3;
+    --cream2:#f0e2c8;
+    --espresso:#33201a;
+    --amber:#d9803f;
+    --shadow: 0 14px 34px rgba(58,15,22,0.18);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Mukta',sans-serif;
+    color:var(--espresso);
+    background:var(--cream);
+    line-height:1.7;
+    font-size:16px;
+  }
+  img{display:block;max-width:100%;height:auto;}
+  a{color:inherit;}
+
+  h1,h2,h3,h4{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:700;
+    line-height:1.15;
+    color:var(--maroon-dark);
+  }
+
+  .eyebrow{
+    display:inline-block;
+    font-family:'Mukta',sans-serif;
+    font-weight:700;
+    font-size:0.78rem;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:var(--maroon);
+    margin-bottom:0.6rem;
+  }
+
+  .container{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  /* ===== Seal / mühür signature element ===== */
+  .seal{
+    --size:118px;
+    width:var(--size);
+    height:var(--size);
+    border-radius:50%;
+    border:3px solid var(--gold);
+    outline:1px dashed rgba(205,161,84,0.55);
+    outline-offset:6px;
+    background: radial-gradient(circle at 50% 38%, #8a2433, var(--maroon-dark) 78%);
+    color:var(--gold-light);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    transform:rotate(-9deg);
+    box-shadow:var(--shadow);
+    flex-shrink:0;
+  }
+  .seal .seal-top{
+    font-family:'Mukta',sans-serif;
+    font-weight:700;
+    font-size:0.62rem;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+  }
+  .seal .seal-mid{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:700;
+    font-size:1.5rem;
+    line-height:1;
+    margin:2px 0;
+  }
+  .seal .seal-bottom{
+    font-family:'Mukta',sans-serif;
+    font-weight:600;
+    font-size:0.6rem;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+  }
+  .seal.seal-sm{--size:84px;}
+  .seal.seal-sm .seal-mid{font-size:1.05rem;}
+
+  /* ===== Ribbon section divider (echoes the packaging ribbon) ===== */
+  .ribbon-wrap{display:flex;justify-content:center;margin:0 auto 2.6rem;}
+  .ribbon{
+    position:relative;
+    background:linear-gradient(180deg,#8c2433,var(--maroon) 55%,#6c1a26);
+    color:var(--gold-light);
+    font-family:'Mukta',sans-serif;
+    font-weight:700;
+    letter-spacing:0.24em;
+    text-transform:uppercase;
+    font-size:0.82rem;
+    padding:0.65rem 2.6rem;
+    clip-path:polygon(0% 0%,100% 0%,92% 50%,100% 100%,0% 100%,8% 50%);
+    box-shadow:var(--shadow);
+  }
+
+  /* ===== Header ===== */
+  header.site-header{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(249,241,227,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom:1px solid var(--cream2);
+  }
+  .nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 0;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-family:'Cormorant Garamond',serif;
+  }
+  .brand .brand-mark{
+    width:44px;height:44px;border-radius:50%;
+    border:2px solid var(--gold);
+    display:flex;align-items:center;justify-content:center;
+    background:var(--maroon-dark);color:var(--gold-light);
+    font-weight:700;font-size:1.3rem;
+  }
+  .brand .brand-name{font-size:1.55rem;font-weight:700;color:var(--maroon-dark);line-height:1;}
+  .brand .brand-sub{font-family:'Mukta',sans-serif;font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--maroon);}
+
+  nav.links{display:flex;gap:28px;align-items:center;}
+  nav.links a{
+    font-weight:600;font-size:0.92rem;text-decoration:none;
+    color:var(--espresso);
+    position:relative;
+    padding-bottom:4px;
+  }
+  nav.links a:hover{color:var(--maroon);}
+
+  .cart-btn{
+    display:flex;align-items:center;gap:8px;
+    background:var(--maroon);
+    color:var(--cream);
+    border:none;
+    border-radius:999px;
+    padding:10px 20px;
+    font-weight:700;
+    font-size:0.88rem;
+    cursor:pointer;
+    transition:background .2s ease, transform .2s ease;
+    font-family:'Mukta',sans-serif;
+  }
+  .cart-btn:hover{background:var(--amber);transform:translateY(-1px);}
+  .cart-count{
+    background:var(--gold);color:var(--maroon-dark);
+    border-radius:999px;min-width:22px;height:22px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:0.75rem;font-weight:800;padding:0 6px;
+  }
+
+  .menu-toggle{display:none;background:none;border:none;font-size:1.6rem;color:var(--maroon-dark);cursor:pointer;}
+
+  /* ===== Hero ===== */
+  .hero{
+    position:relative;
+    min-height:88vh;
+    display:flex;
+    align-items:center;
+    background:url('images/33139.jpg') center 60% / cover no-repeat;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;inset:0;
+    background:linear-gradient(105deg, rgba(40,10,16,0.82) 0%, rgba(40,10,16,0.55) 45%, rgba(40,10,16,0.18) 80%);
+  }
+  .hero-content{
+    position:relative;z-index:2;
+    max-width:620px;
+    color:var(--cream);
+    padding:0 24px;
+    margin:0 auto;
+    width:100%;
+  }
+  .hero-content .eyebrow{color:var(--gold-light);}
+  .hero h1{
+    font-size:clamp(2.6rem, 6vw, 4.4rem);
+    color:var(--cream);
+    margin-bottom:1rem;
+  }
+  .hero h1 em{
+    font-style:italic;color:var(--gold-light);
+  }
+  .hero p.lead{
+    font-size:1.1rem;
+    color:var(--cream2);
+    max-width:520px;
+    margin-bottom:2rem;
+  }
+  .hero-ctas{display:flex;gap:16px;flex-wrap:wrap;align-items:center;}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'Mukta',sans-serif;
+    font-weight:700;
+    font-size:0.92rem;
+    letter-spacing:0.04em;
+    padding:14px 30px;
+    border-radius:999px;
+    text-decoration:none;
+    border:2px solid transparent;
+    cursor:pointer;
+    transition:transform .2s ease, background .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .btn-primary{background:var(--amber);color:#fff;}
+  .btn-primary:hover{background:#c76a26;transform:translateY(-2px);}
+  .btn-outline{border-color:var(--gold-light);color:var(--cream);}
+  .btn-outline:hover{background:rgba(255,255,255,0.12);transform:translateY(-2px);}
+  .btn-dark{background:var(--maroon);color:var(--cream);}
+  .btn-dark:hover{background:var(--maroon-dark);transform:translateY(-2px);}
+  .btn-block{width:100%;justify-content:center;}
+
+  /* ===== Badge strip ===== */
+  .strip{
+    background:var(--maroon-dark);
+    color:var(--gold-light);
+    padding:18px 0;
+  }
+  .strip .container{
+    display:flex;
+    justify-content:space-around;
+    flex-wrap:wrap;
+    gap:14px;
+    font-family:'Mukta',sans-serif;
+    font-weight:600;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    font-size:0.82rem;
+    text-align:center;
+  }
+  .strip span{display:flex;align-items:center;gap:8px;}
+
+  /* ===== Section spacing ===== */
+  section{padding:5.5rem 0;}
+  .section-head{text-align:center;max-width:680px;margin:0 auto 3rem;}
+  .section-head h2{font-size:clamp(2rem,4vw,2.8rem);margin-bottom:0.9rem;}
+  .section-head p{color:#5d4536;font-size:1.05rem;}
+
+  /* ===== Products ===== */
+  .products{background:var(--cream);}
+  .product-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:28px;
+  }
+  .product-card{
+    background:#fff;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+    display:flex;flex-direction:column;
+    position:relative;
+    border:1px solid var(--cream2);
+  }
+  .product-card.featured{outline:3px solid var(--gold);}
+  .product-badge{
+    position:absolute;top:14px;right:14px;
+    background:var(--amber);color:#fff;
+    font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+    padding:6px 14px;border-radius:999px;
+    z-index:2;
+    box-shadow:0 4px 10px rgba(0,0,0,0.18);
+  }
+  .product-img{height:210px;overflow:hidden;}
+  .product-img img{width:100%;height:100%;object-fit:cover;}
+  .product-body{padding:24px 26px 28px;display:flex;flex-direction:column;gap:10px;flex:1;}
+  .product-body h3{font-size:1.5rem;}
+  .product-body .unit{font-size:0.85rem;color:#7a5d4c;font-weight:600;}
+  .product-price{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:700;
+    font-size:2.1rem;
+    color:var(--maroon);
+    margin:0.2rem 0;
+  }
+  .product-price small{font-size:1rem;font-weight:600;color:#7a5d4c;font-family:'Mukta',sans-serif;}
+  .product-save{
+    display:inline-block;
+    font-size:0.78rem;font-weight:700;color:var(--maroon-dark);
+    background:var(--gold-light);
+    padding:4px 10px;border-radius:6px;
+    align-self:flex-start;
+  }
+  .product-body p{color:#5d4536;font-size:0.94rem;}
+
+  .qty-row{
+    display:flex;align-items:center;justify-content:space-between;
+    margin-top:auto;
+    gap:12px;
+    padding-top:6px;
+  }
+  .qty-control{
+    display:flex;align-items:center;gap:0;
+    border:1px solid var(--cream2);
+    border-radius:999px;
+    overflow:hidden;
+  }
+  .qty-control button{
+    width:34px;height:34px;border:none;background:var(--cream2);
+    font-size:1.1rem;font-weight:700;color:var(--maroon-dark);cursor:pointer;
+    transition:background .15s ease;
+  }
+  .qty-control button:hover{background:var(--gold-light);}
+  .qty-control span{width:34px;text-align:center;font-weight:700;}
+
+  .min-note{
+    font-size:0.8rem;color:#7a5d4c;font-style:italic;
+  }
+
+  /* ===== About ===== */
+  .about{background:var(--maroon-dark);color:var(--cream2);position:relative;overflow:hidden;}
+  .about::after{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(ellipse at 80% 20%, rgba(205,161,84,0.10), transparent 60%);
+    pointer-events:none;
+  }
+  .about-grid{
+    display:grid;grid-template-columns:0.85fr 1.15fr;
+    gap:60px;align-items:center;
+    position:relative;z-index:1;
+  }
+  .about-media{position:relative;}
+  .about-media img{
+    border-radius:18px;
+    box-shadow:0 24px 50px rgba(0,0,0,0.45);
+    border:6px solid rgba(236,217,179,0.12);
+  }
+  .about-media .seal{
+    position:absolute;bottom:-30px;right:-26px;
+  }
+  .about h2{color:var(--cream);}
+  .about .eyebrow{color:var(--gold);}
+  .about p{margin-bottom:1.1rem;color:#e6d6c8;}
+  .about p.signoff{
+    font-family:'Caveat',cursive;
+    font-size:1.9rem;
+    color:var(--gold-light);
+    margin-top:1.6rem;
+  }
+
+  /* Timeline */
+  .timeline{margin-top:2.4rem;border-left:2px solid rgba(205,161,84,0.35);padding-left:28px;display:flex;flex-direction:column;gap:1.6rem;}
+  .timeline-item{position:relative;}
+  .timeline-item::before{
+    content:"";position:absolute;left:-34.5px;top:4px;
+    width:13px;height:13px;border-radius:50%;
+    background:var(--gold);border:3px solid var(--maroon-dark);
+  }
+  .timeline-item .t-year{
+    font-family:'Cormorant Garamond',serif;font-weight:700;color:var(--gold-light);
+    font-size:1.15rem;display:block;margin-bottom:2px;
+  }
+  .timeline-item p{margin:0;color:#dcc8b8;font-size:0.95rem;}
+
+  /* ===== Gallery ===== */
+  .gallery{background:var(--cream2);}
+  .gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+  }
+  .gallery-grid img{
+    width:100%;height:220px;object-fit:cover;border-radius:14px;
+    box-shadow:0 10px 24px rgba(58,15,22,0.14);
+    transition:transform .35s ease;
+  }
+  .gallery-grid img:hover{transform:scale(1.03);}
+  .gallery-grid .tall{grid-row:span 2;height:456px;}
+
+  /* ===== Contact ===== */
+  .contact{background:var(--cream);}
+  .contact-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:start;
+  }
+  .contact-card{
+    background:#fff;border-radius:18px;padding:34px;box-shadow:var(--shadow);border:1px solid var(--cream2);
+  }
+  .contact-row{display:flex;gap:16px;align-items:flex-start;margin-bottom:22px;}
+  .contact-row:last-child{margin-bottom:0;}
+  .contact-icon{
+    width:46px;height:46px;border-radius:50%;flex-shrink:0;
+    background:var(--maroon);color:var(--cream);
+    display:flex;align-items:center;justify-content:center;font-size:1.25rem;
+  }
+  .contact-row h4{font-size:1.1rem;margin-bottom:2px;color:var(--maroon-dark);}
+  .contact-row p, .contact-row a{color:#5d4536;font-size:0.95rem;text-decoration:none;}
+  .contact-row a:hover{color:var(--maroon);}
+  .map-frame{border-radius:18px;overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--cream2);height:100%;min-height:380px;}
+  .map-frame iframe{width:100%;height:100%;min-height:380px;border:0;display:block;}
+
+  /* ===== Footer ===== */
+  footer{background:var(--maroon-dark);color:var(--cream2);padding:3.5rem 0 2rem;}
+  .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;margin-bottom:2.4rem;}
+  footer h4{color:var(--gold-light);font-size:1rem;font-family:'Mukta',sans-serif;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1rem;}
+  footer p, footer a{color:#d9c6b6;font-size:0.92rem;text-decoration:none;line-height:1.8;}
+  footer a:hover{color:var(--gold-light);}
+  .footer-brand{font-family:'Cormorant Garamond',serif;font-size:1.7rem;color:var(--cream);margin-bottom:0.6rem;}
+  .footer-bottom{
+    border-top:1px solid rgba(236,217,179,0.18);
+    padding-top:1.4rem;
+    text-align:center;
+    font-size:0.82rem;color:#b89c8c;
+  }
+
+  /* ===== Cart Drawer ===== */
+  .overlay{
+    position:fixed;inset:0;background:rgba(51,32,26,0.55);
+    z-index:90;opacity:0;visibility:hidden;transition:opacity .25s ease;
+  }
+  .overlay.show{opacity:1;visibility:visible;}
+
+  .cart-drawer{
+    position:fixed;top:0;right:0;height:100%;width:420px;max-width:92vw;
+    background:var(--cream);
+    z-index:100;
+    box-shadow:-20px 0 40px rgba(0,0,0,0.25);
+    transform:translateX(100%);
+    transition:transform .3s ease;
+    display:flex;flex-direction:column;
+  }
+  .cart-drawer.open{transform:translateX(0);}
+  .cart-head{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:22px 24px;border-bottom:1px solid var(--cream2);
+    background:var(--maroon);color:var(--cream);
+  }
+  .cart-head h3{color:var(--cream);font-size:1.4rem;}
+  .cart-head button{background:none;border:none;color:var(--cream);font-size:1.6rem;cursor:pointer;line-height:1;}
+  .cart-body{flex:1;overflow-y:auto;padding:18px 24px;}
+  .cart-empty{text-align:center;color:#9a7d6c;padding:3rem 1rem;}
+  .cart-item{
+    display:flex;gap:14px;align-items:center;
+    padding:14px 0;border-bottom:1px solid var(--cream2);
+  }
+  .cart-item img{width:64px;height:64px;object-fit:cover;border-radius:10px;flex-shrink:0;}
+  .cart-item-info{flex:1;}
+  .cart-item-info h4{font-size:1.02rem;color:var(--maroon-dark);font-family:'Cormorant Garamond',serif;}
+  .cart-item-info .ci-price{font-size:0.85rem;color:#7a5d4c;}
+  .cart-item .qty-control button{width:28px;height:28px;font-size:0.95rem;}
+  .cart-item .qty-control span{width:28px;}
+  .cart-remove{background:none;border:none;color:var(--maroon);font-size:0.78rem;font-weight:700;cursor:pointer;text-decoration:underline;margin-top:6px;}
+
+  .cart-foot{padding:20px 24px;border-top:1px solid var(--cream2);background:#fff;}
+  .cart-total-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;}
+  .cart-total-row span:first-child{font-weight:600;color:#5d4536;}
+  .cart-total-row .total-amt{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--maroon);}
+
+  /* ===== Checkout Modal ===== */
+  .modal-overlay{
+    position:fixed;inset:0;background:rgba(51,32,26,0.6);
+    z-index:200;display:flex;align-items:center;justify-content:center;
+    opacity:0;visibility:hidden;transition:opacity .25s ease;padding:20px;
+  }
+  .modal-overlay.show{opacity:1;visibility:visible;}
+  .modal{
+    background:var(--cream);border-radius:18px;max-width:540px;width:100%;
+    max-height:90vh;overflow-y:auto;padding:32px;
+    box-shadow:0 30px 60px rgba(0,0,0,0.35);
+  }
+  .modal h3{font-size:1.7rem;margin-bottom:0.4rem;}
+  .modal .modal-sub{color:#7a5d4c;font-size:0.92rem;margin-bottom:1.6rem;}
+  .modal .modal-close{
+    float:right;background:none;border:none;font-size:1.6rem;cursor:pointer;color:var(--maroon-dark);line-height:1;
+  }
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+  .form-grid .full{grid-column:1 / -1;}
+  label{display:block;font-size:0.82rem;font-weight:700;color:var(--maroon-dark);margin-bottom:6px;}
+  input, textarea{
+    width:100%;padding:11px 13px;border-radius:10px;border:1px solid var(--cream2);
+    background:#fff;font-family:'Mukta',sans-serif;font-size:0.95rem;color:var(--espresso);
+  }
+  input:focus, textarea:focus{outline:2px solid var(--gold);border-color:var(--gold);}
+  textarea{resize:vertical;min-height:70px;}
+  .order-summary{
+    background:#fff;border:1px solid var(--cream2);border-radius:12px;padding:14px 16px;margin:1.2rem 0;font-size:0.92rem;
+  }
+  .order-summary .os-row{display:flex;justify-content:space-between;padding:4px 0;}
+  .order-summary .os-total{font-weight:800;border-top:1px solid var(--cream2);margin-top:8px;padding-top:10px;color:var(--maroon);}
+  .iyzico-note{
+    font-size:0.82rem;color:#7a5d4c;background:var(--cream2);border-radius:10px;padding:12px 14px;margin-top:14px;
+  }
+  .payment-result{margin-top:14px;font-size:0.9rem;font-weight:600;}
+  .payment-result.success{color:#3a7d44;}
+  .payment-result.info{color:var(--maroon);}
+
+  /* ===== Responsive ===== */
+  @media (max-width: 980px){
+    .product-grid{grid-template-columns:1fr;}
+    .about-grid{grid-template-columns:1fr;}
+    .about-media{order:2;}
+    .about-media .seal{right:14px;}
+    .gallery-grid{grid-template-columns:repeat(2,1fr);}
+    .gallery-grid .tall{height:300px;grid-row:auto;}
+    .contact-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr;gap:24px;}
+  }
+  @media (max-width: 720px){
+    nav.links{
+      position:absolute;top:100%;left:0;right:0;
+      background:var(--cream);
+      flex-direction:column;align-items:flex-start;
+      padding:18px 24px;gap:18px;
+      border-bottom:1px solid var(--cream2);
+      display:none;
+    }
+    nav.links.open{display:flex;}
+    .menu-toggle{display:block;}
+    .strip .container{flex-direction:column;align-items:center;}
+    .form-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== HEADER ===================== -->
+<header class="site-header">
+  <div class="container nav">
+    <a href="#top" class="brand" style="text-decoration:none;">
+      <div class="brand-mark">K</div>
+      <div>
+        <div class="brand-name">Kurabiye's</div>
+        <div class="brand-sub">Leblebi Kurabiyesi</div>
+      </div>
+    </a>
+    <nav class="links" id="navLinks">
+      <a href="#urunler">Ürünler</a>
+      <a href="#hakkimizda">Hikayemiz</a>
+      <a href="#galeri">Galeri</a>
+      <a href="#iletisim">İletişim</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <button class="cart-btn" onclick="openCart()">
+        🧺 Sepetim <span class="cart-count" id="cartCount">0</span>
+      </button>
+      <button class="menu-toggle" id="menuToggle" aria-label="Menü">☰</button>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="top">
+  <div class="hero-content">
+    <span class="eyebrow">Eskişehir Odunpazarı'ndan • 1986'dan Bugüne</span>
+    <h1>40 yıllık emeğin <em>tek lokmadaki</em> hali.</h1>
+    <p class="lead">Yunus Usta'nın yıllarca deneyerek bulduğu, hiçbir ustadan görmediği, sıfırdan keşfettiği eşsiz tarif. Bugün aynı sevgi ve titizlikle, elle şekillendirilip fırınlanıyor.</p>
+    <div class="hero-ctas">
+      <a href="#urunler" class="btn btn-primary">Ürünleri İncele</a>
+      <a href="#hakkimizda" class="btn btn-outline">Hikayemizi Oku</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== BADGE STRIP ===================== -->
+<div class="strip">
+  <div class="container">
+    <span>✦ El Yapımı, Günlük Taze Üretim</span>
+    <span>✦ Katkı Maddesi İçermez</span>
+    <span>✦ 40 Yıllık Aile Tarifi</span>
+    <span>✦ Özenle Paketlenip Kapınıza Gelir</span>
+  </div>
+</div>
+
+<!-- ===================== PRODUCTS ===================== -->
+<section id="urunler" class="products">
+  <div class="container">
+    <div class="ribbon-wrap"><div class="ribbon">Ürünler</div></div>
+    <div class="section-head">
+      <span class="eyebrow">Taze Fırından</span>
+      <h2>Leblebi Kurabiyesi</h2>
+      <p>200 gr'lık paketler halinde, en az 5 paketten oluşan setler ile satışa sunulur. Birim fiyatı 200 gr için 100 TL'dir; toplu alımlarda avantajlı fiyatlar geçerlidir.</p>
+    </div>
+
+    <div class="product-grid">
+
+      <!-- 5'li Paket -->
+      <div class="product-card">
+        <div class="product-img"><img src="images/33144.jpg" alt="5'li Leblebi Kurabiyesi Paketi"></div>
+        <div class="product-body">
+          <h3>5'li Paket</h3>
+          <div class="unit">5 x 200 gr (toplam 1 kg) — minimum sipariş</div>
+          <div class="product-price">500 TL <small>/ 5 paket</small></div>
+          <p>İlk denemeniz için ideal. Paket başı 100 TL — sitemizdeki en küçük sipariş seçeneğidir.</p>
+          <div class="qty-row">
+            <div class="qty-control">
+              <button onclick="changeQty('p5',-1)" aria-label="azalt">−</button>
+              <span id="qty-p5">1</span>
+              <button onclick="changeQty('p5',1)" aria-label="arttır">+</button>
+            </div>
+            <button class="btn btn-dark" onclick="addToCart('p5')">Sepete Ekle</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 10'lu Paket -->
+      <div class="product-card featured">
+        <div class="product-badge">En Çok Tercih Edilen</div>
+        <div class="product-img"><img src="images/33145.jpg" alt="10'lu Leblebi Kurabiyesi Paketi"></div>
+        <div class="product-body">
+          <h3>10'lu Paket</h3>
+          <div class="unit">10 x 200 gr (toplam 2 kg)</div>
+          <div class="product-price">900 TL <small>/ 10 paket</small></div>
+          <span class="product-save">100 TL avantaj</span>
+          <p>Paket başı 90 TL. Ailece tüketim veya hediyeleşmek için en dengeli seçenek.</p>
+          <div class="qty-row">
+            <div class="qty-control">
+              <button onclick="changeQty('p10',-1)" aria-label="azalt">−</button>
+              <span id="qty-p10">1</span>
+              <button onclick="changeQty('p10',1)" aria-label="arttır">+</button>
+            </div>
+            <button class="btn btn-dark" onclick="addToCart('p10')">Sepete Ekle</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 36'lı Koli -->
+      <div class="product-card">
+        <div class="product-img"><img src="images/33143.jpg" alt="36'lı Koli Leblebi Kurabiyesi"></div>
+        <div class="product-body">
+          <h3>36'lı Koli</h3>
+          <div class="unit">36 x 200 gr (toplam 7,2 kg)</div>
+          <div class="product-price">2.700 TL <small>/ koli</small></div>
+          <span class="product-save">900 TL avantaj</span>
+          <p>Paket başı 75 TL. Toplu siparişler, işletmeler ve düzenli müşterilerimiz için.</p>
+          <div class="qty-row">
+            <div class="qty-control">
+              <button onclick="changeQty('p36',-1)" aria-label="azalt">−</button>
+              <span id="qty-p36">1</span>
+              <button onclick="changeQty('p36',1)" aria-label="arttır">+</button>
+            </div>
+            <button class="btn btn-dark" onclick="addToCart('p36')">Sepete Ekle</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ABOUT / HİKAYEMİZ ===================== -->
+<section id="hakkimizda" class="about">
+  <div class="container about-grid">
+    <div class="about-media">
+      <img src="images/33093.jpg" alt="Leblebi kurabiyesi ve çay">
+      <div class="seal">
+        <span class="seal-top">El Yapımı</span>
+        <span class="seal-mid">1986</span>
+        <span class="seal-bottom">Yunus Usta'dan</span>
+      </div>
+    </div>
+    <div>
+      <span class="eyebrow">Hikayemiz</span>
+      <h2>Yunus Usta'nın 40 Yıllık Yolculuğu</h2>
+      <p>Her şey, sırtında küçük bir sepetle kasaba kasaba dolaşan, sokaklarda tatlı satan genç bir seyyar satıcı ile başladı. Merhum babamız Yunus Usta, elindeki imkânlarla insanlara küçük bir tatlılık ulaştırmanın peşindeydi. O günden bugüne kırk yıl geçti.</p>
+      <p>Bu işi ona kimse öğretmedi. Yanında çalıştığı bir usta, devraldığı bir defter ya da kopyaladığı bir tarif yoktu. Leblebi kurabiyesinin "doğru" halini bulana kadar, her hamuru kendi elleriyle yoğurdu, her ölçüyü kendi denedi, her fırın derecesini sayısız kez tekrar etti. Yıllar süren bu sabırlı deneme-yanılma süreci, sonunda piyasadaki hiçbir tarife benzemeyen, kendine has bir dokuya ve tada kavuştu.</p>
+      <p>Bugün Yunus Usta aramızda olmasa da, onun bu topraklardan, bu sabırdan ve bu sevgiden çıkardığı tarif yaşıyor. Eskişehir Odunpazarı'ndaki küçük fırınımızda, aynı titizlikle, aynı malzemelerle ve aynı kalpten üretmeye devam ediyoruz.</p>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <span class="t-year">1986 — Seyyar Satıcılık</span>
+          <p>Yunus Usta, elinde sepeti ile sokaklarda tatlı satarak bu yolculuğa başladı.</p>
+        </div>
+        <div class="timeline-item">
+          <span class="t-year">Yıllar İçinde — Tarifin Aranışı</span>
+          <p>Hiçbir ustadan ders almadan, leblebi kurabiyesinin kendine has tarifini bulana kadar sayısız deneme yaptı.</p>
+        </div>
+        <div class="timeline-item">
+          <span class="t-year">Eşsiz Tarif — Tamamlandı</span>
+          <p>Yıllar süren sabrın sonunda, piyasadaki diğer tariflerden tamamen farklı, kendine özgü bir leblebi kurabiyesi tarifi ortaya çıktı.</p>
+        </div>
+        <div class="timeline-item">
+          <span class="t-year">Bugün — Kurabiye's</span>
+          <p>Aynı tarif, aynı emek ve aynı sevgiyle, Eskişehir Odunpazarı'ndan tüm Türkiye'ye gönderiyoruz.</p>
+        </div>
+      </div>
+
+      <p class="signoff">— Yunus Usta'nın anısına, sevgiyle.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== GALERİ ===================== -->
+<section id="galeri" class="gallery">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Vitrimizden</span>
+      <h2>Tazeliğin Görüntüsü</h2>
+      <p>Her parti, elle şekillendirilip fırınlanır ve özenle paketlenir.</p>
+    </div>
+    <div class="gallery-grid">
+      <img class="tall" src="images/33109.jpg" alt="Tabakta leblebi kurabiyesi">
+      <img src="images/33141.jpg" alt="Paketlenmiş leblebi kurabiyesi">
+      <img src="images/33142.jpg" alt="Leblebi kurabiyesi ve Türk çayı">
+      <img src="images/33145.jpg" alt="Leblebi kurabiyesi paketleri">
+      <img src="images/33144.jpg" alt="Leblebi kurabiyesi paketleri orman manzarası">
+    </div>
+  </div>
+</section>
+
+<!-- ===================== İLETİŞİM ===================== -->
+<section id="iletisim" class="contact">
+  <div class="container">
+    <div class="ribbon-wrap"><div class="ribbon">İletişim</div></div>
+    <div class="section-head">
+      <span class="eyebrow">Bize Ulaşın</span>
+      <h2>Sorularınız mı var?</h2>
+      <p>Sipariş, toplu alım veya iş birliği için bize ulaşabilirsiniz.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-row">
+          <div class="contact-icon">📞</div>
+          <div>
+            <h4>Telefon / WhatsApp</h4>
+            <a href="tel:+905392891630">0539 289 16 30</a>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon">📍</div>
+          <div>
+            <h4>Adres</h4>
+            <p>Yıldıztepe Mahallesi, Oruçkaptan Sokak No:2/A<br>Odunpazarı / Eskişehir</p>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon">✉️</div>
+          <div>
+            <h4>E-posta</h4>
+            <a href="mailto:siparis@kurabiyes.com">siparis@kurabiyes.com</a>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon">🕒</div>
+          <div>
+            <h4>Çalışma Saatleri</h4>
+            <p>Her gün 09:00 – 19:00</p>
+          </div>
+        </div>
+      </div>
+      <div class="map-frame">
+        <iframe loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps?q=Y%C4%B1ld%C4%B1ztepe%20Mahallesi%20Oru%C3%A7kaptan%20Sokak%20No%202%20Odunpazar%C4%B1%20Eski%C5%9Fehir&output=embed">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">Kurabiye's</div>
+        <p>Yunus Usta'nın 40 yıllık emeğiyle bulduğu eşsiz leblebi kurabiyesi tarifi, Eskişehir Odunpazarı'ndan elinize ulaşır.</p>
+      </div>
+      <div>
+        <h4>Hızlı Bağlantılar</h4>
+        <p><a href="#urunler">Ürünler</a></p>
+        <p><a href="#hakkimizda">Hikayemiz</a></p>
+        <p><a href="#galeri">Galeri</a></p>
+        <p><a href="#iletisim">İletişim</a></p>
+      </div>
+      <div>
+        <h4>İletişim</h4>
+        <p><a href="tel:+905392891630">0539 289 16 30</a></p>
+        <p>Yıldıztepe Mah. Oruçkaptan Sk. No:2/A<br>Odunpazarı / Eskişehir</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2026 Kurabiye's — Tüm hakları saklıdır. Ödemeler iyzico güvencesi ile alınır.
+    </div>
+  </div>
+</footer>
+
+<!-- ===================== CART DRAWER ===================== -->
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<aside class="cart-drawer" id="cartDrawer">
+  <div class="cart-head">
+    <h3>Sepetim</h3>
+    <button onclick="closeCart()" aria-label="Kapat">×</button>
+  </div>
+  <div class="cart-body" id="cartBody">
+    <div class="cart-empty">Sepetiniz şu anda boş.<br>Lezzetli bir şeyler eklemeye ne dersiniz?</div>
+  </div>
+  <div class="cart-foot">
+    <div class="cart-total-row">
+      <span>Toplam</span>
+      <span class="total-amt" id="cartTotal">0 TL</span>
+    </div>
+    <button class="btn btn-primary btn-block" onclick="openCheckout()" id="checkoutBtn" disabled>Ödemeye Geç</button>
+  </div>
+</aside>
+
+<!-- ===================== CHECKOUT MODAL ===================== -->
+<div class="modal-overlay" id="checkoutOverlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closeCheckout()" aria-label="Kapat">×</button>
+    <h3>Sipariş Bilgileri</h3>
+    <p class="modal-sub">Siparişinizi tamamlamak için bilgilerinizi girin. Ödeme, iyzico güvenli ödeme altyapısı üzerinden alınır.</p>
+
+    <form id="checkoutForm" onsubmit="submitOrder(event)">
+      <div class="form-grid">
+        <div>
+          <label for="adSoyad">Ad Soyad</label>
+          <input type="text" id="adSoyad" required>
+        </div>
+        <div>
+          <label for="telefon">Telefon</label>
+          <input type="tel" id="telefon" required placeholder="05xx xxx xx xx">
+        </div>
+        <div class="full">
+          <label for="eposta">E-posta</label>
+          <input type="email" id="eposta" required>
+        </div>
+        <div class="full">
+          <label for="adres">Teslimat Adresi</label>
+          <textarea id="adres" required placeholder="Mahalle, sokak, no, ilçe / il"></textarea>
+        </div>
+      </div>
+
+      <div class="order-summary" id="orderSummary"></div>
+
+      <button type="submit" class="btn btn-primary btn-block">iyzico ile Güvenli Ödeme Yap</button>
+      <div class="iyzico-note">
+        🔒 Kart bilgileriniz iyzico'nun güvenli ödeme sayfasında alınır, sitemizde saklanmaz.
+      </div>
+      <div class="payment-result" id="paymentResult"></div>
+    </form>
+  </div>
+</div>
+
+<script>
+  // ---------------------------------------------------------------
+  // ÜRÜN VERİLERİ
+  // ---------------------------------------------------------------
+  const PRODUCTS = {
+    p5:  { name: "5'li Paket",   desc: "5 x 200 gr (1 kg)",   price: 500,  img: "images/33144.jpg" },
+    p10: { name: "10'lu Paket",  desc: "10 x 200 gr (2 kg)",  price: 900,  img: "images/33145.jpg" },
+    p36: { name: "36'lı Koli",   desc: "36 x 200 gr (7,2 kg)", price: 2700, img: "images/33143.jpg" }
+  };
+
+  const qty = { p5: 1, p10: 1, p36: 1 };
+  const cart = {}; // { p5: count, ... }
+
+  function changeQty(id, delta){
+    qty[id] = Math.max(1, (qty[id] || 1) + delta);
+    document.getElementById('qty-' + id).textContent = qty[id];
+  }
+
+  function addToCart(id){
+    cart[id] = (cart[id] || 0) + qty[id];
+    qty[id] = 1;
+    document.getElementById('qty-' + id).textContent = 1;
+    renderCart();
+    openCart();
+  }
+
+  function removeFromCart(id){
+    delete cart[id];
+    renderCart();
+  }
+
+  function changeCartQty(id, delta){
+    cart[id] = Math.max(0, (cart[id] || 0) + delta);
+    if(cart[id] === 0) delete cart[id];
+    renderCart();
+  }
+
+  function cartTotal(){
+    return Object.entries(cart).reduce((sum, [id, q]) => sum + PRODUCTS[id].price * q, 0);
+  }
+
+  function cartCount(){
+    return Object.values(cart).reduce((sum, q) => sum + q, 0);
+  }
+
+  function renderCart(){
+    const body = document.getElementById('cartBody');
+    const count = cartCount();
+    document.getElementById('cartCount').textContent = count;
+    document.getElementById('cartTotal').textContent = cartTotal().toLocaleString('tr-TR') + ' TL';
+    document.getElementById('checkoutBtn').disabled = count === 0;
+
+    if(count === 0){
+      body.innerHTML = '<div class="cart-empty">Sepetiniz şu anda boş.<br>Lezzetli bir şeyler eklemeye ne dersiniz?</div>';
+      return;
+    }
+
+    body.innerHTML = Object.entries(cart).map(([id, q]) => {
+      const p = PRODUCTS[id];
+      return `
+        <div class="cart-item">
+          <img src="${p.img}" alt="${p.name}">
+          <div class="cart-item-info">
+            <h4>${p.name}</h4>
+            <div class="ci-price">${p.desc} · ${p.price.toLocaleString('tr-TR')} TL</div>
+            <div class="qty-control" style="margin-top:8px;">
+              <button onclick="changeCartQty('${id}',-1)">−</button>
+              <span>${q}</span>
+              <button onclick="changeCartQty('${id}',1)">+</button>
+            </div>
+          </div>
+          <button class="cart-remove" onclick="removeFromCart('${id}')">Kaldır</button>
+        </div>`;
+    }).join('');
+  }
+
+  // ---------------------------------------------------------------
+  // CART DRAWER & MOBİL MENÜ
+  // ---------------------------------------------------------------
+  function openCart(){
+    document.getElementById('cartDrawer').classList.add('open');
+    document.getElementById('overlay').classList.add('show');
+  }
+  function closeCart(){
+    document.getElementById('cartDrawer').classList.remove('open');
+    document.getElementById('overlay').classList.remove('show');
+  }
+
+  document.getElementById('menuToggle').addEventListener('click', () => {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+
+  // ---------------------------------------------------------------
+  // CHECKOUT MODAL
+  // ---------------------------------------------------------------
+  function openCheckout(){
+    if(cartCount() === 0) return;
+    const summary = document.getElementById('orderSummary');
+    const rows = Object.entries(cart).map(([id, q]) => {
+      const p = PRODUCTS[id];
+      return `<div class="os-row"><span>${p.name} x${q}</span><span>${(p.price*q).toLocaleString('tr-TR')} TL</span></div>`;
+    }).join('');
+    summary.innerHTML = rows + `<div class="os-row os-total"><span>Toplam</span><span>${cartTotal().toLocaleString('tr-TR')} TL</span></div>`;
+    document.getElementById('paymentResult').textContent = '';
+    document.getElementById('checkoutOverlay').classList.add('show');
+    closeCart();
+  }
+  function closeCheckout(){
+    document.getElementById('checkoutOverlay').classList.remove('show');
+  }
+
+  // ---------------------------------------------------------------
+  // ÖDEME (İYZİCO)
+  // ---------------------------------------------------------------
+  // ÖNEMLİ: iyzico ödeme başlatma işlemi, gizli API anahtarınızı
+  // güvenle saklayabileceğiniz bir SUNUCU (backend) üzerinden yapılmalıdır.
+  // API anahtarları tarayıcı (frontend) koduna asla yazılmamalıdır.
+  //
+  // Bu fonksiyon, kendi sunucunuzda oluşturacağınız bir uç noktaya
+  // (örnek: /api/odeme/baslat) sipariş bilgilerini gönderir.
+  // Sunucu, iyzico "Checkout Form Initialize" API'sini çağırır ve
+  // dönen ödeme formu / yönlendirme adresini frontend'e iletir.
+  //
+  // Örnek bir Node.js sunucu kodu, proje klasöründeki
+  // "server-ornegi/server.js" dosyasında verilmiştir.
+  async function submitOrder(event){
+    event.preventDefault();
+    const resultEl = document.getElementById('paymentResult');
+
+    const order = {
+      musteri: {
+        adSoyad: document.getElementById('adSoyad').value,
+        telefon: document.getElementById('telefon').value,
+        eposta: document.getElementById('eposta').value,
+        adres: document.getElementById('adres').value
+      },
+      sepet: Object.entries(cart).map(([id, q]) => ({
+        urunKodu: id,
+        ad: PRODUCTS[id].name,
+        adet: q,
+        birimFiyat: PRODUCTS[id].price
+      })),
+      toplam: cartTotal()
+    };
+
+    resultEl.className = 'payment-result info';
+    resultEl.textContent = 'Ödeme adımına yönlendiriliyorsunuz...';
+
+    try{
+      const res = await fetch('/api/odeme/baslat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(order)
+      });
+
+      if(!res.ok) throw new Error('Sunucu yanıtı başarısız');
+
+      const data = await res.json();
+
+      // iyzico Checkout Form genelde bir 'paymentPageUrl' veya
+      // gömülebilir 'checkoutFormContent' (HTML/script) döner.
+      if(data.paymentPageUrl){
+        window.location.href = data.paymentPageUrl;
+      } else if(data.checkoutFormContent){
+        document.open();
+        document.write(data.checkoutFormContent);
+        document.close();
+      } else {
+        resultEl.className = 'payment-result success';
+        resultEl.textContent = 'Siparişiniz alındı. Ödeme adımı için size dönüş yapılacaktır.';
+      }
+    } catch(err){
+      // Bu demo sitede henüz bir ödeme sunucusu bağlı değil.
+      resultEl.className = 'payment-result info';
+      resultEl.innerHTML = 'Sipariş bilgileriniz kaydedildi. <br>Bu site, ödeme adımını tamamlamak için bir iyzico sunucu entegrasyonu (backend) gerektirir — kurulum için "server-ornegi" klasörüne ve README dosyasına bakın. Şimdilik siparişinizi <a href="tel:+905392891630">0539 289 16 30</a> numarasından telefonla onaylatabilirsiniz.';
+    }
+  }
+
+  renderCart();
+</script>
+
+</body>
+</html>
