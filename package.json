@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "Kurabiye's - iyzico odemeli e-ticaret sitesi",
-  "dependencies": {"iyzipay": "^2.0.48"
+  "dependencies": {
     "iyzipay": "^2.0.67"
   }
 }
