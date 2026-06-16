@@ -1,4 +1,4 @@
-# Netlify yapılandırması — derleme yok, sadece fonksiyonlar
+# Netlify yapılandırması – derleme yok, sadece fonksiyonlar
 [build]
   publish = "."
   command = ""
@@ -6,3 +6,13 @@
 
 [functions]
   node_bundler = "zisi"
+
+[[redirects]]
+  from = "/.netlify/functions/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
