@@ -25,10 +25,22 @@
       "Bugün Yunus Usta aramızda olmasa da, onun bu topraklardan, bu sabırdan ve bu sevgiden çıkardığı tarif yaşıyor. Eskişehir Odunpazarı'ndaki küçük fırınımızda, aynı titizlikle, aynı malzemelerle ve aynı kalpten üretmeye devam ediyoruz."
     ],
     "timeline": [
-      { "year": "1986 — Seyyar Satıcılık", "text": "Yunus Usta, elinde sepeti ile sokaklarda tatlı satarak bu yolculuğa başladı." },
-      { "year": "Yıllar İçinde — Tarifin Aranışı", "text": "Hiçbir ustadan ders almadan, leblebi kurabiyesinin kendine has tarifini bulana kadar sayısız deneme yaptı." },
-      { "year": "Eşsiz Tarif — Tamamlandı", "text": "Yıllar süren sabrın sonunda, piyasadaki diğer tariflerden tamamen farklı, kendine özgü bir leblebi kurabiyesi tarifi ortaya çıktı." },
-      { "year": "Bugün — Kurabiye's", "text": "Aynı tarif, aynı emek ve aynı sevgiyle, Eskişehir Odunpazarı'ndan tüm Türkiye'ye gönderiyoruz." }
+      {
+        "year": "1986 — Seyyar Satıcılık",
+        "text": "Yunus Usta, elinde sepeti ile sokaklarda tatlı satarak bu yolculuğa başladı."
+      },
+      {
+        "year": "Yıllar İçinde — Tarifin Aranışı",
+        "text": "Hiçbir ustadan ders almadan, leblebi kurabiyesinin kendine has tarifini bulana kadar sayısız deneme yaptı."
+      },
+      {
+        "year": "Eşsiz Tarif — Tamamlandı",
+        "text": "Yıllar süren sabrın sonunda, piyasadaki diğer tariflerden tamamen farklı, kendine özgü bir leblebi kurabiyesi tarifi ortaya çıktı."
+      },
+      {
+        "year": "Bugün — Kurabiye's",
+        "text": "Aynı tarif, aynı emek ve aynı sevgiyle, Eskişehir Odunpazarı'ndan tüm Türkiye'ye gönderiyoruz."
+      }
     ],
     "signoff": "— Yunus Usta'nın anısına, sevgiyle."
   },
@@ -71,6 +83,7 @@
     }
   ],
   "gallery": [
+    "images/33146.jpg",
     "images/33109.jpg",
     "images/33141.jpg",
     "images/33142.jpg",
