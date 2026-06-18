@@ -1,0 +1,93 @@
+{
+  "hero": {
+    "eyebrow": "Eskişehir Odunpazarı'ndan • 1986'dan Bugüne",
+    "titleHtml": "40 yıllık emeğin <em>tek lokmadaki</em> hali.",
+    "lead": "Yunus Usta'nın yıllarca deneyerek bulduğu, hiçbir ustadan görmediği, sıfırdan keşfettiği eşsiz tarif. Bugün aynı sevgi ve titizlikle, elle şekillendirilip fırınlanıyor.",
+    "image": "images/33139.jpg"
+  },
+  "contact": {
+    "phoneDisplay": "0539 289 16 30",
+    "phoneHref": "905392891630",
+    "email": "siparis@kurabiyes.com",
+    "addressLines": [
+      "Yıldıztepe Mahallesi, Oruçkaptan Sokak No:2/A",
+      "Odunpazarı / Eskişehir"
+    ],
+    "hours": "Her gün 09:00 – 19:00"
+  },
+  "about": {
+    "eyebrow": "Hikayemiz",
+    "title": "Yunus Usta'nın 40 Yıllık Yolculuğu",
+    "image": "images/33093.jpg",
+    "paragraphs": [
+      "Her şey, sırtında küçük bir sepetle kasaba kasaba dolaşan, sokaklarda tatlı satan genç bir seyyar satıcı ile başladı. Merhum babamız Yunus Usta, elindeki imkânlarla insanlara küçük bir tatlılık ulaştırmanın peşindeydi. O günden bugüne kırk yıl geçti.",
+      "Bu işi ona kimse öğretmedi. Yanında çalıştığı bir usta, devraldığı bir defter ya da kopyaladığı bir tarif yoktu. Leblebi kurabiyesinin \"doğru\" halini bulana kadar, her hamuru kendi elleriyle yoğurdu, her ölçüyü kendi denedi, her fırın derecesini sayısız kez tekrar etti. Yıllar süren bu sabırlı deneme-yanılma süreci, sonunda piyasadaki hiçbir tarife benzemeyen, kendine has bir dokuya ve tada kavuştu.",
+      "Bugün Yunus Usta aramızda olmasa da, onun bu topraklardan, bu sabırdan ve bu sevgiden çıkardığı tarif yaşıyor. Eskişehir Odunpazarı'ndaki küçük fırınımızda, aynı titizlikle, aynı malzemelerle ve aynı kalpten üretmeye devam ediyoruz."
+    ],
+    "timeline": [
+      {
+        "year": "1986 — Seyyar Satıcılık",
+        "text": "Yunus Usta, elinde sepeti ile sokaklarda tatlı satarak bu yolculuğa başladı."
+      },
+      {
+        "year": "Yıllar İçinde — Tarifin Aranışı",
+        "text": "Hiçbir ustadan ders almadan, leblebi kurabiyesinin kendine has tarifini bulana kadar sayısız deneme yaptı."
+      },
+      {
+        "year": "Eşsiz Tarif — Tamamlandı",
+        "text": "Yıllar süren sabrın sonunda, piyasadaki diğer tariflerden tamamen farklı, kendine özgü bir leblebi kurabiyesi tarifi ortaya çıktı."
+      },
+      {
+        "year": "Bugün — Kurabiye's",
+        "text": "Aynı tarif, aynı emek ve aynı sevgiyle, Eskişehir Odunpazarı'ndan tüm Türkiye'ye gönderiyoruz."
+      }
+    ],
+    "signoff": "— Yunus Usta'nın anısına, sevgiyle."
+  },
+  "products": [
+    {
+      "id": "p5",
+      "name": "5'li Paket",
+      "unit": "5 x 200 gr (toplam 1 kg) — minimum sipariş",
+      "price": 500,
+      "priceUnit": "/ 5 paket",
+      "badge": "",
+      "save": "",
+      "desc": "İlk denemeniz için ideal. Paket başı 100 TL — sitemizdeki en küçük sipariş seçeneğidir.",
+      "image": "images/33144.jpg",
+      "featured": false
+    },
+    {
+      "id": "p10",
+      "name": "10'lu Paket",
+      "unit": "10 x 200 gr (toplam 2 kg)",
+      "price": 900,
+      "priceUnit": "/ 10 paket",
+      "badge": "En Çok Tercih Edilen",
+      "save": "100 TL avantaj",
+      "desc": "Paket başı 90 TL. Ailece tüketim veya hediyeleşmek için en dengeli seçenek.",
+      "image": "images/33145.jpg",
+      "featured": true
+    },
+    {
+      "id": "p36",
+      "name": "36'lı Koli",
+      "unit": "36 x 200 gr (toplam 7,2 kg)",
+      "price": 2700,
+      "priceUnit": "/ koli",
+      "badge": "",
+      "save": "900 TL avantaj",
+      "desc": "Paket başı 75 TL. Toplu siparişler, işletmeler ve düzenli müşterilerimiz için.",
+      "image": "images/33143.jpg",
+      "featured": false
+    }
+  ],
+  "gallery": [
+    "images/33146.jpg",
+    "images/33109.jpg",
+    "images/33141.jpg",
+    "images/33142.jpg",
+    "images/33145.jpg",
+    "images/33144.jpg"
+  ]
+}
