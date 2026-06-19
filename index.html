@@ -1,6 +1,22 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1033184749133790');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1033184749133790&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel Code -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Leblebi Kurabiyesi | Eskişehir'in Meşhur Lezzeti – Kurabiye's</title>
@@ -1217,6 +1233,7 @@ const EMBEDDED_SITE_DATA = {"hero": {"eyebrow": "Eskişehir Odunpazarı'ndan •
     cart[id] = (cart[id] || 0) + (qty[id] || 1);
     qty[id] = 1;
     document.getElementById('qty-' + id).textContent = 1;
+    try{ if(window.fbq) fbq('track','AddToCart',{content_ids:[id],content_type:'product',value:(PRODUCTS[id]?PRODUCTS[id].price:0),currency:'TRY'}); }catch(e){}
     renderCart();
     openCart();
   }
@@ -1343,6 +1360,8 @@ const EMBEDDED_SITE_DATA = {"hero": {"eyebrow": "Eskişehir Odunpazarı'ndan •
 
     resultEl.className = 'payment-result info';
     resultEl.textContent = 'Ödeme adımına yönlendiriliyorsunuz...';
+    try{ if(window.fbq) fbq('track','InitiateCheckout',{value:cartTotal(),currency:'TRY',num_items:cartCount()}); }catch(e){}
+    try{ localStorage.setItem('kb_last_total', String(cartTotal())); localStorage.setItem('kb_last_items', String(cartCount())); }catch(e){}
 
     try{
       const res = await fetch('/.netlify/functions/odeme-baslat', {

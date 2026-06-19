@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1033184749133790');
+fbq('track', 'PageView');
+</script>
+<!-- End Meta Pixel Code -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Siparişiniz Alındı — Kurabiye's</title>
@@ -20,5 +34,13 @@
     <p>Kurabiyeleriniz özenle hazırlanıp en kısa sürede kargoya verilecektir.</p>
     <a href="/index.html">Ana Sayfaya Dön</a>
   </div>
+  <script>
+  try{
+    var v = parseFloat(localStorage.getItem('kb_last_total')||'0');
+    var n = parseInt(localStorage.getItem('kb_last_items')||'1');
+    if(window.fbq) fbq('track','Purchase',{value:isNaN(v)?0:v,currency:'TRY',num_items:isNaN(n)?1:n});
+    localStorage.removeItem('kb_last_total'); localStorage.removeItem('kb_last_items');
+  }catch(e){}
+  </script>
 </body>
 </html>
