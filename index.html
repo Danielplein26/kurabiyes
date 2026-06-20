@@ -738,7 +738,7 @@ src="https://www.facebook.com/tr?id=1033184749133790&ev=PageView&noscript=1"/></
       "name": "Kargo kaç günde elime ulaşır?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Siparişleriniz genellikle 1-3 iş günü içinde elinize ulaşır. Tüm Türkiye'ye kargo ücretsizdir. Saat 16:00'ya kadar verilen siparişler aynı gün kargoya teslim edilir."
+        "text": "Siparişleriniz genellikle 1-3 iş günü içinde elinize ulaşır. Tüm Türkiye'ye kargo ücretsizdir. Hafta içi 15:30'a, Cumartesi 14:30'a kadar verdiğiniz siparişler aynı gün kargoya teslim edilir. Pazar günleri kargo bulunmamaktadır."
       }
     },
     {
@@ -757,7 +757,7 @@ src="https://www.facebook.com/tr?id=1033184749133790&ev=PageView&noscript=1"/></
 
 <!-- ===================== ÜST DUYURU ŞERİDİ ===================== -->
 <div class="top-bar" id="topBar">
-  <span id="topBarText">⏰ Bugün <span class="sayac">16:00</span>'ya kadar verilen siparişler <span class="kargo-vurgu">bugün kargoda!</span> &nbsp;•&nbsp; Tüm Türkiye'ye <span class="kargo-vurgu">ücretsiz kargo</span> 🚚</span>
+  <span id="topBarText">⏰ Siparişiniz <span class="kargo-vurgu">bugün kargoda!</span> &nbsp;•&nbsp; Tüm Türkiye'ye <span class="kargo-vurgu">ücretsiz kargo</span> 🚚</span>
 </div>
 
 <!-- ===================== HEADER ===================== -->
@@ -929,7 +929,7 @@ src="https://www.facebook.com/tr?id=1033184749133790&ev=PageView&noscript=1"/></
       </details>
       <details class="faq-item">
         <summary>Kargo kaç günde elime ulaşır?</summary>
-        <div class="faq-a">Siparişleriniz genellikle <strong>1-3 iş günü</strong> içinde elinize ulaşır. Tüm Türkiye'ye kargo ücretsizdir. Saat 16:00'ya kadar verdiğiniz siparişler aynı gün kargoya teslim edilir.</div>
+        <div class="faq-a">Siparişleriniz genellikle <strong>1-3 iş günü</strong> içinde elinize ulaşır. Tüm Türkiye'ye kargo ücretsizdir. <strong>Hafta içi 15:30</strong>'a, <strong>Cumartesi 14:30</strong>'a kadar verdiğiniz siparişler aynı gün kargoya teslim edilir. Pazar günleri kargo bulunmamaktadır.</div>
       </details>
       <details class="faq-item">
         <summary>Kapıda ödeme var mı?</summary>
@@ -1415,26 +1415,40 @@ const EMBEDDED_SITE_DATA = {"hero": {"eyebrow": "Eskişehir Odunpazarı'ndan •
   <input type="text" name="bot-field" />
 </form>
 <script>
-  // Üst şerit: 16:00 kargo kesim saatine göre mesaj + geri sayım
+  // Üst şerit: gün bazlı kargo kesim saatine göre mesaj + geri sayım
+  // Hafta içi 15:30, Cumartesi 14:30, Pazar kapalı
   (function(){
     var el = document.getElementById('topBarText');
     if(!el) return;
     function pad(n){ return n<10 ? '0'+n : ''+n; }
+    var ucretsiz = ' &nbsp;•&nbsp; Tüm Türkiye\'ye <span class="kargo-vurgu">ücretsiz kargo</span> 🚚';
     function guncelle(){
       var now = new Date();
+      var gun = now.getDay(); // 0=Pazar, 1=Pazartesi ... 6=Cumartesi
       var h = now.getHours(), m = now.getMinutes(), s = now.getSeconds();
-      if (h < 16) {
-        // Kalan süreyi hesapla (16:00'a kadar)
-        var kalanSn = ((16-h)*3600) - (m*60) - s;
+      var nowSec = h*3600 + m*60 + s;
+
+      // Pazar: kargo kapalı
+      if (gun === 0) {
+        el.innerHTML = '📦 Bugün kargo kapalı — siparişiniz <span class="kargo-vurgu">Pazartesi kargoda!</span>' + ucretsiz;
+        return;
+      }
+
+      // Bugünün kesim saati (saniye cinsinden): Cumartesi 14:30, hafta içi 15:30
+      var cutoff = (gun === 6) ? (14*3600 + 30*60) : (15*3600 + 30*60);
+
+      if (nowSec < cutoff) {
+        var kalanSn = cutoff - nowSec;
         var kh = Math.floor(kalanSn/3600);
         var km = Math.floor((kalanSn%3600)/60);
         var ks = kalanSn%60;
         var geri = (kh>0 ? kh+' sa ' : '') + pad(km)+' dk '+pad(ks)+' sn';
         el.innerHTML = '⏰ Siparişiniz <span class="kargo-vurgu">bugün kargoda!</span> '
-          + 'Son <span class="sayac">'+geri+'</span> &nbsp;•&nbsp; Tüm Türkiye\'ye <span class="kargo-vurgu">ücretsiz kargo</span> 🚚';
+          + 'Son <span class="sayac">'+geri+'</span>' + ucretsiz;
       } else {
-        el.innerHTML = '🚚 Bugünün kargo saati doldu — siparişiniz <span class="kargo-vurgu">yarın kargoda!</span> '
-          + '&nbsp;•&nbsp; Tüm Türkiye\'ye <span class="kargo-vurgu">ücretsiz kargo</span>';
+        // Kesim saati doldu — Cuma/Cumartesi sonrası Pazartesi, diğer günler yarın
+        var sonraki = (gun === 5 || gun === 6) ? 'Pazartesi' : 'yarın';
+        el.innerHTML = '🚚 Bugünün kargo saati doldu — siparişiniz <span class="kargo-vurgu">'+sonraki+' kargoda!</span>' + ucretsiz;
       }
     }
     guncelle();
