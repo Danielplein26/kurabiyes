@@ -51,10 +51,12 @@ exports.handler = async (event) => {
   const adParcalari = (musteri.adSoyad || 'Musteri').trim().split(' ');
   const ad = adParcalari[0] || 'Musteri';
   const soyad = adParcalari.slice(1).join(' ') || '-';
- 
-  const sehir = (musteri.il || 'Eskisehir').trim();
-  const tamAdres = [musteri.adres, musteri.ilce, musteri.il].filter(Boolean).join(', ') || 'Adres belirtilmedi';
 
+  // Müşterinin gerçek il/ilçe bilgisi (formdan gelir)
+  const il = String(musteri.il || 'Eskisehir').trim();
+  const ilce = String(musteri.ilce || '').trim();
+  const tamAdres = [musteri.adres, ilce, il].filter(Boolean).join(', ') || il;
+ 
   const request = {
     locale: Iyzipay.LOCALE.TR,
     conversationId: siparisNo,
@@ -74,16 +76,16 @@ exports.handler = async (event) => {
       identityNumber: '74300864791',
       registrationAddress: tamAdres,
       ip: (event.headers['x-forwarded-for'] || '85.34.78.112').split(',')[0].trim(),
-      city: sehir,
+      city: il,
       country: 'Turkey'
     },
     shippingAddress: {
       contactName: musteri.adSoyad || 'Musteri',
-      city: sehir, country: 'Turkey', address: tamAdres
+      city: il, country: 'Turkey', address: tamAdres
     },
     billingAddress: {
       contactName: musteri.adSoyad || 'Musteri',
-      city: sehir, country: 'Turkey', address: tamAdres
+      city: il, country: 'Turkey', address: tamAdres
     },
     basketItems
   };
@@ -106,7 +108,10 @@ exports.handler = async (event) => {
       ad: musteri.adSoyad || '',
       telefon: musteri.telefon || '',
       eposta: musteri.eposta || '',
-      adres: tamAdres,
+      il: il,
+      ilce: ilce,
+      adres: musteri.adres || '',
+      odemeYontemi: 'Kart (iyzico)',
       urunler: urunMetni,
       toplam: Number(toplam).toLocaleString('tr-TR') + ' TL',
       tarih: d.toLocaleString('tr-TR')

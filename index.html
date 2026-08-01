@@ -646,6 +646,34 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
   .payment-result.success{color:#3a7d44;}
   .payment-result.info{color:var(--maroon);}
 
+  /* Ödeme yöntemi seçimi */
+  .pay-methods{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 16px;}
+  .pay-method{display:block;cursor:pointer;}
+  .pay-method input{position:absolute;opacity:0;pointer-events:none;}
+  .pay-method .pm-body{
+    display:flex;flex-direction:column;gap:3px;border:2px solid var(--cream2);
+    border-radius:12px;padding:12px 14px;background:#fff;transition:border-color .2s, background .2s;
+  }
+  .pay-method .pm-body strong{font-size:0.92rem;color:var(--maroon-dark);}
+  .pay-method .pm-body small{font-size:0.76rem;color:#7a5d4c;}
+  .pay-method input:checked + .pm-body{border-color:var(--gold);background:var(--cream);box-shadow:0 4px 14px rgba(205,161,84,0.18);}
+  @media (max-width:560px){ .pay-methods{grid-template-columns:1fr;} }
+
+  /* Havale bilgi paneli */
+  .havale-box h4{font-size:1.15rem;color:var(--maroon-dark);margin-bottom:6px;}
+  .havale-sub{font-size:0.88rem;color:#5d4536;margin-bottom:14px;}
+  .havale-rows{background:var(--cream);border:1px solid var(--cream2);border-radius:12px;padding:6px 14px;margin-bottom:12px;}
+  .hv-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px dashed var(--cream2);font-size:0.9rem;}
+  .hv-row:last-child{border-bottom:none;}
+  .hv-row span{color:#7a5d4c;min-width:105px;flex-shrink:0;}
+  .hv-row strong{color:var(--maroon-dark);word-break:break-all;}
+  .hv-copy{
+    margin-left:auto;flex-shrink:0;border:1px solid var(--gold);background:#fff;color:var(--maroon);
+    border-radius:8px;padding:4px 10px;font-size:0.78rem;font-weight:600;cursor:pointer;
+  }
+  .hv-copy:hover{background:var(--gold-light);}
+  .havale-not{font-size:0.82rem;color:#7a5d4c;background:var(--cream2);border-radius:10px;padding:12px 14px;margin-bottom:14px;}
+
   /* ===== Responsive ===== */
   @media (max-width: 980px){
     .product-grid{grid-template-columns:1fr;}
@@ -1218,17 +1246,46 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
 
       <div class="order-summary" id="orderSummary"></div>
 
+      <div class="pay-methods">
+        <label class="pay-method">
+          <input type="radio" name="odemeYontemi" value="kart" checked onchange="odemeYontemiDegisti()">
+          <span class="pm-body"><strong>💳 Kredi / Banka Kartı</strong><small>iyzico güvenli ödeme &middot; taksit imkânı</small></span>
+        </label>
+        <label class="pay-method">
+          <input type="radio" name="odemeYontemi" value="havale" onchange="odemeYontemiDegisti()">
+          <span class="pm-body"><strong>🏦 Havale / EFT</strong><small>Banka hesabımıza transfer</small></span>
+        </label>
+      </div>
+
       <label style="display:flex;gap:10px;align-items:flex-start;font-weight:500;font-size:0.85rem;color:#5d4536;margin-bottom:14px;cursor:pointer;">
         <input type="checkbox" id="sozlesmeOnay" required style="width:auto;margin-top:3px;flex-shrink:0;">
         <span><a href="mesafeli-satis-sozlesmesi.html" target="_blank">Mesafeli Satış Sözleşmesi</a>'ni, <a href="teslimat-ve-iade.html" target="_blank">Teslimat ve İade</a> şartlarını ve <a href="gizlilik-politikasi.html" target="_blank">Gizlilik Politikası</a>'nı okudum, onaylıyorum.</span>
       </label>
 
-      <button type="submit" class="btn btn-primary btn-block">iyzico ile Güvenli Ödeme Yap</button>
-      <div class="iyzico-note">
+      <button type="submit" class="btn btn-primary btn-block" id="checkoutSubmitBtn">iyzico ile Güvenli Ödeme Yap</button>
+      <div class="iyzico-note" id="checkoutNote">
         🔒 Kart bilgileriniz iyzico'nun güvenli ödeme sayfasında alınır, sitemizde saklanmaz.
       </div>
       <div class="payment-result" id="paymentResult"></div>
     </form>
+
+    <!-- Havale/EFT bilgi paneli (sipariş oluşturulunca form yerine gösterilir) -->
+    <div id="havalePanel" style="display:none;">
+      <div class="havale-box">
+        <h4>Siparişiniz oluşturuldu 🎉</h4>
+        <p class="havale-sub">Aşağıdaki hesaba havale/EFT yaptığınızda siparişiniz onaylanır ve kargoya verilir.</p>
+        <div class="havale-rows">
+          <div class="hv-row"><span>Sipariş No</span><strong id="hvSiparisNo"></strong></div>
+          <div class="hv-row"><span>Tutar</span><strong id="hvTutar"></strong></div>
+          <div class="hv-row"><span>Banka</span><strong id="hvBanka"></strong></div>
+          <div class="hv-row"><span>Hesap Sahibi</span><strong id="hvHesapSahibi"></strong></div>
+          <div class="hv-row hv-iban"><span>IBAN</span><strong id="hvIban"></strong><button type="button" class="hv-copy" onclick="ibanKopyala()">Kopyala</button></div>
+        </div>
+        <p class="havale-not">⚠️ Havale/EFT yaparken açıklama kısmına lütfen <strong>sipariş numaranızı</strong> yazın. Bu bilgiler ekranı kapattığınızda kaybolur, ödemeyi tamamlamadan not almanızı öneririz.</p>
+        <button type="button" class="btn btn-primary btn-block" id="odedimBtn" onclick="odemeyiYaptim()">✓ Ödemeyi Yaptım</button>
+        <div class="payment-result" id="havaleResult"></div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1437,6 +1494,9 @@ const EMBEDDED_SITE_DATA = {"hero": {"eyebrow": "Eskişehir Odunpazarı'ndan •
     }).join('');
     summary.innerHTML = rows + `<div class="os-row os-total"><span>Toplam</span><span>${cartTotal().toLocaleString('tr-TR')} TL</span></div>`;
     document.getElementById('paymentResult').textContent = '';
+    document.getElementById('checkoutForm').style.display = '';
+    document.getElementById('havalePanel').style.display = 'none';
+    odemeYontemiDegisti();
     document.getElementById('checkoutOverlay').classList.add('show');
     closeCart();
   }
@@ -1470,6 +1530,121 @@ const EMBEDDED_SITE_DATA = {"hero": {"eyebrow": "Eskişehir Odunpazarı'ndan •
     });
   })();
 
+  // ===============================================================
+  // HAVALE / EFT
+  // ===============================================================
+  // ÖNEMLİ: Aşağıdaki banka bilgilerini kendi bilgilerinizle doldurun.
+  const HAVALE_BILGI = {
+    banka: 'Enpara (QNB Finansbank)',
+    hesapSahibi: 'Ümit Yıldırım',
+    iban: 'TR38 0015 7000 0000 0109 3173 67'
+  };
+
+  let havaleSiparis = null; // oluşturulan havale siparişinin bilgileri
+
+  function seciliOdemeYontemi(){
+    const r = document.querySelector('input[name="odemeYontemi"]:checked');
+    return r ? r.value : 'kart';
+  }
+
+  function odemeYontemiDegisti(){
+    const havale = seciliOdemeYontemi() === 'havale';
+    document.getElementById('checkoutSubmitBtn').textContent =
+      havale ? 'Siparişi Oluştur' : 'iyzico ile Güvenli Ödeme Yap';
+    document.getElementById('checkoutNote').innerHTML = havale
+      ? '🏦 Sipariş oluşturduktan sonra IBAN bilgilerimiz ekranda gösterilir. Ödemeniz hesabımıza geçince siparişiniz kargoya verilir.'
+      : "🔒 Kart bilgileriniz iyzico'nun güvenli ödeme sayfasında alınır, sitemizde saklanmaz.";
+  }
+
+  // Netlify Forms'a kayıt gönderir (sipariş kutunuza düşer, e-posta bildirimi gelir)
+  function siparisFormunaYaz(veri){
+    const govde = new URLSearchParams({ 'form-name': 'siparisler', ...veri }).toString();
+    return fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: govde
+    });
+  }
+
+  function havaleSiparisNoUret(){
+    const d = new Date();
+    const pad = n => String(n).padStart(2, '0');
+    return `H${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}-${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
+  }
+
+  async function havaleSiparisOlustur(musteri, resultEl){
+    const siparisNo = havaleSiparisNoUret();
+    const urunMetni = Object.entries(cart).map(([id, q]) =>
+      `${PRODUCTS[id].name} x${q} (${(PRODUCTS[id].price*q).toLocaleString('tr-TR')} TL)`).join(' | ');
+    const toplam = cartTotal();
+
+    havaleSiparis = {
+      siparisNo,
+      ad: musteri.adSoyad, telefon: musteri.telefon, eposta: musteri.eposta,
+      il: musteri.il, ilce: musteri.ilce, adres: musteri.adres,
+      urunler: urunMetni,
+      toplam: toplam.toLocaleString('tr-TR') + ' TL'
+    };
+
+    resultEl.className = 'payment-result info';
+    resultEl.textContent = 'Siparişiniz oluşturuluyor...';
+
+    try{
+      await siparisFormunaYaz({
+        ...havaleSiparis,
+        durum: 'HAVALE - ÖDEME BEKLENİYOR',
+        odemeYontemi: 'Havale/EFT',
+        tarih: new Date().toLocaleString('tr-TR')
+      });
+    }catch(e){ /* kayıt başarısız olsa da müşteriye IBAN gösterilir */ }
+
+    // Formu gizle, havale bilgilerini göster
+    document.getElementById('hvSiparisNo').textContent = siparisNo;
+    document.getElementById('hvTutar').textContent = havaleSiparis.toplam;
+    document.getElementById('hvBanka').textContent = HAVALE_BILGI.banka;
+    document.getElementById('hvHesapSahibi').textContent = HAVALE_BILGI.hesapSahibi;
+    document.getElementById('hvIban').textContent = HAVALE_BILGI.iban;
+    document.getElementById('havaleResult').textContent = '';
+    document.getElementById('odedimBtn').style.display = '';
+    document.getElementById('checkoutForm').style.display = 'none';
+    document.getElementById('havalePanel').style.display = 'block';
+  }
+
+  function ibanKopyala(){
+    const iban = document.getElementById('hvIban').textContent;
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(iban.replace(/\s+/g,''));
+    }
+    const btn = document.querySelector('.hv-copy');
+    if(btn){ btn.textContent = 'Kopyalandı ✓'; setTimeout(()=>{ btn.textContent = 'Kopyala'; }, 2000); }
+  }
+
+  async function odemeyiYaptim(){
+    if(!havaleSiparis) return;
+    const resultEl = document.getElementById('havaleResult');
+    const btn = document.getElementById('odedimBtn');
+    btn.disabled = true;
+    resultEl.className = 'payment-result info';
+    resultEl.textContent = 'Bildiriminiz gönderiliyor...';
+    try{
+      await siparisFormunaYaz({
+        ...havaleSiparis,
+        durum: 'HAVALE - ÖDENDİ (müşteri bildirdi)',
+        odemeYontemi: 'Havale/EFT',
+        tarih: new Date().toLocaleString('tr-TR')
+      });
+      try{ if(window.fbq) fbq('track','Purchase',{value:cartTotal(),currency:'TRY'}); }catch(e){}
+      btn.style.display = 'none';
+      resultEl.className = 'payment-result success';
+      resultEl.textContent = 'Teşekkürler! Ödemeniz kontrol edildikten sonra siparişiniz kargoya verilecek. Sorularınız için bize telefonla ulaşabilirsiniz.';
+      Object.keys(cart).forEach(k => delete cart[k]); renderCart();
+    }catch(e){
+      btn.disabled = false;
+      resultEl.className = 'payment-result info';
+      resultEl.textContent = 'Bildirim gönderilemedi. Lütfen tekrar deneyin ya da bizi telefonla arayın.';
+    }
+  }
+
   async function submitOrder(event){
     event.preventDefault();
     const resultEl = document.getElementById('paymentResult');
@@ -1492,9 +1667,16 @@ const EMBEDDED_SITE_DATA = {"hero": {"eyebrow": "Eskişehir Odunpazarı'ndan •
       toplam: cartTotal()
     };
 
+    try{ if(window.fbq) fbq('track','InitiateCheckout',{value:cartTotal(),currency:'TRY',num_items:cartCount()}); }catch(e){}
+
+    // Havale/EFT seçildiyse iyzico yerine havale akışına git
+    if(seciliOdemeYontemi() === 'havale'){
+      await havaleSiparisOlustur(order.musteri, resultEl);
+      return;
+    }
+
     resultEl.className = 'payment-result info';
     resultEl.textContent = 'Ödeme adımına yönlendiriliyorsunuz...';
-    try{ if(window.fbq) fbq('track','InitiateCheckout',{value:cartTotal(),currency:'TRY',num_items:cartCount()}); }catch(e){}
     try{ localStorage.setItem('kb_last_total', String(cartTotal())); localStorage.setItem('kb_last_items', String(cartCount())); }catch(e){}
 
     try{
@@ -1542,6 +1724,9 @@ const EMBEDDED_SITE_DATA = {"hero": {"eyebrow": "Eskişehir Odunpazarı'ndan •
   <input type="text" name="ad" />
   <input type="text" name="telefon" />
   <input type="email" name="eposta" />
+  <input type="text" name="il" />
+  <input type="text" name="ilce" />
+  <input type="text" name="odemeYontemi" />
   <textarea name="adres"></textarea>
   <textarea name="urunler"></textarea>
   <input type="text" name="toplam" />
