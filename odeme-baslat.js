@@ -9,45 +9,79 @@
 // ============================================================
  
 const Iyzipay = require('iyzipay');
- 
+
 const iyzipay = new Iyzipay({
   apiKey: process.env.IYZICO_API_KEY,
   secretKey: process.env.IYZICO_SECRET_KEY,
   uri: process.env.IYZICO_BASE_URL || 'https://sandbox-api.iyzipay.com'
 });
- 
+
 const SITE_URL = process.env.SITE_URL || 'https://kurabiyes.com';
- 
+
+// ============================================================
+// Fiyat listesi — TEK doğru kaynak burasıdır (sunucu tarafı).
+// Sepetten/istemciden gelen fiyatlara ASLA güvenilmez; her ürünün
+// tutarı burada tanımlı gerçek fiyat üzerinden yeniden hesaplanır.
+// Sitede yeni ürün/fiyat eklendiğinde burayı da güncelleyin.
+// ============================================================
+const FIYAT_LISTESI = {
+  'p5': 750,
+  'p10': 1350,
+  'p36': 3200,
+  'kestane-kavanoz-500': 750,
+  'kestane-cikolatali-240': 200,
+  'kestane-cikolatali-4lu': 440,
+  'mh-fistik': 300,
+  'mh-sade': 250,
+  'mh-karisik': 250,
+  'mh-hediyelik': 250,
+  'uclu-paket': 1100
+};
+
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: JSON.stringify({ error: 'Yöntem desteklenmiyor' }) };
   }
- 
+
   let order;
   try {
     order = JSON.parse(event.body);
   } catch {
     return { statusCode: 400, body: JSON.stringify({ error: 'Geçersiz istek' }) };
   }
- 
-  const { musteri, sepet, toplam } = order;
-  if (!musteri || !sepet || !sepet.length || !toplam) {
+
+  const { musteri, sepet } = order;
+  if (!musteri || !sepet || !sepet.length) {
     return { statusCode: 400, body: JSON.stringify({ error: 'Eksik sipariş bilgisi.' }) };
   }
- 
+
+  // Sepetteki her kalemin gerçek birim fiyatını sunucudaki listeden al;
+  // istemciden gelen birimFiyat/toplam değerleri tamamen yok sayılır.
+  for (const item of sepet) {
+    if (!Object.prototype.hasOwnProperty.call(FIYAT_LISTESI, item.urunKodu)) {
+      return { statusCode: 400, body: JSON.stringify({ error: 'Geçersiz ürün: ' + item.urunKodu }) };
+    }
+    const adet = Number(item.adet);
+    if (!Number.isInteger(adet) || adet < 1 || adet > 999) {
+      return { statusCode: 400, body: JSON.stringify({ error: 'Geçersiz adet.' }) };
+    }
+  }
+  const guvenilirBirimFiyat = (item) => FIYAT_LISTESI[item.urunKodu];
+  const toplam = sepet.reduce((t, item) => t + guvenilirBirimFiyat(item) * Number(item.adet), 0);
+
   // İnsan tarafından okunabilir kısa sipariş numarası
   const d = new Date();
   const pad = (n) => String(n).padStart(2, '0');
   const siparisNo = `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}-${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
- 
+
   const basketItems = sepet.map((item, i) => ({
     id: String(item.urunKodu || 'urun-' + i),
     name: item.ad,
     category1: 'Kurabiye',
     itemType: Iyzipay.BASKET_ITEM_TYPE.PHYSICAL,
-    price: (Number(item.birimFiyat) * Number(item.adet)).toFixed(2)
+    price: (guvenilirBirimFiyat(item) * Number(item.adet)).toFixed(2)
   }));
- 
+
   const adParcalari = (musteri.adSoyad || 'Musteri').trim().split(' ');
   const ad = adParcalari[0] || 'Musteri';
   const soyad = adParcalari.slice(1).join(' ') || '-';
@@ -56,12 +90,12 @@ exports.handler = async (event) => {
   const il = String(musteri.il || 'Eskisehir').trim();
   const ilce = String(musteri.ilce || '').trim();
   const tamAdres = [musteri.adres, ilce, il].filter(Boolean).join(', ') || il;
- 
+
   const request = {
     locale: Iyzipay.LOCALE.TR,
     conversationId: siparisNo,
-    price: Number(toplam).toFixed(2),
-    paidPrice: Number(toplam).toFixed(2),
+    price: toplam.toFixed(2),
+    paidPrice: toplam.toFixed(2),
     currency: Iyzipay.CURRENCY.TRY,
     basketId: siparisNo,
     paymentGroup: Iyzipay.PAYMENT_GROUP.PRODUCT,
@@ -101,7 +135,7 @@ exports.handler = async (event) => {
  
     // Siparişi "ödeme bekleniyor" olarak kutuya düşür (ödeme bağlanmasa da
     // müşteriye ulaşabilmeniz için tüm iletişim bilgileriyle).
-    const urunMetni = sepet.map(s => `${s.ad} x${s.adet} (${(s.birimFiyat * s.adet).toLocaleString('tr-TR')} TL)`).join(' | ');
+    const urunMetni = sepet.map(s => `${s.ad} x${s.adet} (${(guvenilirBirimFiyat(s) * s.adet).toLocaleString('tr-TR')} TL)`).join(' | ');
     await siparisKaydet({
       siparisNo,
       durum: 'ÖDEME BEKLENİYOR',
@@ -113,7 +147,7 @@ exports.handler = async (event) => {
       adres: musteri.adres || '',
       odemeYontemi: 'Kart (iyzico)',
       urunler: urunMetni,
-      toplam: Number(toplam).toLocaleString('tr-TR') + ' TL',
+      toplam: toplam.toLocaleString('tr-TR') + ' TL',
       tarih: d.toLocaleString('tr-TR')
     });
  

@@ -116,6 +116,66 @@
       "desc": "Çikolatalı kestane şekerinin 4'lü avantaj paketi. Paylaşmak veya stoklamak için ideal.",
       "image": "images/kestane-cikolatali-4lu.jpg",
       "featured": false
+    },
+    {
+      "id": "mh-fistik",
+      "name": "Antep Fıstıklı Met Helvası",
+      "unit": "400 gr",
+      "price": 300,
+      "priceUnit": "/ paket",
+      "badge": "Yeni",
+      "save": "",
+      "desc": "Eskişehir'in meşhur met helvası, bol Antep fıstıklı. Tel tel açılan, ağızda dağılan geleneksel lezzet.",
+      "image": "images/met-helvasi-fistikli.jpg",
+      "featured": false
+    },
+    {
+      "id": "mh-sade",
+      "name": "Sade Met Helvası",
+      "unit": "400 gr",
+      "price": 250,
+      "priceUnit": "/ paket",
+      "badge": "Yeni",
+      "save": "",
+      "desc": "Eskişehir'in asırlık lezzeti met helvasının en klasik hali. Tel tel, hafif ve ağızda eriyen dokusuyla.",
+      "image": "images/met-helvasi-sade.jpg",
+      "featured": false
+    },
+    {
+      "id": "mh-karisik",
+      "name": "Karışık Met Helvası",
+      "unit": "400 gr",
+      "price": 250,
+      "priceUnit": "/ paket",
+      "badge": "Yeni",
+      "save": "",
+      "desc": "Sade ve kakaolu met helvası bir arada. Karar veremeyenler için iki lezzet tek pakette.",
+      "image": "images/met-helvasi-karisik.jpg",
+      "featured": false
+    },
+    {
+      "id": "mh-hediyelik",
+      "name": "Hediyelik Met Helvası",
+      "unit": "300 gr — özel kutu",
+      "price": 250,
+      "priceUnit": "/ kutu",
+      "badge": "Hediyelik",
+      "save": "",
+      "desc": "Özel tasarım kutusunda met helvası. Sevdiklerinize Eskişehir'den götürülecek en zarif hediye.",
+      "image": "images/met-helvasi-hediyelik.jpg",
+      "featured": false
+    },
+    {
+      "id": "uclu-paket",
+      "name": "Üçlü Paket",
+      "unit": "Sade Met Helvası 400 gr + Leblebi Kurabiyesi 200 gr x2 + Kestane Şekeri Kavanoz 500 gr",
+      "price": 1100,
+      "priceUnit": "/ set",
+      "badge": "Yeni",
+      "save": "200 TL avantaj",
+      "desc": "Eskişehir'in üç meşhur lezzeti tek kutuda: sade met helvası, leblebi kurabiyesi ve kestane şekeri. Hediyelik veya kendinize — ayrı ayrı alınca 1300 TL.",
+      "image": "images/uclu-paket.jpg",
+      "featured": true
     }
   ],
   "gallery": [
