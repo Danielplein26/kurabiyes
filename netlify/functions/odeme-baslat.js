@@ -44,6 +44,26 @@ const FIYAT_LISTESI = {
   'uclu-paket': 935
 };
 
+// ============================================================
+// SEPETTE İNDİRİM KAMPANYASI (11–12 Kasım 2026, Türkiye saati)
+// Eski liste fiyatı üzerinden toplam %35 — sadece leblebi kurabiyesi.
+// index.html içindeki KAMPANYA ile BİREBİR AYNI olmalıdır.
+// Bitişte 10 dk tolerans: 23:59'da sepeti açıp formu dolduran
+// müşteriden gördüğünden farklı tutar çekilmesin.
+// ============================================================
+const KAMPANYA = {
+  baslangic: Date.parse('2026-11-11T00:00:00+03:00'),
+  bitis: Date.parse('2026-11-13T00:00:00+03:00') + 10 * 60 * 1000,
+  fiyat: { 'p5': 487, 'p10': 877, 'p36': 2080 }
+};
+function gecerliFiyat(urunKodu) {
+  const t = Date.now();
+  if (t >= KAMPANYA.baslangic && t < KAMPANYA.bitis && KAMPANYA.fiyat[urunKodu]) {
+    return KAMPANYA.fiyat[urunKodu];
+  }
+  return FIYAT_LISTESI[urunKodu];
+}
+
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: JSON.stringify({ error: 'Yöntem desteklenmiyor' }) };
@@ -97,7 +117,7 @@ exports.handler = async (event) => {
       return { statusCode: 400, body: JSON.stringify({ error: 'Geçersiz adet.' }) };
     }
   }
-  const guvenilirBirimFiyat = (item) => FIYAT_LISTESI[item.urunKodu];
+  const guvenilirBirimFiyat = (item) => gecerliFiyat(item.urunKodu);
   const toplam = sepet.reduce((t, item) => t + guvenilirBirimFiyat(item) * Number(item.adet), 0);
 
   // İnsan tarafından okunabilir kısa sipariş numarası
