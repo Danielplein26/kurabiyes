@@ -393,6 +393,27 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
     padding:4px 10px;border-radius:6px;
     letter-spacing:0.02em;
   }
+  .kampanya-chip{
+    display:inline-block;
+    font-size:0.78rem;font-weight:800;color:#fff;
+    background:var(--maroon);
+    padding:4px 10px;border-radius:6px;
+    letter-spacing:0.02em;
+  }
+  .kampanya-bar{
+    display:none;
+    background:var(--gold);
+    color:var(--maroon-dark);
+    text-align:center;
+    font-size:0.95rem;font-weight:700;
+    padding:9px 16px;line-height:1.4;
+  }
+  .kampanya-bar.show{display:block;}
+  @media (max-width:560px){ .kampanya-bar{font-size:0.82rem;padding:8px 12px;} }
+  .cart-discount-row{display:none;justify-content:space-between;font-size:0.92rem;font-weight:700;color:#1f9e52;margin-bottom:6px;}
+  .cart-discount-row.show{display:flex;}
+  .cart-subtotal-row{display:none;justify-content:space-between;font-size:0.92rem;color:#5d4536;margin-bottom:4px;}
+  .cart-subtotal-row.show{display:flex;}
   .product-save{
     display:inline-block;
     font-size:0.78rem;font-weight:700;color:var(--maroon-dark);
@@ -923,6 +944,7 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
 <body>
 
 <!-- ===================== ÜST DUYURU ŞERİDİ ===================== -->
+<div class="kampanya-bar" id="kampanyaBar">🎉 11–12 Kasım'a özel: Leblebi kurabiyesinde <strong>sepette %35 indirim!</strong> İndirim sepette otomatik uygulanır.</div>
 <div class="top-bar" id="topBar">
   <span id="topBarText">⏰ Siparişiniz <span class="kargo-vurgu">bugün kargoda!</span> &nbsp;•&nbsp; Tüm Türkiye'ye <span class="kargo-vurgu">ücretsiz kargo</span> 🚚</span>
 </div>
@@ -1282,6 +1304,8 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
     <div class="cart-empty">Sepetiniz şu anda boş.<br>Lezzetli bir şeyler eklemeye ne dersiniz?</div>
   </div>
   <div class="cart-foot">
+    <div class="cart-subtotal-row" id="cartSubtotalRow"><span>Ara toplam</span><span id="cartSubtotal"></span></div>
+    <div class="cart-discount-row" id="cartDiscountRow"><span>Sepette %35 indirim</span><span id="cartDiscount"></span></div>
     <div class="cart-total-row">
       <span>Toplam</span>
       <span class="total-amt" id="cartTotal">0 TL</span>
@@ -1382,6 +1406,22 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
   let SITE_DATA = null;
   const PRODUCTS = {}; // sepet hesaplamaları için id -> {name, price, image}
 
+  // =================================================================
+  // SEPETTE İNDİRİM KAMPANYASI (11–12 Kasım 2026, Türkiye saati)
+  // Eski liste fiyatı üzerinden toplam %35 — sadece leblebi kurabiyesi.
+  // ÖNEMLİ: Buradaki tarih ve fiyatlar netlify/functions/odeme-baslat.js
+  // içindeki KAMPANYA ile BİREBİR AYNI olmalıdır (karttan çekilen tutarı
+  // sunucu belirler).
+  // =================================================================
+  const KAMPANYA = {
+    baslangic: Date.parse('2026-11-11T00:00:00+03:00'),
+    bitis:     Date.parse('2026-11-13T00:00:00+03:00'),
+    fiyat: { p5: 487, p10: 877, p36: 2080 }
+  };
+  function kampanyaAktif(){ const t = Date.now(); return t >= KAMPANYA.baslangic && t < KAMPANYA.bitis; }
+  function kampanyaFiyat(id){ return kampanyaAktif() && KAMPANYA.fiyat[id] ? KAMPANYA.fiyat[id] : null; }
+  function sepetBirimFiyat(id){ return kampanyaFiyat(id) || PRODUCTS[id].price; }
+
   function loadContent(){
     // İçerik ve fotoğraflar bu dosyanın içine gömülüdür (harici klasör gerekmez).
     SITE_DATA = EMBEDDED_SITE_DATA;
@@ -1391,6 +1431,7 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
     renderGallery(SITE_DATA.gallery);
     renderContact(SITE_DATA.contact);
     renderCart();
+    if(kampanyaAktif()) document.getElementById('kampanyaBar').classList.add('show');
   }
 
   function renderHero(hero){
@@ -1419,6 +1460,7 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
           <div class="product-price">${p.oldPrice ? `<span class="price-old">${p.oldPrice.toLocaleString('tr-TR')} TL</span>` : ''} ${p.price.toLocaleString('tr-TR')} TL <small>${p.priceUnit}</small></div>
           <div class="save-row">
             ${p.oldPrice ? `<span class="discount-chip">%15 İndirim</span>` : ''}
+            ${kampanyaAktif() && KAMPANYA.fiyat[p.id] ? `<span class="kampanya-chip">Sepette %35 İndirim: ${KAMPANYA.fiyat[p.id].toLocaleString('tr-TR')} TL</span>` : ''}
             ${p.save ? `<span class="product-save">${p.save}</span>` : ''}
           </div>
           <p>${p.desc}</p>
@@ -1500,7 +1542,7 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
     cart[id] = (cart[id] || 0) + (qty[id] || 1);
     qty[id] = 1;
     document.getElementById('qty-' + id).textContent = 1;
-    try{ if(window.fbq) fbq('track','AddToCart',{content_ids:[id],content_type:'product',value:(PRODUCTS[id]?PRODUCTS[id].price:0),currency:'TRY'}); }catch(e){}
+    try{ if(window.fbq) fbq('track','AddToCart',{content_ids:[id],content_type:'product',value:(PRODUCTS[id]?sepetBirimFiyat(id):0),currency:'TRY'}); }catch(e){}
     renderCart();
     openCart();
   }
@@ -1516,9 +1558,14 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
     renderCart();
   }
 
-  function cartTotal(){
+  function cartSubtotal(){
     return Object.entries(cart).reduce((sum, [id, q]) => sum + PRODUCTS[id].price * q, 0);
   }
+  // Ödenecek tutar (kampanya dönemindeyse sepette indirim uygulanmış hali)
+  function cartTotal(){
+    return Object.entries(cart).reduce((sum, [id, q]) => sum + sepetBirimFiyat(id) * q, 0);
+  }
+  function cartDiscount(){ return cartSubtotal() - cartTotal(); }
 
   function cartCount(){
     return Object.values(cart).reduce((sum, q) => sum + q, 0);
@@ -1530,6 +1577,11 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
     document.getElementById('cartCount').textContent = count;
     document.getElementById('cartTotal').textContent = cartTotal().toLocaleString('tr-TR') + ' TL';
     document.getElementById('checkoutBtn').disabled = count === 0;
+    const ind = cartDiscount();
+    document.getElementById('cartSubtotalRow').classList.toggle('show', ind > 0);
+    document.getElementById('cartDiscountRow').classList.toggle('show', ind > 0);
+    document.getElementById('cartSubtotal').textContent = cartSubtotal().toLocaleString('tr-TR') + ' TL';
+    document.getElementById('cartDiscount').textContent = '−' + ind.toLocaleString('tr-TR') + ' TL';
 
     if(count === 0){
       body.innerHTML = '<div class="cart-empty">Sepetiniz şu anda boş.<br>Lezzetli bir şeyler eklemeye ne dersiniz?</div>';
@@ -1582,7 +1634,9 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
       const p = PRODUCTS[id];
       return `<div class="os-row"><span>${p.name} x${q}</span><span>${(p.price*q).toLocaleString('tr-TR')} TL</span></div>`;
     }).join('');
-    summary.innerHTML = rows + `<div class="os-row os-total"><span>Toplam</span><span>${cartTotal().toLocaleString('tr-TR')} TL</span></div>` + `<div style="font-size:0.8rem;color:#1f9e52;font-weight:600;text-align:right;margin-top:6px;">🚚 Kargo dahil, ekstra ücret yok</div>`;
+    const ind = cartDiscount();
+    const indRow = ind > 0 ? `<div class="os-row" style="color:#1f9e52;font-weight:700;"><span>Sepette %35 indirim</span><span>−${ind.toLocaleString('tr-TR')} TL</span></div>` : '';
+    summary.innerHTML = rows + indRow + `<div class="os-row os-total"><span>Toplam</span><span>${cartTotal().toLocaleString('tr-TR')} TL</span></div>` + `<div style="font-size:0.8rem;color:#1f9e52;font-weight:600;text-align:right;margin-top:6px;">🚚 Kargo dahil, ekstra ücret yok</div>`;
     document.getElementById('paymentResult').textContent = '';
     document.getElementById('checkoutForm').style.display = '';
     document.getElementById('havalePanel').style.display = 'none';
@@ -1665,7 +1719,7 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
   async function havaleSiparisOlustur(musteri, resultEl){
     const siparisNo = havaleSiparisNoUret();
     const urunMetni = Object.entries(cart).map(([id, q]) =>
-      `${PRODUCTS[id].name} x${q} (${(PRODUCTS[id].price*q).toLocaleString('tr-TR')} TL)`).join(' | ');
+      `${PRODUCTS[id].name} x${q} (${(sepetBirimFiyat(id)*q).toLocaleString('tr-TR')} TL)`).join(' | ');
     const toplam = cartTotal();
 
     havaleSiparis = {
@@ -1752,7 +1806,7 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
         urunKodu: id,
         ad: PRODUCTS[id].name,
         adet: q,
-        birimFiyat: PRODUCTS[id].price
+        birimFiyat: sepetBirimFiyat(id)
       })),
       toplam: cartTotal()
     };

@@ -22,21 +22,47 @@ const SITE_URL = process.env.SITE_URL || 'https://kurabiyes.com';
 // Fiyat listesi — TEK doğru kaynak burasıdır (sunucu tarafı).
 // Sepetten/istemciden gelen fiyatlara ASLA güvenilmez; her ürünün
 // tutarı burada tanımlı gerçek fiyat üzerinden yeniden hesaplanır.
-// Sitede yeni ürün/fiyat eklendiğinde burayı da güncelleyin.
+//
+// ÖNEMLİ: Bu liste index.html içindeki EMBEDDED_SITE_DATA'daki ürün
+// fiyatlarının BİREBİR AYNISI olmalıdır. Sitede fiyat/indirim
+// değiştiğinde bu dosya güncellenmezse, müşteri sitede gördüğü
+// fiyatı öder gibi görünür ama kartından burada yazan (eski) fiyat
+// çekilir — bu liste 30 Eylül 2026'daki %15 indirimden sonraki
+// güncel fiyatlarla eşitlendi.
 // ============================================================
 const FIYAT_LISTESI = {
-  'p5': 750,
-  'p10': 1350,
-  'p36': 3200,
-  'kestane-kavanoz-500': 750,
-  'kestane-cikolatali-240': 200,
-  'kestane-cikolatali-4lu': 440,
-  'mh-fistik': 300,
-  'mh-sade': 250,
-  'mh-karisik': 250,
-  'mh-hediyelik': 250,
-  'uclu-paket': 1100
+  'p5': 638,
+  'p10': 1148,
+  'p36': 2720,
+  'kestane-kavanoz-500': 638,
+  'kestane-cikolatali-240': 170,
+  'kestane-cikolatali-4lu': 374,
+  'mh-fistik': 255,
+  'mh-sade': 213,
+  'mh-karisik': 213,
+  'mh-hediyelik': 213,
+  'uclu-paket': 935
 };
+
+// ============================================================
+// SEPETTE İNDİRİM KAMPANYASI (11–12 Kasım 2026, Türkiye saati)
+// Eski liste fiyatı üzerinden toplam %35 — sadece leblebi kurabiyesi.
+// index.html içindeki KAMPANYA ile BİREBİR AYNI olmalıdır.
+// Bitişte 10 dk tolerans: 23:59'da sepeti açıp formu dolduran
+// müşteriden gördüğünden farklı tutar çekilmesin.
+// ============================================================
+const KAMPANYA = {
+  baslangic: Date.parse('2026-11-11T00:00:00+03:00'),
+  bitis: Date.parse('2026-11-13T00:00:00+03:00') + 10 * 60 * 1000,
+  fiyat: { 'p5': 487, 'p10': 877, 'p36': 2080 }
+};
+function gecerliFiyat(urunKodu) {
+  const t = Date.now();
+  if (t >= KAMPANYA.baslangic && t < KAMPANYA.bitis && KAMPANYA.fiyat[urunKodu]) {
+    return KAMPANYA.fiyat[urunKodu];
+  }
+  return FIYAT_LISTESI[urunKodu];
+}
 
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
@@ -55,6 +81,31 @@ exports.handler = async (event) => {
     return { statusCode: 400, body: JSON.stringify({ error: 'Eksik sipariş bilgisi.' }) };
   }
 
+  // ============================================================
+  // Müşteri bilgilerini doğrula — hiçbir alan için sahte/varsayılan
+  // değer KULLANILMAZ. Formda hepsi zaten "required", ama sunucu
+  // tarafında da doğrulanır (ör. doğrudan API'ye atılan, forma
+  // uğramamış istekler için). Eksik/geçersiz varsa sipariş reddedilir;
+  // asla iyzico'ya uydurma bir şehir/telefon/eposta gönderilmez.
+  // ============================================================
+  const adSoyad = String(musteri.adSoyad || '').trim();
+  const telefonHam = String(musteri.telefon || '').trim();
+  const eposta = String(musteri.eposta || '').trim();
+  const il = String(musteri.il || '').trim();
+  const ilce = String(musteri.ilce || '').trim();
+  const adres = String(musteri.adres || '').trim();
+
+  if (!adSoyad || !telefonHam || !eposta || !il || !ilce || !adres) {
+    return { statusCode: 400, body: JSON.stringify({ error: 'Ad soyad, telefon, e-posta, il, ilçe ve adres bilgilerinin tamamı gereklidir.' }) };
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(eposta)) {
+    return { statusCode: 400, body: JSON.stringify({ error: 'E-posta adresi geçersiz görünüyor.' }) };
+  }
+  const gsm = gsmFormatla(telefonHam);
+  if (!gsm) {
+    return { statusCode: 400, body: JSON.stringify({ error: 'Telefon numarası geçersiz görünüyor. Lütfen 05xx xxx xx xx formatında girin.' }) };
+  }
+
   // Sepetteki her kalemin gerçek birim fiyatını sunucudaki listeden al;
   // istemciden gelen birimFiyat/toplam değerleri tamamen yok sayılır.
   for (const item of sepet) {
@@ -66,7 +117,7 @@ exports.handler = async (event) => {
       return { statusCode: 400, body: JSON.stringify({ error: 'Geçersiz adet.' }) };
     }
   }
-  const guvenilirBirimFiyat = (item) => FIYAT_LISTESI[item.urunKodu];
+  const guvenilirBirimFiyat = (item) => gecerliFiyat(item.urunKodu);
   const toplam = sepet.reduce((t, item) => t + guvenilirBirimFiyat(item) * Number(item.adet), 0);
 
   // İnsan tarafından okunabilir kısa sipariş numarası
@@ -82,14 +133,13 @@ exports.handler = async (event) => {
     price: (guvenilirBirimFiyat(item) * Number(item.adet)).toFixed(2)
   }));
 
-  const adParcalari = (musteri.adSoyad || 'Musteri').trim().split(' ');
-  const ad = adParcalari[0] || 'Musteri';
+  const adParcalari = adSoyad.split(' ').filter(Boolean);
+  const ad = adParcalari[0] || adSoyad;
   const soyad = adParcalari.slice(1).join(' ') || '-';
 
-  // Müşterinin gerçek il/ilçe bilgisi (formdan gelir)
-  const il = String(musteri.il || 'Eskisehir').trim();
-  const ilce = String(musteri.ilce || '').trim();
-  const tamAdres = [musteri.adres, ilce, il].filter(Boolean).join(', ') || il;
+  // Müşterinin gerçek il/ilçe/adres bilgisi — yukarıda doğrulandı,
+  // burada asla varsayılan/sahte bir değerle değiştirilmez.
+  const tamAdres = [adres, ilce, il].join(', ');
 
   const request = {
     locale: Iyzipay.LOCALE.TR,
@@ -105,20 +155,20 @@ exports.handler = async (event) => {
       id: 'BY-' + Date.now(),
       name: ad,
       surname: soyad,
-      gsmNumber: gsmFormatla(musteri.telefon),
-      email: musteri.eposta || 'musteri@kurabiyes.com',
-      identityNumber: '74300864791',
+      gsmNumber: gsm,
+      email: eposta,
+      identityNumber: '74300864791', // TODO: bkz. not — geçici, gerçek müşteri TC no'su toplanmıyor
       registrationAddress: tamAdres,
       ip: (event.headers['x-forwarded-for'] || '85.34.78.112').split(',')[0].trim(),
       city: il,
       country: 'Turkey'
     },
     shippingAddress: {
-      contactName: musteri.adSoyad || 'Musteri',
+      contactName: adSoyad,
       city: il, country: 'Turkey', address: tamAdres
     },
     billingAddress: {
-      contactName: musteri.adSoyad || 'Musteri',
+      contactName: adSoyad,
       city: il, country: 'Turkey', address: tamAdres
     },
     basketItems
@@ -139,12 +189,12 @@ exports.handler = async (event) => {
     await siparisKaydet({
       siparisNo,
       durum: 'ÖDEME BEKLENİYOR',
-      ad: musteri.adSoyad || '',
-      telefon: musteri.telefon || '',
-      eposta: musteri.eposta || '',
+      ad: adSoyad,
+      telefon: telefonHam,
+      eposta: eposta,
       il: il,
       ilce: ilce,
-      adres: musteri.adres || '',
+      adres: adres,
       odemeYontemi: 'Kart (iyzico)',
       urunler: urunMetni,
       toplam: toplam.toLocaleString('tr-TR') + ' TL',
@@ -196,12 +246,14 @@ function siparisKaydet(veri) {
   });
 }
  
-// Telefon numarasını iyzico'nun beklediği +90 formatına çevirir
+// Telefon numarasını iyzico'nun beklediği +90 formatına çevirir.
+// Geçersizse null döner (çağıran taraf siparişi reddeder) — asla
+// sahte bir numarayla devam edilmez.
 function gsmFormatla(tel) {
-  if (!tel) return '+905555555555';
+  if (!tel) return null;
   let s = String(tel).replace(/\D/g, ''); // sadece rakamlar
   if (s.startsWith('90')) s = s.slice(2);
   if (s.startsWith('0')) s = s.slice(1);
-  if (s.length !== 10) return '+905555555555';
+  if (s.length !== 10) return null;
   return '+90' + s;
 }
