@@ -21,7 +21,7 @@ ulaşılamazsa ya da hata verirse sipariş/ödeme **etkilenmez**; sipariş kayd�
 
 | Değişken | Ne işe yarar |
 |---|---|
-| `BASITKARGO_HANDLER` | Dolu ise taslak yerine **barkod da otomatik** alınır (bakiyenizden kargo ücreti düşer). Örn: `ECONOMIC` (en ucuz), `FAST` (en hızlı), `YURTICI`, `ARAS`, `SURAT`, `MNG`, `PTT`; kendi anlaşmanız için `SELF_YURTICI` gibi. Açmadan önce aşağıdaki koli ölçülerini düzeltin. |
+| `BASITKARGO_HANDLER` | Dolu ise taslak yerine **barkod da otomatik** alınır (bakiyenizden kargo ücreti düşer). Örn: `ECONOMIC` (en ucuz), `FAST` (en hızlı), `YURTICI`, `ARAS`, `SURAT`, `MNG`, `PTT`; kendi anlaşmanız için `SELF_YURTICI` gibi. Açmadan önce aşağıdaki ağırlıkları kontrol edin. |
 | `BASITKARGO_ADDRESS_ID` | Gönderici adres kimliği (boşsa panelde varsayılan adres). |
 | `BASITKARGO_BRAND_ID` | Marka/mağaza profili kimliği (boşsa varsayılan). |
 | `BASITKARGO_KAPIDA_TIP` | Kapıda tahsilat şekli: `CASH` (varsayılan) ya da `CREDIT_CARD` (kapıda kart). |
@@ -29,14 +29,14 @@ ulaşılamazsa ya da hata verirse sipariş/ödeme **etkilenmez**; sipariş kayd�
 ## Koli ölçüleri
 
 `netlify/functions/lib/ortak.js` içindeki `URUNLER` listesinde her ürünün ağırlığı (kg) ve ölçüsü
-(cm: yükseklik, genişlik, derinlik) **tahmini** yazıldı. Kendi kolilerinize göre düzeltin; desi
+(cm: yükseklik, genişlik, derinlik) koli ölçüleri verdiğiniz değerlerle yazıldı; ağırlıklar tahmini. Gerekirse düzeltin; desi
 hesabı buna göre yapılır. Her adet ürün ayrı bir paket olarak gönderilir.
 
 ## Kapıda ödeme ücreti
 
 Kargo firmasının tahsilat bedelini müşteriye yansıtmak isterseniz iki yerde aynı tutarı yazın:
 - `netlify/functions/lib/ortak.js` → `KAPIDA_ODEME.ucret`
-- `index.html` → `const KAPIDA_ODEME = { aktif: true, ucret: 0 }`
+- `index.html` → `const KAPIDA_ODEME = { aktif: true, ucret: 50 }`
 
 `aktif: false` yaparsanız kapıda ödeme seçeneği hem siteden kalkar hem sunucuda reddedilir.
 
