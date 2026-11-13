@@ -7,12 +7,84 @@
 [functions]
   node_bundler = "zisi"
 
+# --- http → https ve www → kök alan adı (kalıcı yönlendirme) ---
+[[redirects]]
+  from = "http://kurabiyes.com/*"
+  to = "https://kurabiyes.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.kurabiyes.com/*"
+  to = "https://kurabiyes.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.kurabiyes.com/*"
+  to = "https://kurabiyes.com/:splat"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/.netlify/functions/*"
   to = "/.netlify/functions/:splat"
   status = 200
 
+# --- .html uzantısız adresler (mevcut sayfalar) ---
+# Eskiden her bilinmeyen adres ana sayfayı döndürüyordu (/kvkk, /iletisim ...).
+# Artık sadece aşağıdaki gerçek sayfalar açılır; diğerleri 404.html ile gerçek 404 verir.
 [[redirects]]
-  from = "/*"
-  to = "/index.html"
+  from = "/mesafeli-satis-sozlesmesi"
+  to = "/mesafeli-satis-sozlesmesi.html"
+  status = 200
+
+[[redirects]]
+  from = "/teslimat-ve-iade"
+  to = "/teslimat-ve-iade.html"
+  status = 200
+
+[[redirects]]
+  from = "/gizlilik-politikasi"
+  to = "/gizlilik-politikasi.html"
+  status = 200
+
+[[redirects]]
+  from = "/blog"
+  to = "/blog.html"
+  status = 200
+
+[[redirects]]
+  from = "/leblebi-kurabiyesi-nasil-yapilir"
+  to = "/leblebi-kurabiyesi-nasil-yapilir.html"
+  status = 200
+
+[[redirects]]
+  from = "/leblebi-kurabiyesi-nedir"
+  to = "/leblebi-kurabiyesi-nedir.html"
+  status = 200
+
+[[redirects]]
+  from = "/eskisehir-meshur-lezzetleri-leblebi-kurabiyesi"
+  to = "/eskisehir-meshur-lezzetleri-leblebi-kurabiyesi.html"
+  status = 200
+
+[[redirects]]
+  from = "/leblebi-kurabiyesi-siparis"
+  to = "/leblebi-kurabiyesi-siparis.html"
+  status = 200
+
+[[redirects]]
+  from = "/talkan-kurabiyesi"
+  to = "/talkan-kurabiyesi.html"
+  status = 200
+
+[[redirects]]
+  from = "/odeme-basarili"
+  to = "/odeme-basarili.html"
+  status = 200
+
+[[redirects]]
+  from = "/odeme-basarisiz"
+  to = "/odeme-basarisiz.html"
   status = 200

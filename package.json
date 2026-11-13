@@ -4,6 +4,7 @@
   "private": true,
   "description": "Kurabiye's - iyzico odemeli e-ticaret sitesi",
   "dependencies": {
+    "@netlify/blobs": "^8.2.0",
     "iyzipay": "^2.0.67"
   }
 }
