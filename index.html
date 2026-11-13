@@ -1418,7 +1418,6 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
         </label>
       </div>
 
-      <div class="taksit-box" id="taksitBox" style="display:none;"></div>
 
       <label style="display:flex;gap:10px;align-items:flex-start;font-weight:500;font-size:0.85rem;color:#5d4536;margin-bottom:14px;cursor:pointer;">
         <input type="checkbox" id="sozlesmeOnay" required style="width:auto;margin-top:3px;flex-shrink:0;">
@@ -1807,17 +1806,6 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
       + `<div class="kargo-satir ozet">${kargoMesaji()}</div>`;
   }
 
-  // Kart seçiliyken taksit seçenekleri ve aylık tutarlar (iyzico sayfasında: 1, 2, 3, 6 taksit)
-  function taksitCiz(){
-    const box = document.getElementById('taksitBox');
-    if(seciliOdemeYontemi() !== 'kart'){ box.style.display = 'none'; return; }
-    const t = cartTotal();
-    box.innerHTML = `<h5>💳 Taksit seçenekleri</h5>`
-      + `<div class="tk-row"><span>Tek çekim</span><strong>${TL2(t)} TL</strong></div>`
-      + [2,3,6].map(n => `<div class="tk-row"><span>${n} taksit</span><strong>${n} × ${TL2(t/n)} TL</strong></div>`).join('')
-      + `<small>Geçerli taksit sayısı ve varsa vade farkı, kartınızın bankasına göre iyzico ödeme sayfasında kesinleşir.</small>`;
-    box.style.display = '';
-  }
 
   // =================================================================
   // ÖDEME (İYZİCO)
@@ -1880,7 +1868,6 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
       : y === 'kapida' ? '📦 Ödemeyi teslimat sırasında kargo görevlisine yaparsınız. Şimdi kart bilgisi istenmez.'
       : "🔒 Kart bilgileriniz iyzico'nun güvenli ödeme sayfasında alınır, sitemizde saklanmaz.";
     ozetCiz();
-    taksitCiz();
   }
 
   // Netlify Forms'a kayıt gönderir (sipariş kutunuza düşer, e-posta bildirimi gelir)
