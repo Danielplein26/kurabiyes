@@ -721,6 +721,32 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
   .oneri-kutu{background:#fff8e6;border:1px dashed var(--gold);border-radius:12px;padding:12px 14px;margin-top:6px;font-size:0.86rem;color:#5d4536;line-height:1.45;}
   .oneri-kutu strong{color:var(--maroon-dark);}
   .oneri-kutu button{margin-top:8px;display:block;background:var(--maroon);color:#fff;border:0;border-radius:999px;padding:8px 16px;font-weight:700;font-size:0.84rem;cursor:pointer;}
+  /* İlk ekran güven satırı */
+  .hero-guven{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:22px;font-size:0.92rem;color:var(--cream2);font-weight:600;}
+  .hero-guven strong{color:var(--gold);font-size:1.05rem;}
+  /* Sepet: güven listesi, WhatsApp siparişi, ürün önerisi */
+  .sepet-guven{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:4px 10px;margin:0 0 12px;padding:0;font-size:0.8rem;color:#5d4536;font-weight:600;}
+  .sepet-wa{display:block;text-align:center;margin-top:10px;font-size:0.86rem;font-weight:700;color:#1f9e52;text-decoration:underline;}
+  .yanina-oneri{display:flex;gap:12px;align-items:center;background:#fff;border:1px solid var(--cream2);border-radius:12px;padding:10px 12px;margin-top:12px;}
+  .yanina-oneri img{width:52px;height:52px;object-fit:cover;border-radius:8px;flex-shrink:0;}
+  .yanina-oneri .yo-metin{flex:1;font-size:0.84rem;color:#5d4536;line-height:1.35;}
+  .yanina-oneri .yo-metin strong{display:block;color:var(--maroon-dark);font-size:0.9rem;}
+  .yanina-oneri button{background:var(--maroon);color:#fff;border:0;border-radius:999px;padding:7px 14px;font-weight:700;font-size:0.82rem;cursor:pointer;flex-shrink:0;}
+  .tel-not{display:block;margin-top:4px;font-size:0.74rem;color:#7a5d4c;line-height:1.35;}
+  /* Mobil sabit sepet çubuğu (sepette ürün varken görünür) */
+  .sepet-cubuk{display:none;}
+  @media (max-width:720px){
+    .sepet-cubuk.show{
+      display:flex;align-items:center;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:80;
+      background:#fff;border-top:1px solid var(--cream2);box-shadow:0 -6px 18px rgba(0,0,0,0.12);
+      padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+    }
+    .sepet-cubuk .sc-bilgi{flex:1;background:none;border:0;text-align:left;font-family:'Mukta',sans-serif;font-size:0.92rem;color:var(--maroon-dark);cursor:pointer;padding:0;}
+    .sepet-cubuk .sc-bilgi strong{color:var(--maroon);font-size:1.02rem;}
+    .sepet-cubuk .sc-btn{background:var(--amber);color:#fff;border:0;border-radius:999px;padding:12px 18px;font-weight:700;font-size:0.92rem;cursor:pointer;}
+    body.cubuk-acik{padding-bottom:72px;}
+    body.cubuk-acik .wa-float{bottom:84px !important;}
+  }
   /* Mobilde yüzen WhatsApp butonu kartlardaki "Sepete Ekle"yi kapatmasın */
   @media (max-width:600px){
     .product-body .qty-row{padding-right:58px;}
@@ -810,7 +836,7 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
     {
       "@type": "Offer",
       "name": "5'li Paket (5 x 200 gr)",
-      "price": "638",
+      "price": "550",
       "priceCurrency": "TRY",
       "availability": "https://schema.org/InStock",
       "url": "https://kurabiyes.com/"
@@ -818,7 +844,7 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
     {
       "@type": "Offer",
       "name": "10'lu Paket (10 x 200 gr)",
-      "price": "1148",
+      "price": "990",
       "priceCurrency": "TRY",
       "availability": "https://schema.org/InStock",
       "url": "https://kurabiyes.com/"
@@ -826,7 +852,7 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
     {
       "@type": "Offer",
       "name": "36'lı Koli (36 x 200 gr)",
-      "price": "2720",
+      "price": "2345",
       "priceCurrency": "TRY",
       "availability": "https://schema.org/InStock",
       "url": "https://kurabiyes.com/"
@@ -834,7 +860,7 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
     {
       "@type": "Offer",
       "name": "Kestane Şekeri Kavanoz (500 gr)",
-      "price": "638",
+      "price": "500",
       "priceCurrency": "TRY",
       "availability": "https://schema.org/InStock",
       "url": "https://kurabiyes.com/"
@@ -890,7 +916,7 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
     {
       "@type": "Offer",
       "name": "Üçlü Paket (Met Helvası + Leblebi Kurabiyesi + Kestane Şekeri)",
-      "price": "935",
+      "price": "795",
       "priceCurrency": "TRY",
       "availability": "https://schema.org/InStock",
       "url": "https://kurabiyes.com/"
@@ -1011,10 +1037,16 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
   <div class="hero-content">
     <span class="eyebrow" id="heroEyebrow">Eskişehir Odunpazarı'ndan • 1986'dan Bugüne</span>
     <h1 id="heroTitle">40 yıllık emeğin <em>tek lokmadaki</em> hali.</h1>
-    <p class="lead" id="heroLead">Yunus Usta'nın yıllarca deneyerek bulduğu, hiçbir ustadan görmediği, sıfırdan keşfettiği eşsiz tarif. Bugün aynı sevgi ve titizlikle, elle şekillendirilip fırınlanıyor.</p>
+    <p class="lead" id="heroLead">Yunus Usta'nın yıllarca deneyerek bulduğu, hiçbir ustadan görmediği, sıfırdan keşfettiği eşsiz tarif. Bugün aynı sevgi ve titizlikle, Eskişehir Odunpazarı'nda günlük taze üretiliyor.</p>
     <div class="hero-ctas">
-      <a href="#urunler" class="btn btn-primary">Ürünleri İncele</a>
+      <a href="#urunler" class="btn btn-primary">Hemen Sipariş Ver</a>
       <a href="#hakkimizda" class="btn btn-outline">Hikayemizi Oku</a>
+    </div>
+    <div class="hero-guven">
+      <span>1 kg <strong>550 TL</strong></span>
+      <span>🚚 Ücretsiz kargo</span>
+      <span>📦 Kapıda ödeme</span>
+      <span>💳 Taksit imkânı</span>
     </div>
   </div>
 </section>
@@ -1036,7 +1068,7 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
     <div class="section-head">
       <span class="eyebrow">Taze Fırından</span>
       <h2>Leblebi Kurabiyesi</h2>
-      <p>200 gr'lık paketler halinde, en az 5 paketten oluşan setler ile satışa sunulur. Birim fiyatı 200 gr için 128 TL'dir; toplu alımlarda avantajlı fiyatlar geçerlidir.</p>
+      <p>200 gr'lık paketler halinde, en az 5 paketten oluşan setler ile satışa sunulur. 5'li pakette 200 gr'ın fiyatı 110 TL; 10'lu pakette 99 TL'ye, 36'lı kolide 65 TL'ye düşer.</p>
     </div>
 
     <div class="product-grid" id="productGrid">
@@ -1105,7 +1137,7 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
     <div class="section-head">
       <span class="eyebrow">Vitrimizden</span>
       <h2>Tazeliğin Görüntüsü</h2>
-      <p>Her parti, elle şekillendirilip fırınlanır ve özenle paketlenir.</p>
+      <p>Her parti günlük taze fırınlanır ve özenle paketlenir.</p>
     </div>
     <div class="gallery-grid" id="galleryGrid">
       <!-- content/site-data.json içindeki "gallery" listesinden otomatik oluşturulur -->
@@ -1221,7 +1253,7 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
       <p>Eskişehir'in meşhur lezzeti leblebi kurabiyesinin hikâyesi, içeriği ve sipariş detayları.</p>
     </div>
     <div class="info-body">
-      <p>Leblebi kurabiyesi, kavrulmuş leblebinin ince öğütülmesiyle elde edilen leblebi unundan hazırlanan, ağızda dağılan geleneksel bir Türk kurabiyesidir. <strong>Kurabiye's</strong> olarak biz bu lezzeti, Yunus Usta'nın 40 yıllık tarifiyle <strong>Eskişehir Odunpazarı</strong>'nda günlük taze üretiyoruz. Her parti elle şekillendirilir, özenle fırınlanır ve aynı tazelikte kapınıza gelir.</p>
+      <p>Leblebi kurabiyesi, kavrulmuş leblebinin ince öğütülmesiyle elde edilen leblebi unundan hazırlanan, ağızda dağılan geleneksel bir Türk kurabiyesidir. <strong>Kurabiye's</strong> olarak biz bu lezzeti, Yunus Usta'nın 40 yıllık tarifiyle <strong>Eskişehir Odunpazarı</strong>'nda günlük taze üretiyoruz. Her parti özenle fırınlanır ve aynı tazelikte kapınıza gelir.</p>
       <h3>Neden Eskişehir'in Meşhur Lezzeti?</h3>
       <p>Eskişehir ve özellikle tarihi Odunpazarı bölgesi, leblebi geleneğinin Anadolu'daki en köklü duraklarından biridir. Bizim <strong>Eskişehir leblebi kurabiyesi</strong> tarifimiz de bu mirastan besleniyor: kaliteli leblebi, doğru kıvam ve onlarca yıllık tecrübe. Sonuç, ilk lokmada hissedilen o nostaljik, ağızda eriyen doku.</p>
       <h3>Glutensiz ve Katkısız Üretim</h3>
@@ -1360,9 +1392,22 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
     </div>
     <p style="font-size:0.82rem;color:#1f9e52;font-weight:600;margin:-8px 0 6px;">🚚 Kargo dahil, ekstra ücret yok</p>
     <p class="kargo-satir" id="cartKargoSatir"></p>
-    <button class="btn btn-primary btn-block" onclick="openCheckout()" id="checkoutBtn" disabled>Ödemeye Geç</button>
+    <ul class="sepet-guven">
+      <li>📦 Kapıda ödeme seçeneği</li>
+      <li>💳 Kredi kartına taksit</li>
+      <li>🏦 Havale / EFT</li>
+      <li>🔒 iyzico güvenli ödeme</li>
+    </ul>
+    <button class="btn btn-primary btn-block" onclick="openCheckout()" id="checkoutBtn" disabled>Siparişi Tamamla →</button>
+    <a class="sepet-wa" id="sepetWa" href="#" target="_blank" rel="noopener">veya WhatsApp'tan sipariş ver</a>
   </div>
 </aside>
+
+<!-- ===================== MOBİL SABİT SEPET ÇUBUĞU ===================== -->
+<div class="sepet-cubuk" id="sepetCubuk">
+  <button type="button" class="sc-bilgi" onclick="openCart()">🧺 <span id="scAdet">0 ürün</span> · <strong id="scTutar">0 TL</strong></button>
+  <button type="button" class="sc-btn" onclick="openCheckout()">Siparişi Tamamla</button>
+</div>
 
 <!-- ===================== CHECKOUT MODAL ===================== -->
 <div class="modal-overlay" id="checkoutOverlay">
@@ -1380,6 +1425,7 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
         <div>
           <label for="telefon">Telefon</label>
           <input type="tel" id="telefon" required placeholder="05xx xxx xx xx">
+          <small class="tel-not">Siparişiniz yarım kalırsa size yardımcı olmak için bu numaradan ulaşabiliriz.</small>
         </div>
         <div class="full">
           <label for="eposta">E-posta</label>
@@ -1469,7 +1515,7 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
   // =================================================================
   // İÇERİĞİ YÜKLE (content/site-data.json) — Panel buradan düzenler
   // =================================================================
-const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1986'dan Bugüne","titleHtml":"40 yıllık emeğin <em>tek lokmadaki</em> hali.","lead":"Yunus Usta'nın yıllarca deneyerek bulduğu, hiçbir ustadan görmediği, sıfırdan keşfettiği eşsiz tarif. Bugün aynı sevgi ve titizlikle, elle şekillendirilip fırınlanıyor.","image":"/images/hero.webp"},"contact":{"phoneDisplay":"0539 289 16 30","phoneHref":"905392891630","email":"siparis@kurabiyes.com","addressLines":["Yıldıztepe Mahallesi, Oruçkaptan Sokak No:2/A","Odunpazarı / Eskişehir"],"hours":"Her gün 09:00 – 19:00","whatsappHref":"905427262985"},"about":{"eyebrow":"Hikayemiz","title":"Yunus Usta'nın 40 Yıllık Yolculuğu","image":"/images/hikaye.webp","paragraphs":["Her şey, sırtında küçük bir sepetle kasaba kasaba dolaşan, sokaklarda tatlı satan genç bir seyyar satıcı ile başladı. Merhum babamız Yunus Usta, elindeki imkânlarla insanlara küçük bir tatlılık ulaştırmanın peşindeydi. O günden bugüne kırk yıl geçti.","Bu işi ona kimse öğretmedi. Yanında çalıştığı bir usta, devraldığı bir defter ya da kopyaladığı bir tarif yoktu. Leblebi kurabiyesinin \"doğru\" halini bulana kadar, her hamuru kendi elleriyle yoğurdu, her ölçüyü kendi denedi, her fırın derecesini sayısız kez tekrar etti. Yıllar süren bu sabırlı deneme-yanılma süreci, sonunda piyasadaki hiçbir tarife benzemeyen, kendine has bir dokuya ve tada kavuştu.","Bugün Yunus Usta aramızda olmasa da, onun bu topraklardan, bu sabırdan ve bu sevgiden çıkardığı tarif yaşıyor. Eskişehir Odunpazarı'ndaki küçük fırınımızda, aynı titizlikle, aynı malzemelerle ve aynı kalpten üretmeye devam ediyoruz."],"timeline":[{"year":"1986 — Seyyar Satıcılık","text":"Yunus Usta, elinde sepeti ile sokaklarda tatlı satarak bu yolculuğa başladı."},{"year":"Yıllar İçinde — Tarifin Aranışı","text":"Hiçbir ustadan ders almadan, leblebi kurabiyesinin kendine has tarifini bulana kadar sayısız deneme yaptı."},{"year":"Eşsiz Tarif — Tamamlandı","text":"Yıllar süren sabrın sonunda, piyasadaki diğer tariflerden tamamen farklı, kendine özgü bir leblebi kurabiyesi tarifi ortaya çıktı."},{"year":"Bugün — Kurabiye's","text":"Aynı tarif, aynı emek ve aynı sevgiyle, Eskişehir Odunpazarı'ndan tüm Türkiye'ye gönderiyoruz."}],"signoff":"— Yunus Usta'nın anısına, sevgiyle."},"products":[{"id":"p5","name":"5'li Paket","unit":"5 x 200 gr (toplam 1 kg) — minimum sipariş","price":638,"priceUnit":"/ 5 paket","badge":"","save":"","desc":"İlk denemeniz için ideal. Paket başı 128 TL — sitemizdeki en küçük sipariş seçeneğidir.","image":"/images/urun-5li-paket.webp","featured":false,"oldPrice":750,"packCount":5},{"id":"p10","name":"10'lu Paket","unit":"10 x 200 gr (toplam 2 kg)","price":1148,"priceUnit":"/ 10 paket","badge":"En Çok Tercih Edilen","save":"128 TL avantaj","desc":"Paket başı 115 TL. Ailece tüketim veya hediyeleşmek için en dengeli seçenek.","image":"/images/urun-10lu-paket.webp","featured":true,"imgFit":"contain","oldPrice":1350,"packCount":10},{"id":"p36","name":"36'lı Koli","unit":"36 x 200 gr (toplam 7,2 kg)","price":2720,"priceUnit":"/ koli","badge":"","save":"1.874 TL avantaj","desc":"Paket başı 76 TL. Toplu siparişler, işletmeler ve düzenli müşterilerimiz için.","image":"/images/urun-36li-koli.webp","featured":false,"oldPrice":3200,"packCount":36},{"id":"kestane-kavanoz-500","name":"Kestane Şekeri Kavanoz","unit":"500 gr — kavanoz","price":638,"priceUnit":"/ kavanoz","badge":"Yeni","save":"","desc":"Şurup içinde yumuşacık kestane şekeri. Kahvaltılıklara eşlik eder, tatlı ihtiyacını tek kaşıkta giderir.","image":"/images/urun-kestane-kavanoz.webp","featured":false,"oldPrice":750},{"id":"kestane-cikolatali-240","name":"Çikolatalı Kestane Şekeri","unit":"240 gr — kutu","price":170,"priceUnit":"/ kutu","badge":"Yeni","save":"","desc":"Bol bitter çikolata kaplamalı kestane şekeri. Glutensiz, hediyelik kutusunda.","image":"/images/urun-cikolatali-kestane.webp","featured":false,"oldPrice":200},{"id":"kestane-cikolatali-4lu","name":"4'lü Avantaj Paket Çikolatalı Kestane","unit":"4 x 125 gr (toplam 500 gr)","price":374,"priceUnit":"/ paket","badge":"Yeni","save":"","desc":"Çikolatalı kestane şekerinin 4'lü avantaj paketi. Paylaşmak veya stoklamak için ideal.","image":"/images/urun-cikolatali-kestane-4lu.webp","featured":false,"oldPrice":440},{"id":"mh-fistik","name":"Antep Fıstıklı Met Helvası","unit":"400 gr","price":255,"priceUnit":"/ paket","badge":"Yeni","save":"","desc":"Eskişehir'in meşhur met helvası, bol Antep fıstıklı. Tel tel açılan, ağızda dağılan geleneksel lezzet.","image":"/images/urun-met-helvasi-fistikli.webp","featured":false,"oldPrice":300},{"id":"mh-sade","name":"Sade Met Helvası","unit":"400 gr","price":213,"priceUnit":"/ paket","badge":"Yeni","save":"","desc":"Eskişehir'in asırlık lezzeti met helvasının en klasik hali. Tel tel, hafif ve ağızda eriyen dokusuyla.","image":"/images/urun-met-helvasi-sade.webp","featured":false,"oldPrice":250},{"id":"mh-karisik","name":"Karışık Met Helvası","unit":"400 gr","price":213,"priceUnit":"/ paket","badge":"Yeni","save":"","desc":"Sade ve kakaolu met helvası bir arada. Karar veremeyenler için iki lezzet tek pakette.","image":"/images/urun-met-helvasi-karisik.webp","featured":false,"oldPrice":250},{"id":"mh-hediyelik","name":"Hediyelik Met Helvası","unit":"300 gr — özel kutu","price":213,"priceUnit":"/ kutu","badge":"Hediyelik","save":"","desc":"Özel tasarım kutusunda met helvası. Sevdiklerinize Eskişehir'den götürülecek en zarif hediye.","image":"/images/urun-met-helvasi-hediyelik.webp","featured":false,"oldPrice":250},{"id":"uclu-paket","name":"Üçlü Paket","unit":"Sade Met Helvası 400 gr + Leblebi Kurabiyesi 200 gr x2 + Kestane Şekeri Kavanoz 500 gr","price":935,"priceUnit":"/ set","badge":"Yeni","save":"171 TL avantaj","desc":"Eskişehir'in iki meşhur lezzeti ile Bursa'nın meşhur kestane şekeri tek kutuda: sade met helvası, leblebi kurabiyesi ve kestane şekeri. Hediyelik veya kendinize — ayrı ayrı alınca 1.106 TL.","image":"/images/urun-uclu-paket.webp","featured":true,"imgFit":"contain","oldPrice":1100}],"gallery":["/images/galeri-1.webp","/images/galeri-2.webp","/images/galeri-3.webp","/images/galeri-4.webp","/images/galeri-5.webp"]};
+const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1986'dan Bugüne","titleHtml":"40 yıllık emeğin <em>tek lokmadaki</em> hali.","lead":"Yunus Usta'nın yıllarca deneyerek bulduğu, hiçbir ustadan görmediği, sıfırdan keşfettiği eşsiz tarif. Bugün aynı sevgi ve titizlikle, Eskişehir Odunpazarı'nda günlük taze üretiliyor.","image":"/images/hero.webp"},"contact":{"phoneDisplay":"0539 289 16 30","phoneHref":"905392891630","email":"siparis@kurabiyes.com","addressLines":["Yıldıztepe Mahallesi, Oruçkaptan Sokak No:2/A","Odunpazarı / Eskişehir"],"hours":"Her gün 09:00 – 19:00","whatsappHref":"905427262985"},"about":{"eyebrow":"Hikayemiz","title":"Yunus Usta'nın 40 Yıllık Yolculuğu","image":"/images/hikaye.webp","paragraphs":["Her şey, sırtında küçük bir sepetle kasaba kasaba dolaşan, sokaklarda tatlı satan genç bir seyyar satıcı ile başladı. Merhum babamız Yunus Usta, elindeki imkânlarla insanlara küçük bir tatlılık ulaştırmanın peşindeydi. O günden bugüne kırk yıl geçti.","Bu işi ona kimse öğretmedi. Yanında çalıştığı bir usta, devraldığı bir defter ya da kopyaladığı bir tarif yoktu. Leblebi kurabiyesinin \"doğru\" halini bulana kadar, her hamuru kendi elleriyle yoğurdu, her ölçüyü kendi denedi, her fırın derecesini sayısız kez tekrar etti. Yıllar süren bu sabırlı deneme-yanılma süreci, sonunda piyasadaki hiçbir tarife benzemeyen, kendine has bir dokuya ve tada kavuştu.","Bugün Yunus Usta aramızda olmasa da, onun bu topraklardan, bu sabırdan ve bu sevgiden çıkardığı tarif yaşıyor. Eskişehir Odunpazarı'ndaki küçük fırınımızda, aynı titizlikle, aynı malzemelerle ve aynı kalpten üretmeye devam ediyoruz."],"timeline":[{"year":"1986 — Seyyar Satıcılık","text":"Yunus Usta, elinde sepeti ile sokaklarda tatlı satarak bu yolculuğa başladı."},{"year":"Yıllar İçinde — Tarifin Aranışı","text":"Hiçbir ustadan ders almadan, leblebi kurabiyesinin kendine has tarifini bulana kadar sayısız deneme yaptı."},{"year":"Eşsiz Tarif — Tamamlandı","text":"Yıllar süren sabrın sonunda, piyasadaki diğer tariflerden tamamen farklı, kendine özgü bir leblebi kurabiyesi tarifi ortaya çıktı."},{"year":"Bugün — Kurabiye's","text":"Aynı tarif, aynı emek ve aynı sevgiyle, Eskişehir Odunpazarı'ndan tüm Türkiye'ye gönderiyoruz."}],"signoff":"— Yunus Usta'nın anısına, sevgiyle."},"products":[{"id":"p5","name":"5'li Paket","unit":"5 x 200 gr (toplam 1 kg) — minimum sipariş","price":550,"priceUnit":"/ 5 paket","badge":"","save":"","desc":"İlk denemeniz için ideal. Paket başı 110 TL — sitemizdeki en küçük sipariş seçeneğidir.","image":"/images/urun-5li-paket.webp","featured":false,"packCount":5,"newPrice":true},{"id":"p10","name":"10'lu Paket","unit":"10 x 200 gr (toplam 2 kg)","price":990,"priceUnit":"/ 10 paket","badge":"En Çok Tercih Edilen","save":"110 TL avantaj","desc":"Paket başı 99 TL. Ailece tüketim veya hediyeleşmek için en dengeli seçenek.","image":"/images/urun-10lu-paket.webp","featured":true,"imgFit":"contain","packCount":10,"newPrice":true},{"id":"p36","name":"36'lı Koli","unit":"36 x 200 gr (toplam 7,2 kg)","price":2345,"priceUnit":"/ koli","badge":"","save":"1.615 TL avantaj","desc":"Paket başı 65 TL. Toplu siparişler, işletmeler ve düzenli müşterilerimiz için.","image":"/images/urun-36li-koli.webp","featured":false,"packCount":36,"newPrice":true},{"id":"kestane-kavanoz-500","name":"Kestane Şekeri Kavanoz","unit":"500 gr — kavanoz","price":500,"priceUnit":"/ kavanoz","badge":"Yeni","save":"","desc":"Şurup içinde yumuşacık kestane şekeri. Kahvaltılıklara eşlik eder, tatlı ihtiyacını tek kaşıkta giderir.","image":"/images/urun-kestane-kavanoz.webp","featured":false,"oldPrice":638},{"id":"kestane-cikolatali-240","name":"Çikolatalı Kestane Şekeri","unit":"240 gr — kutu","price":170,"priceUnit":"/ kutu","badge":"Yeni","save":"","desc":"Bol bitter çikolata kaplamalı kestane şekeri. Glutensiz, hediyelik kutusunda.","image":"/images/urun-cikolatali-kestane.webp","featured":false},{"id":"kestane-cikolatali-4lu","name":"4'lü Avantaj Paket Çikolatalı Kestane","unit":"4 x 125 gr (toplam 500 gr)","price":374,"priceUnit":"/ paket","badge":"Yeni","save":"","desc":"Çikolatalı kestane şekerinin 4'lü avantaj paketi. Paylaşmak veya stoklamak için ideal.","image":"/images/urun-cikolatali-kestane-4lu.webp","featured":false},{"id":"mh-fistik","name":"Antep Fıstıklı Met Helvası","unit":"400 gr","price":255,"priceUnit":"/ paket","badge":"Yeni","save":"","desc":"Eskişehir'in meşhur met helvası, bol Antep fıstıklı. Tel tel açılan, ağızda dağılan geleneksel lezzet.","image":"/images/urun-met-helvasi-fistikli.webp","featured":false},{"id":"mh-sade","name":"Sade Met Helvası","unit":"400 gr","price":213,"priceUnit":"/ paket","badge":"Yeni","save":"","desc":"Eskişehir'in asırlık lezzeti met helvasının en klasik hali. Tel tel, hafif ve ağızda eriyen dokusuyla.","image":"/images/urun-met-helvasi-sade.webp","featured":false},{"id":"mh-karisik","name":"Karışık Met Helvası","unit":"400 gr","price":213,"priceUnit":"/ paket","badge":"Yeni","save":"","desc":"Sade ve kakaolu met helvası bir arada. Karar veremeyenler için iki lezzet tek pakette.","image":"/images/urun-met-helvasi-karisik.webp","featured":false},{"id":"mh-hediyelik","name":"Hediyelik Met Helvası","unit":"300 gr — özel kutu","price":213,"priceUnit":"/ kutu","badge":"Hediyelik","save":"","desc":"Özel tasarım kutusunda met helvası. Sevdiklerinize Eskişehir'den götürülecek en zarif hediye.","image":"/images/urun-met-helvasi-hediyelik.webp","featured":false},{"id":"uclu-paket","name":"Üçlü Paket","unit":"Sade Met Helvası 400 gr + Leblebi Kurabiyesi 200 gr x2 + Kestane Şekeri Kavanoz 500 gr","price":795,"priceUnit":"/ set","badge":"Yeni","save":"138 TL avantaj","desc":"Eskişehir'in iki meşhur lezzeti ile Bursa'nın meşhur kestane şekeri tek kutuda: sade met helvası, leblebi kurabiyesi ve kestane şekeri. Hediyelik veya kendinize — ayrı ayrı alınca 933 TL.","image":"/images/urun-uclu-paket.webp","featured":true,"imgFit":"contain","oldPrice":935}],"gallery":["/images/galeri-1.webp","/images/galeri-2.webp","/images/galeri-3.webp","/images/galeri-4.webp","/images/galeri-5.webp"]};
 
   let SITE_DATA = null;
   const PRODUCTS = {}; // sepet hesaplamaları için id -> {name, price, image}
@@ -1535,6 +1581,7 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
     renderAbout(SITE_DATA.about);
     renderGallery(SITE_DATA.gallery);
     renderContact(SITE_DATA.contact);
+    sepetiYukle();
     renderCart();
     if(kampanyaAktif()) document.getElementById('kampanyaBar').classList.add('show');
   }
@@ -1564,7 +1611,8 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
           <div class="unit">${p.unit}</div>
           <div class="product-price">${p.oldPrice ? `<span class="price-old">${p.oldPrice.toLocaleString('tr-TR')} TL</span>` : ''} ${p.price.toLocaleString('tr-TR')} TL <small>${p.priceUnit}</small></div>
           <div class="save-row">
-            ${p.oldPrice ? `<span class="discount-chip">%15 İndirim</span>` : ''}
+            ${p.oldPrice ? `<span class="discount-chip">%${Math.round((p.oldPrice - p.price) / p.oldPrice * 100)} İndirim</span>` : ''}
+            ${p.newPrice ? `<span class="discount-chip">Yeni Fiyat</span>` : ''}
             ${kampanyaAktif() && KAMPANYA.fiyat[p.id] ? `<span class="kampanya-chip">Sepette %35 İndirim: ${KAMPANYA.fiyat[p.id].toLocaleString('tr-TR')} TL</span>` : ''}
             ${p.save ? `<span class="product-save">${p.save}</span>` : ''}
           </div>
@@ -1681,9 +1729,72 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
     return Object.values(cart).reduce((sum, q) => sum + q, 0);
   }
 
+  // Sepet tarayıcıda saklanır: sayfa yenilense ya da Instagram/Facebook tarayıcısı kapanıp
+  // açılsa bile sepet kaybolmaz. 7 günden eski sepetler yüklenmez.
+  const SEPET_ANAHTAR = 'kb_sepet';
+  function sepetiKaydet(){
+    try{ localStorage.setItem(SEPET_ANAHTAR, JSON.stringify({ t: Date.now(), cart })); }catch(e){}
+  }
+  function sepetiYukle(){
+    try{
+      const v = JSON.parse(localStorage.getItem(SEPET_ANAHTAR) || 'null');
+      if(!v || !v.cart || Date.now() - v.t > 7*24*3600*1000) return;
+      Object.entries(v.cart).forEach(([id, q]) => {
+        if(PRODUCTS[id] && Number.isInteger(q) && q > 0 && q < 1000) cart[id] = q;
+      });
+    }catch(e){}
+  }
+
+  // Sepette olmayan tamamlayıcı bir ürün önerir (tek dokunuşla eklenir)
+  const ONERI_SIRASI = ['mh-sade', 'kestane-cikolatali-240', 'mh-fistik', 'p5'];
+  function yaninaOneri(){
+    const id = ONERI_SIRASI.find(k => PRODUCTS[k] && !cart[k]
+      && !(k === 'mh-sade' && (cart['mh-fistik'] || cart['mh-karisik'] || cart['mh-hediyelik']))
+      && !(k === 'p5' && (cart.p10 || cart.p36)));
+    if(!id) return '';
+    const p = PRODUCTS[id];
+    return `<div class="yanina-oneri">
+        <img src="${p.image}" width="52" height="52" loading="lazy" decoding="async" alt="${p.name}">
+        <div class="yo-metin"><strong>Yanına ${p.name}?</strong>${p.desc} · ${p.price.toLocaleString('tr-TR')} TL</div>
+        <button type="button" onclick="oneriEkle('${id}')">+ Ekle</button>
+      </div>`;
+  }
+  function oneriEkle(id){
+    cart[id] = (cart[id] || 0) + 1;
+    try{ if(window.fbq) fbq('track','AddToCart',{content_ids:[id],content_type:'product',value:sepetBirimFiyat(id),currency:'TRY'}); }catch(e){}
+    renderCart();
+  }
+
+  // Sepet içeriğiyle hazır WhatsApp sipariş mesajı
+  function sepetWaLinki(){
+    const c = SITE_DATA && SITE_DATA.contact ? SITE_DATA.contact : {};
+    const no = c.whatsappHref || c.phoneHref || '';
+    const satirlar = Object.entries(cart).map(([id, q]) => `• ${PRODUCTS[id].name} x${q}`).join('\n');
+    const msg = `Merhaba, sitenizden sipariş vermek istiyorum:\n${satirlar}\nToplam: ${cartTotal().toLocaleString('tr-TR')} TL`;
+    return `https://wa.me/${no}?text=${encodeURIComponent(msg)}`;
+  }
+
+  // Mobil sabit sepet çubuğu: sepette ürün varken ve sepet/ödeme ekranı kapalıyken görünür
+  function sepetCubuguGuncelle(){
+    const bar = document.getElementById('sepetCubuk');
+    if(!bar) return;
+    const count = cartCount();
+    const acikEkran = document.getElementById('cartDrawer').classList.contains('open')
+      || document.getElementById('checkoutOverlay').classList.contains('show');
+    const goster = count > 0 && !acikEkran;
+    bar.classList.toggle('show', goster);
+    document.body.classList.toggle('cubuk-acik', goster);
+    document.getElementById('scAdet').textContent = count + ' ürün';
+    document.getElementById('scTutar').textContent = cartTotal().toLocaleString('tr-TR') + ' TL';
+  }
+
   function renderCart(){
+    sepetiKaydet();
+    sepetCubuguGuncelle();
     const body = document.getElementById('cartBody');
     const count = cartCount();
+    const wa = document.getElementById('sepetWa');
+    if(wa){ wa.style.display = count ? '' : 'none'; if(count) wa.href = sepetWaLinki(); }
     document.getElementById('cartCount').textContent = count;
     document.getElementById('cartTotal').textContent = cartTotal().toLocaleString('tr-TR') + ' TL';
     document.getElementById('checkoutBtn').disabled = count === 0;
@@ -1716,7 +1827,7 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
           </div>
           <button class="cart-remove" onclick="removeFromCart('${id}')">Kaldır</button>
         </div>`;
-    }).join('') + p10Oneri();
+    }).join('') + p10Oneri() + yaninaOneri();
   }
 
   // "10'luya geç, X TL kazan" önerisi: sepette 5'li paket varsa 10'lu paketin avantajını göster
@@ -1755,10 +1866,12 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
     kargoSatiriniYaz();
     document.getElementById('cartDrawer').classList.add('open');
     document.getElementById('overlay').classList.add('show');
+    sepetCubuguGuncelle();
   }
   function closeCart(){
     document.getElementById('cartDrawer').classList.remove('open');
     document.getElementById('overlay').classList.remove('show');
+    sepetCubuguGuncelle();
   }
 
   document.getElementById('menuToggle').addEventListener('click', () => {
@@ -1770,6 +1883,7 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
   // =================================================================
   function openCheckout(){
     if(cartCount() === 0) return;
+    siparisTamamlandi = false;
     document.getElementById('paymentResult').textContent = '';
     document.getElementById('kapidaPanel').style.display = 'none';
     document.getElementById('checkoutForm').style.display = '';
@@ -1777,10 +1891,52 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
     odemeYontemiDegisti();
     document.getElementById('checkoutOverlay').classList.add('show');
     closeCart();
+    // Meta: ödeme ekranı açıldığı an "InitiateCheckout" (yeniden hedefleme kitlesi için)
+    try{ if(window.fbq) fbq('track','InitiateCheckout',{value:cartTotal(),currency:'TRY',num_items:cartCount(),content_ids:Object.keys(cart),content_type:'product'}); }catch(e){}
   }
   function closeCheckout(){
     document.getElementById('checkoutOverlay').classList.remove('show');
+    yarimSiparisGonder();
+    sepetCubuguGuncelle();
   }
+
+  // =================================================================
+  // YARIM KALAN SİPARİŞ: ödeme ekranında geçerli telefon girilip sipariş
+  // tamamlanmadan ekran kapatılırsa / sayfadan çıkılırsa, bilgiler
+  // "yarim-siparisler" Netlify formuna düşer (e-posta bildirimi gelir).
+  // Aynı numara + aynı sepet için bir kez gönderilir.
+  // =================================================================
+  let siparisTamamlandi = false;
+  let sonYarimImza = '';
+  function yarimSiparisGonder(){
+    if(siparisTamamlandi || cartCount() === 0) return;
+    const tel = (document.getElementById('telefon').value || '').replace(/\D/g, '');
+    const telNorm = tel.replace(/^90/, '').replace(/^0/, '');
+    if(telNorm.length !== 10) return;
+    const urunler = Object.entries(cart).map(([id, q]) => `${PRODUCTS[id].name} x${q}`).join(' | ');
+    const imza = telNorm + '|' + urunler;
+    if(imza === sonYarimImza) return;
+    sonYarimImza = imza;
+    const govde = new URLSearchParams({
+      'form-name': 'yarim-siparisler',
+      ad: document.getElementById('adSoyad').value || '',
+      telefon: '0' + telNorm,
+      eposta: document.getElementById('eposta').value || '',
+      il: document.getElementById('il').value || '',
+      urunler,
+      toplam: cartTotal().toLocaleString('tr-TR') + ' TL',
+      tarih: new Date().toLocaleString('tr-TR', { timeZone: 'Europe/Istanbul' })
+    }).toString();
+    try{
+      const blob = new Blob([govde], { type: 'application/x-www-form-urlencoded' });
+      if(!(navigator.sendBeacon && navigator.sendBeacon('/', blob))){
+        fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: govde, keepalive: true });
+      }
+    }catch(e){}
+  }
+  document.addEventListener('visibilitychange', () => {
+    if(document.visibilityState === 'hidden' && document.getElementById('checkoutOverlay').classList.contains('show')) yarimSiparisGonder();
+  });
 
   const TL = n => n.toLocaleString('tr-TR');
   const TL2 = n => n.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -1914,6 +2070,7 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
     const sunucu = await sunucudaSiparisOlustur('havale', musteri);
     if(sunucu && sunucu.hata){
       resultEl.textContent = sunucu.hata;
+      siparisTamamlandi = false;
       return;
     }
     let siparisNo, toplam;
@@ -2012,7 +2169,9 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
       toplam: cartTotal()
     };
 
-    try{ if(window.fbq) fbq('track','InitiateCheckout',{value:cartTotal(),currency:'TRY',num_items:cartCount()}); }catch(e){}
+    // Sipariş gönderiliyor: bu andan sonra "yarım sipariş" bildirimi gitmesin
+    // (iyzico'ya yönlendirme sırasında sayfa gizlenince yanlış bildirim olmasın)
+    siparisTamamlandi = true;
 
     // Havale/EFT seçildiyse iyzico yerine havale akışına git
     if(seciliOdemeYontemi() === 'havale'){
@@ -2029,6 +2188,7 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
       const sunucu = await sunucudaSiparisOlustur('kapida', order.musteri);
       btn.disabled = false;
       if(!sunucu || sunucu.hata){
+        siparisTamamlandi = false;
         resultEl.className = 'payment-result info';
         resultEl.innerHTML = (sunucu && sunucu.hata ? sunucu.hata + ' ' : 'Sipariş oluşturulamadı. ') +
           'Lütfen tekrar deneyin ya da siparişinizi ' +
@@ -2068,6 +2228,7 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
         throw new Error('Ödeme sayfası adresi alınamadı');
       }
     } catch(err){
+      siparisTamamlandi = false;
       resultEl.className = 'payment-result info';
       resultEl.innerHTML = 'Ödeme başlatılamadı. Lütfen birazdan tekrar deneyin ya da siparişinizi ' +
         (SITE_DATA && SITE_DATA.contact ? `<a href="tel:+${SITE_DATA.contact.phoneHref}">${SITE_DATA.contact.phoneDisplay}</a>` : 'telefon') +
@@ -2100,6 +2261,17 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
   <textarea name="urunler"></textarea>
   <input type="text" name="toplam" />
   <input type="text" name="kargo" />
+  <input type="text" name="tarih" />
+  <input type="text" name="bot-field" />
+</form>
+<!-- Netlify Forms: ödeme formunda telefon girip siparişi tamamlamayanlar (geri dönüş için) -->
+<form name="yarim-siparisler" netlify netlify-honeypot="bot-field" hidden>
+  <input type="text" name="ad" />
+  <input type="text" name="telefon" />
+  <input type="email" name="eposta" />
+  <input type="text" name="il" />
+  <textarea name="urunler"></textarea>
+  <input type="text" name="toplam" />
   <input type="text" name="tarih" />
   <input type="text" name="bot-field" />
 </form>

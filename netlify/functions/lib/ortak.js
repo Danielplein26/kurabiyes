@@ -15,17 +15,17 @@ const SITE_URL = process.env.SITE_URL || 'https://kurabiyes.com';
 // Gönderi, Basit Kargo'da önce TASLAK açıldığı için yanlış ölçü bir şey ödetmez;
 // ama otomatik barkod modunu (BASITKARGO_HANDLER) açmadan önce mutlaka düzelt.
 const URUNLER = {
-  'p5':                     { ad: "Leblebi Kurabiyesi 5'li Paket",      fiyat: 638,  agirlikKg: 1.0, olcu: [13, 25, 23] },
-  'p10':                    { ad: "Leblebi Kurabiyesi 10'lu Paket",     fiyat: 1148, agirlikKg: 2.0, olcu: [26, 25, 23] },
-  'p36':                    { ad: "Leblebi Kurabiyesi 36'lı Koli",      fiyat: 2720, agirlikKg: 7.2, olcu: [44, 22, 33] },
-  'kestane-kavanoz-500':    { ad: 'Kestane Şekeri Kavanoz 500 gr',      fiyat: 638,  agirlikKg: 0.9, olcu: [13, 25, 23] },
+  'p5':                     { ad: "Leblebi Kurabiyesi 5'li Paket",      fiyat: 550,  agirlikKg: 1.0, olcu: [13, 25, 23] },
+  'p10':                    { ad: "Leblebi Kurabiyesi 10'lu Paket",     fiyat: 990,  agirlikKg: 2.0, olcu: [26, 25, 23] },
+  'p36':                    { ad: "Leblebi Kurabiyesi 36'lı Koli",      fiyat: 2345, agirlikKg: 7.2, olcu: [44, 22, 33] },
+  'kestane-kavanoz-500':    { ad: 'Kestane Şekeri Kavanoz 500 gr',      fiyat: 500,  agirlikKg: 0.9, olcu: [13, 25, 23] },
   'kestane-cikolatali-240': { ad: 'Çikolatalı Kestane Şekeri 240 gr',   fiyat: 170,  agirlikKg: 0.3, olcu: [13, 25, 23] },
   'kestane-cikolatali-4lu': { ad: "4'lü Çikolatalı Kestane Paketi",     fiyat: 374,  agirlikKg: 0.6, olcu: [13, 25, 23] },
   'mh-fistik':              { ad: 'Antep Fıstıklı Met Helvası 400 gr',  fiyat: 255,  agirlikKg: 0.5, olcu: [13, 25, 23] },
   'mh-sade':                { ad: 'Sade Met Helvası 400 gr',            fiyat: 213,  agirlikKg: 0.5, olcu: [13, 25, 23] },
   'mh-karisik':             { ad: 'Karışık Met Helvası 400 gr',         fiyat: 213,  agirlikKg: 0.5, olcu: [13, 25, 23] },
   'mh-hediyelik':           { ad: 'Hediyelik Met Helvası 300 gr',       fiyat: 213,  agirlikKg: 0.4, olcu: [13, 25, 23] },
-  'uclu-paket':             { ad: 'Üçlü Paket (Helva + Kurabiye + Kestane)', fiyat: 935, agirlikKg: 1.8, olcu: [13, 25, 23] }
+  'uclu-paket':             { ad: 'Üçlü Paket (Helva + Kurabiye + Kestane)', fiyat: 795, agirlikKg: 1.8, olcu: [13, 25, 23] }
 };
 
 // Eski kod "FIYAT_LISTESI" adıyla kullanıyordu; aynı veriyi sağlar.

@@ -59,6 +59,8 @@ gtag('config', 'AW-17161300693');
     </div>
   </div>
   <script>
+  // Ödeme tamamlandı: ana sayfada saklanan sepeti temizle
+  try{ localStorage.removeItem('kb_sepet'); }catch(e){}
   try{
     var v = parseFloat(localStorage.getItem('kb_last_total')||'0');
     var n = parseInt(localStorage.getItem('kb_last_items')||'1');
