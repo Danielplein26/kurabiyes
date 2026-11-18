@@ -10,6 +10,7 @@
 // ============================================================
 
 const { KAPIDA_ODEME, musteriDogrula, sepetHesapla, urunMetni, siparisNoUret, trTarih, siparisKaydet } = require('./lib/ortak');
+const { siparisOnayiGonder } = require('./lib/eposta');
 const basitKargo = require('./lib/basitkargo');
 
 const json = (statusCode, obj) => ({ statusCode, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(obj) });
@@ -57,6 +58,8 @@ exports.handler = async (event) => {
     kargo: kargo.durum === 'ATLANDI' ? '' : kargo.not,
     tarih: trTarih()
   });
+
+  await siparisOnayiGonder({ siparisNo, musteri, satirlar: hesap.satirlar, toplam, odeme: yontem, ucret });
 
   return json(200, { siparisNo, toplam, ucret });
 };

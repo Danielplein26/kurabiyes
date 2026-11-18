@@ -13,6 +13,7 @@ const querystring = require('querystring');
 const { trTarih, urunMetni, siparisKaydet } = require('./lib/ortak');
 const bekleyen = require('./lib/bekleyen');
 const basitKargo = require('./lib/basitkargo');
+const { siparisOnayiGonder } = require('./lib/eposta');
 
 const iyzipay = new Iyzipay({
   apiKey: process.env.IYZICO_API_KEY,
@@ -82,6 +83,10 @@ exports.handler = async (event) => {
         kargo: kargoNotu,
         tarih: trTarih()
       });
+      // Müşteriye onay e-postası (iyzico dönüşü tekrar gelirse kayit null olur → ikinci e-posta gitmez)
+      if (kayit) {
+        await siparisOnayiGonder({ ...kayit, toplam: Number(result.paidPrice) || kayit.toplam, odeme: 'kart', ucret: 0 });
+      }
       return yonlendir('/odeme-basarili.html');
     }
 
