@@ -2100,6 +2100,9 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
       }catch(e){ /* kayıt başarısız olsa da müşteriye IBAN gösterilir */ }
     }
 
+    // Meta: havale siparişi oluşturulduğu anda Purchase say (müşteri "Ödedim"e basmasa da)
+    try{ if(window.fbq) fbq('track','Purchase',{value:toplam,currency:'TRY',num_items:cartCount()},{eventID:'hv-'+siparisNo}); }catch(e){}
+
     // Formu gizle, havale bilgilerini göster
     document.getElementById('hvSiparisNo').textContent = siparisNo;
     document.getElementById('hvTutar').textContent = havaleSiparis.toplam;
@@ -2135,7 +2138,6 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
         odemeYontemi: 'Havale/EFT',
         tarih: new Date().toLocaleString('tr-TR')
       });
-      try{ if(window.fbq) fbq('track','Purchase',{value:cartTotal(),currency:'TRY'}); }catch(e){}
       btn.style.display = 'none';
       resultEl.className = 'payment-result success';
       resultEl.textContent = 'Teşekkürler! Ödemeniz kontrol edildikten sonra siparişiniz kargoya verilecek. Sorularınız için bize telefonla ulaşabilirsiniz.';
