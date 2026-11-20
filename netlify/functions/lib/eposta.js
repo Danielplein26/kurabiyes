@@ -71,6 +71,10 @@ function icerikOlustur({ siparisNo, musteri, satirlar, toplam, odeme, ucret }) {
       <div>${kacis(musteri.adres)}</div>
       <div>${kacis(musteri.ilce)} / ${kacis(musteri.il)}</div>
     </div>
+    ${musteri.not ? `<div style="margin-top:16px;font-size:14px;line-height:1.5;background:#f7f1e8;border-radius:10px;padding:12px 14px">
+      <div style="font-weight:bold;margin-bottom:4px">Sipariş / hediye notunuz</div>
+      <div style="white-space:pre-wrap">${kacis(musteri.not)}</div>
+    </div>` : ''}
     <p style="margin:24px 0 0;font-size:14px;line-height:1.5">Kargo takibi ya da herhangi bir sorunuz olursa bu e-postayı yanıtlayabilir ya da
       <a href="${WHATSAPP}" style="color:#8b4a1c;font-weight:bold">WhatsApp'tan yazabilirsiniz</a>.</p>
    </div>
@@ -90,6 +94,7 @@ function icerikOlustur({ siparisNo, musteri, satirlar, toplam, odeme, ucret }) {
       : 'Siparişiniz 1–3 iş günü içinde kargoya verilecek.',
     '',
     `Teslimat: ${musteri.adSoyad}, ${musteri.adres}, ${musteri.ilce}/${musteri.il}`,
+    musteri.not ? `Notunuz: ${musteri.not}` : null,
     `Sorularınız için: ${WHATSAPP}`
   ].filter(x => x !== null).join('\n');
 

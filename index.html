@@ -1445,6 +1445,11 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
           <label for="adres">Teslimat Adresi</label>
           <textarea id="adres" required placeholder="Mahalle, sokak, bina ve daire no"></textarea>
         </div>
+        <div class="full">
+          <label for="siparisNotu">Hediye notu / sipariş notu <span style="font-weight:400;color:#8a7a66">(isteğe bağlı)</span></label>
+          <textarea id="siparisNotu" maxlength="300" placeholder="Hediye gönderiyorsanız karta yazmamızı istediğiniz mesaj. Örn: Sevgili Ayşe Öğretmenim, her şey için teşekkürler! — Elif"></textarea>
+          <small class="tel-not">Notunuzu yazıp paketin içine koyuyoruz. Hediye gönderiyorsanız alıcının adını teslimat adresine yazmayı unutmayın.</small>
+        </div>
       </div>
 
       <div class="order-summary" id="orderSummary"></div>
@@ -2084,7 +2089,7 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
     havaleSiparis = {
       siparisNo,
       ad: musteri.adSoyad, telefon: musteri.telefon, eposta: musteri.eposta,
-      il: musteri.il, ilce: musteri.ilce, adres: musteri.adres,
+      il: musteri.il, ilce: musteri.ilce, adres: musteri.adres, not: musteri.not || '',
       urunler: urunMetni,
       toplam: toplam.toLocaleString('tr-TR') + ' TL'
     };
@@ -2160,7 +2165,8 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
         eposta: document.getElementById('eposta').value,
         il: document.getElementById('il').value,
         ilce: document.getElementById('ilce').value,
-        adres: document.getElementById('adres').value
+        adres: document.getElementById('adres').value,
+        not: document.getElementById('siparisNotu').value
       },
       sepet: Object.entries(cart).map(([id, q]) => ({
         urunKodu: id,
@@ -2260,6 +2266,7 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
   <input type="text" name="ilce" />
   <input type="text" name="odemeYontemi" />
   <textarea name="adres"></textarea>
+  <textarea name="not"></textarea>
   <textarea name="urunler"></textarea>
   <input type="text" name="toplam" />
   <input type="text" name="kargo" />

@@ -77,6 +77,7 @@ exports.handler = async (event) => {
         il: m ? m.il : '',
         ilce: m ? m.ilce : '',
         adres: m ? m.adres : '',
+        not: m ? (m.not || '') : '',
         odemeYontemi: 'Kart (iyzico)',
         urunler: (kayit ? urunMetni(kayit.satirlar) + ' | ' : '') + 'iyzico ödeme no: ' + (result.paymentId || '-'),
         toplam: (Number(result.paidPrice).toLocaleString('tr-TR')) + ' TL',

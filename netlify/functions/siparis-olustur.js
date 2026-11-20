@@ -52,6 +52,7 @@ exports.handler = async (event) => {
     il: musteri.il,
     ilce: musteri.ilce,
     adres: musteri.adres,
+    not: musteri.not,
     odemeYontemi: yontem === 'kapida' ? 'Kapıda Ödeme' : 'Havale/EFT',
     urunler: urunMetni(hesap.satirlar) + (ucret ? ` | Kapıda ödeme ücreti: ${ucret} TL` : ''),
     toplam: toplam.toLocaleString('tr-TR') + ' TL',

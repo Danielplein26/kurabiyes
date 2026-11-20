@@ -84,6 +84,7 @@ function musteriDogrula(m) {
   const il = String(m.il || '').trim();
   const ilce = String(m.ilce || '').trim();
   const adres = String(m.adres || '').trim();
+  const not = String(m.not || '').trim().slice(0, 300);
   if (!adSoyad || !telefonHam || !eposta || !il || !ilce || !adres) {
     return { hata: 'Ad soyad, telefon, e-posta, il, ilçe ve adres bilgilerinin tamamı gereklidir.' };
   }
@@ -91,7 +92,7 @@ function musteriDogrula(m) {
   const gsm = gsmFormatla(telefonHam);
   if (!gsm) return { hata: 'Telefon numarası geçersiz görünüyor. Lütfen 05xx xxx xx xx formatında girin.' };
   if (adSoyad.length > 120 || adres.length > 600 || ilce.length > 80) return { hata: 'Girilen bilgiler çok uzun.' };
-  return { musteri: { adSoyad, telefonHam, gsm, eposta, il, ilce, adres } };
+  return { musteri: { adSoyad, telefonHam, gsm, eposta, il, ilce, adres, not } };
 }
 
 // Sepeti doğrular; sunucudaki gerçek fiyatlarla satırları ve toplamı hesaplar.

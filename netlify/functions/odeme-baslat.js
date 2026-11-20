@@ -47,7 +47,7 @@ exports.handler = async (event) => {
   const dogru = musteriDogrula(musteriHam);
   if (dogru.hata) return { statusCode: 400, body: JSON.stringify({ error: dogru.hata }) };
   const musteri = dogru.musteri;
-  const { adSoyad, telefonHam, gsm, eposta, il, ilce, adres } = musteri;
+  const { adSoyad, telefonHam, gsm, eposta, il, ilce, adres, not } = musteri;
 
   // Sepetteki her kalemin gerçek birim fiyatını sunucudaki listeden al;
   // istemciden gelen birimFiyat/toplam değerleri tamamen yok sayılır.
@@ -124,6 +124,7 @@ exports.handler = async (event) => {
       il,
       ilce,
       adres,
+      not,
       odemeYontemi: 'Kart (iyzico)',
       urunler: urunMetni(satirlar),
       toplam: toplam.toLocaleString('tr-TR') + ' TL',
