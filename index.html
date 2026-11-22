@@ -365,6 +365,7 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
     border:1px solid var(--cream2);
   }
   .product-card.featured{outline:3px solid var(--gold);}
+  .product-card.urun-vurgu{box-shadow:0 0 0 4px var(--gold),0 12px 30px rgba(0,0,0,.18);transition:box-shadow .3s;}
   .product-img.fit-contain{height:230px;background:#fff;}
   .product-img.fit-contain img{object-fit:contain;}
   .product-badge{
@@ -1608,7 +1609,7 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
     grid.innerHTML = products.map(p => {
       Object.assign(PRODUCTS, { [p.id]: { name: p.name, price: p.price, desc: p.unit, image: p.image, packCount: p.packCount || 0 } });
       return `
-      <div class="product-card${p.featured ? ' featured' : ''}">
+      <div class="product-card${p.featured ? ' featured' : ''}" id="urun-${p.id}" data-id="${p.id}">
         ${p.badge ? `<div class="product-badge">${p.badge}</div>` : ''}
         <div class="product-img${p.imgFit === 'contain' ? ' fit-contain' : ''}"><img src="${p.image}"${boyutAttr(p.image)} loading="lazy" decoding="async" alt="${p.name}"></div>
         <div class="product-body">
@@ -1634,6 +1635,42 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
       </div>`;
     }).join('');
     products.forEach(p => qty[p.id] = 1);
+    urunGoruntulemeTakibi(products);
+  }
+
+  // Meta katalog reklamları için: hangi ürünün görüldüğünü (ViewContent) ürün koduyla bildir.
+  // Ürün kartı ekranda en az %60 görünür hâlde 1 saniye kalınca bir kez gönderilir.
+  function viewContentGonder(id){
+    const p = PRODUCTS[id]; if(!p || viewContentGonderildi[id]) return;
+    viewContentGonderildi[id] = true;
+    try{ if(window.fbq) fbq('track','ViewContent',{content_ids:[id],content_type:'product',content_name:p.name,value:p.price,currency:'TRY'}); }catch(e){}
+  }
+  const viewContentGonderildi = {};
+  function urunGoruntulemeTakibi(products){
+    try{
+      const zamanlayici = {};
+      const gozlemci = new IntersectionObserver(girdiler => {
+        girdiler.forEach(g => {
+          const id = g.target.dataset.id;
+          if(g.isIntersecting){ zamanlayici[id] = setTimeout(() => { viewContentGonder(id); gozlemci.unobserve(g.target); }, 1000); }
+          else clearTimeout(zamanlayici[id]);
+        });
+      }, { threshold: 0.6 });
+      products.forEach(p => { const el = document.getElementById('urun-' + p.id); if(el) gozlemci.observe(el); });
+    }catch(e){}
+    // Katalog reklamından ?urun=ID ile gelindiyse o ürüne kaydır ve vurgula
+    try{
+      const id = new URLSearchParams(location.search).get('urun');
+      const el = id && document.getElementById('urun-' + id);
+      if(el){
+        setTimeout(() => {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          el.classList.add('urun-vurgu');
+          setTimeout(() => el.classList.remove('urun-vurgu'), 3000);
+          viewContentGonder(id);
+        }, 300);
+      }
+    }catch(e){}
   }
 
   function renderAbout(about){
@@ -2106,7 +2143,7 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
     }
 
     // Meta: havale siparişi oluşturulduğu anda Purchase say (müşteri "Ödedim"e basmasa da)
-    try{ if(window.fbq) fbq('track','Purchase',{value:toplam,currency:'TRY',num_items:cartCount()},{eventID:'hv-'+siparisNo}); }catch(e){}
+    try{ if(window.fbq) fbq('track','Purchase',{value:toplam,currency:'TRY',num_items:cartCount(),content_ids:Object.keys(cart),content_type:'product'},{eventID:'hv-'+siparisNo}); }catch(e){}
 
     // Formu gizle, havale bilgilerini göster
     document.getElementById('hvSiparisNo').textContent = siparisNo;
@@ -2203,7 +2240,7 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
           (SITE_DATA && SITE_DATA.contact ? `<a href="tel:+${SITE_DATA.contact.phoneHref}">${SITE_DATA.contact.phoneDisplay}</a>` : 'telefon') + ' numarasından verin.';
         return;
       }
-      try{ if(window.fbq) fbq('track','Purchase',{value:sunucu.toplam,currency:'TRY',num_items:cartCount()}); }catch(e){}
+      try{ if(window.fbq) fbq('track','Purchase',{value:sunucu.toplam,currency:'TRY',num_items:cartCount(),content_ids:Object.keys(cart),content_type:'product'}); }catch(e){}
       document.getElementById('kpSiparisNo').textContent = sunucu.siparisNo;
       document.getElementById('kpTutar').textContent = TL(sunucu.toplam) + ' TL';
       document.getElementById('checkoutForm').style.display = 'none';
@@ -2214,7 +2251,7 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
 
     resultEl.className = 'payment-result info';
     resultEl.textContent = 'Ödeme adımına yönlendiriliyorsunuz...';
-    try{ localStorage.setItem('kb_last_total', String(cartTotal())); localStorage.setItem('kb_last_items', String(cartCount())); }catch(e){}
+    try{ localStorage.setItem('kb_last_total', String(cartTotal())); localStorage.setItem('kb_last_items', String(cartCount())); localStorage.setItem('kb_last_ids', JSON.stringify(Object.keys(cart))); }catch(e){}
 
     try{
       const res = await fetch('/.netlify/functions/odeme-baslat', {

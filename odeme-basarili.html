@@ -64,8 +64,9 @@ gtag('config', 'AW-17161300693');
   try{
     var v = parseFloat(localStorage.getItem('kb_last_total')||'0');
     var n = parseInt(localStorage.getItem('kb_last_items')||'1');
-    if(window.fbq) fbq('track','Purchase',{value:isNaN(v)?0:v,currency:'TRY',num_items:isNaN(n)?1:n});
-    localStorage.removeItem('kb_last_total'); localStorage.removeItem('kb_last_items');
+    var ids = []; try{ ids = JSON.parse(localStorage.getItem('kb_last_ids')||'[]'); }catch(e){}
+    if(window.fbq) fbq('track','Purchase',{value:isNaN(v)?0:v,currency:'TRY',num_items:isNaN(n)?1:n,content_ids:ids,content_type:'product'});
+    localStorage.removeItem('kb_last_total'); localStorage.removeItem('kb_last_items'); localStorage.removeItem('kb_last_ids');
   }catch(e){}
   </script>
 </body>
