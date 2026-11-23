@@ -53,6 +53,10 @@ function gecerliFiyat(urunKodu) {
 // için TL cinsinden tutar. 0 = ücret alınmaz. index.html'deki KAPIDA_ODEME ile aynı olmalı.
 const KAPIDA_ODEME = { aktif: true, ucret: 50 };
 
+// MİNİMUM SEPET TUTARI (TL) — ürün toplamı bunun altındaysa sipariş alınmaz.
+// Kapıda ödeme ücreti bu tutara dahil değildir. index.html'deki MIN_SEPET ile aynı olmalı.
+const MIN_SEPET = 500;
+
 // Türkiye saatiyle tarih/saat (Netlify sunucuları UTC çalışır)
 function trTarih(d) {
   return (d || new Date()).toLocaleString('tr-TR', { timeZone: 'Europe/Istanbul' });
@@ -110,7 +114,11 @@ function sepetHesapla(sepet) {
     const birim = gecerliFiyat(item.urunKodu);
     satirlar.push({ urunKodu: item.urunKodu, ad: URUNLER[item.urunKodu].ad, adet, birim, tutar: birim * adet });
   }
-  return { satirlar, urunToplam: satirlar.reduce((t, s) => t + s.tutar, 0) };
+  const urunToplam = satirlar.reduce((t, s) => t + s.tutar, 0);
+  if (urunToplam < MIN_SEPET) {
+    return { hata: `Minimum sipariş tutarı ${MIN_SEPET} TL. Sepetinize ${MIN_SEPET - urunToplam} TL'lik daha ürün ekleyin.` };
+  }
+  return { satirlar, urunToplam };
 }
 
 function urunMetni(satirlar) {
@@ -134,5 +142,5 @@ async function siparisKaydet(veri) {
 
 module.exports = {
   SITE_URL, URUNLER, FIYAT_LISTESI, KAMPANYA, KAPIDA_ODEME, gecerliFiyat,
-  trTarih, siparisNoUret, gsmFormatla, musteriDogrula, sepetHesapla, urunMetni, siparisKaydet
+  MIN_SEPET, trTarih, siparisNoUret, gsmFormatla, musteriDogrula, sepetHesapla, urunMetni, siparisKaydet
 };

@@ -710,6 +710,8 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
 
   /* Kargo / teslim süresi satırı (sepet + ödeme) */
   .kargo-satir{font-size:0.84rem;color:#5d4536;font-weight:600;margin:-4px 0 14px;}
+  .min-uyari{display:none;background:#fff4e0;border:1px solid #f0c27a;color:#8a4b00;border-radius:10px;padding:9px 12px;font-size:0.84rem;font-weight:600;margin:0 0 12px;}
+  .min-uyari.show{display:block;}
   .kargo-satir.ozet{text-align:right;margin:6px 0 0;font-size:0.8rem;}
   /* Taksit bilgisi (kart seçiliyken) */
   .taksit-box{background:var(--cream);border:1px solid var(--cream2);border-radius:12px;padding:12px 14px;margin:0 0 14px;font-size:0.85rem;color:#5d4536;}
@@ -1393,6 +1395,7 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
     </div>
     <p style="font-size:0.82rem;color:#1f9e52;font-weight:600;margin:-8px 0 6px;">🚚 Kargo dahil, ekstra ücret yok</p>
     <p class="kargo-satir" id="cartKargoSatir"></p>
+    <p class="min-uyari" id="cartMinUyari"></p>
     <ul class="sepet-guven">
       <li>📦 Kapıda ödeme seçeneği</li>
       <li>💳 Kredi kartına taksit</li>
@@ -1560,6 +1563,9 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
   // KAPIDA_ODEME ile BİREBİR AYNI olmalıdır (tutarı sunucu belirler).
   // =================================================================
   const KAPIDA_ODEME = { aktif: true, ucret: 50 };
+  // Minimum sepet tutarı (TL, ürün toplamı). netlify/functions/lib/ortak.js'deki MIN_SEPET ile aynı olmalı.
+  const MIN_SEPET = 500;
+  function minEksik(){ return Math.max(0, MIN_SEPET - cartTotal()); }
 
   // "Bugün kargoda · 1-3 iş günü teslim" satırı. Kesim saati: hafta içi 15:30, Cumartesi 14:30, Pazar kapalı
   // (Türkiye saatiyle). Kesimden sonra "yarın / Pazartesi kargoda" yazar; böylece yanlış söz verilmez.
@@ -1839,7 +1845,13 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
     if(wa){ wa.style.display = count ? '' : 'none'; if(count) wa.href = sepetWaLinki(); }
     document.getElementById('cartCount').textContent = count;
     document.getElementById('cartTotal').textContent = cartTotal().toLocaleString('tr-TR') + ' TL';
-    document.getElementById('checkoutBtn').disabled = count === 0;
+    const eksik = minEksik();
+    document.getElementById('checkoutBtn').disabled = count === 0 || eksik > 0;
+    const mu = document.getElementById('cartMinUyari');
+    if(mu){
+      mu.classList.toggle('show', count > 0 && eksik > 0);
+      mu.textContent = `Minimum sipariş tutarı ${MIN_SEPET} TL. Siparişi tamamlamak için ${eksik.toLocaleString('tr-TR')} TL'lik daha ürün ekleyin.`;
+    }
     const ind = cartDiscount();
     document.getElementById('cartSubtotalRow').classList.toggle('show', ind > 0);
     document.getElementById('cartDiscountRow').classList.toggle('show', ind > 0);
@@ -1925,6 +1937,7 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
   // =================================================================
   function openCheckout(){
     if(cartCount() === 0) return;
+    if(minEksik() > 0){ openCart(); return; }
     siparisTamamlandi = false;
     document.getElementById('paymentResult').textContent = '';
     document.getElementById('kapidaPanel').style.display = 'none';
