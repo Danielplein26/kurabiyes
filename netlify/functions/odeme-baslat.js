@@ -82,7 +82,7 @@ exports.handler = async (event) => {
     basketId: siparisNo,
     paymentGroup: Iyzipay.PAYMENT_GROUP.PRODUCT,
     callbackUrl: SITE_URL + '/.netlify/functions/odeme-sonuc',
-    enabledInstallments: [1, 2, 3, 6],
+    enabledInstallments: [1],
     buyer: {
       id: 'BY-' + Date.now(),
       name: ad,

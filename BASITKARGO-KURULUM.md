@@ -24,7 +24,7 @@ ulaşılamazsa ya da hata verirse sipariş/ödeme **etkilenmez**; sipariş kayd�
 | `BASITKARGO_HANDLER` | Dolu ise taslak yerine **barkod da otomatik** alınır (bakiyenizden kargo ücreti düşer). Örn: `ECONOMIC` (en ucuz), `FAST` (en hızlı), `YURTICI`, `ARAS`, `SURAT`, `MNG`, `PTT`; kendi anlaşmanız için `SELF_YURTICI` gibi. Açmadan önce aşağıdaki ağırlıkları kontrol edin. |
 | `BASITKARGO_ADDRESS_ID` | Gönderici adres kimliği (boşsa panelde varsayılan adres). |
 | `BASITKARGO_BRAND_ID` | Marka/mağaza profili kimliği (boşsa varsayılan). |
-| `BASITKARGO_KAPIDA_TIP` | Kapıda tahsilat şekli: `CASH` (varsayılan) ya da `CREDIT_CARD` (kapıda kart). |
+| (kaldırıldı) | Kapıda tahsilat şekli artık müşteri seçer: nakit → `CASH`, kart → `CREDIT_CARD`. |
 
 ## Koli ölçüleri
 

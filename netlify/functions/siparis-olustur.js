@@ -28,6 +28,9 @@ exports.handler = async (event) => {
   if (yontem !== 'kapida' && yontem !== 'havale') return json(400, { error: 'Geçersiz ödeme yöntemi.' });
   if (yontem === 'kapida' && !KAPIDA_ODEME.aktif) return json(403, { error: 'Kapıda ödeme şu anda kullanılamıyor.' });
 
+  const kapidaTip = yontem === 'kapida' && istek.kapidaTip === 'kart' ? 'kart' : 'nakit';
+  const kapidaAdi = kapidaTip === 'kart' ? 'Kapıda Ödeme (Kart)' : 'Kapıda Ödeme (Nakit)';
+
   const dogru = musteriDogrula(istek.musteri);
   if (dogru.hata) return json(400, { error: dogru.hata });
   const musteri = dogru.musteri;
@@ -40,12 +43,12 @@ exports.handler = async (event) => {
   const siparisNo = siparisNoUret(yontem === 'kapida' ? 'K' : 'H');
 
   const kargo = await basitKargo.gonderiOlustur({
-    siparisNo, musteri, satirlar: hesap.satirlar, toplam, odeme: yontem
+    siparisNo, musteri, satirlar: hesap.satirlar, toplam, odeme: yontem, kapidaTip
   });
 
   await siparisKaydet({
     siparisNo,
-    durum: yontem === 'kapida' ? 'KAPIDA ÖDEME - SİPARİŞ ALINDI' : 'HAVALE - ÖDEME BEKLENİYOR',
+    durum: yontem === 'kapida' ? `KAPIDA ÖDEME (${kapidaTip === 'kart' ? 'KART' : 'NAKİT'}) - SİPARİŞ ALINDI` : 'HAVALE - ÖDEME BEKLENİYOR',
     ad: musteri.adSoyad,
     telefon: musteri.telefonHam,
     eposta: musteri.eposta,
@@ -53,14 +56,14 @@ exports.handler = async (event) => {
     ilce: musteri.ilce,
     adres: musteri.adres,
     not: musteri.not,
-    odemeYontemi: yontem === 'kapida' ? 'Kapıda Ödeme' : 'Havale/EFT',
+    odemeYontemi: yontem === 'kapida' ? kapidaAdi : 'Havale/EFT',
     urunler: urunMetni(hesap.satirlar) + (ucret ? ` | Kapıda ödeme ücreti: ${ucret} TL` : ''),
     toplam: toplam.toLocaleString('tr-TR') + ' TL',
     kargo: kargo.durum === 'ATLANDI' ? '' : kargo.not,
     tarih: trTarih()
   });
 
-  await siparisOnayiGonder({ siparisNo, musteri, satirlar: hesap.satirlar, toplam, odeme: yontem, ucret });
+  await siparisOnayiGonder({ siparisNo, musteri, satirlar: hesap.satirlar, toplam, odeme: yontem, ucret, kapidaTip });
 
   return json(200, { siparisNo, toplam, ucret });
 };

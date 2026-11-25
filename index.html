@@ -961,7 +961,7 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
       "name": "Kapıda ödeme var mı? Hangi ödeme yöntemleri geçerli?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Evet, kapıda ödeme seçeneğimiz var: ödeme adımında “Kapıda Ödeme”yi seçip siparişinizi tamamlayın, tutarı teslimatta kargo görevlisine ödersiniz. Kapıda ödeme ücreti (varsa) ödeme adımında sipariş özetinde açıkça gösterilir. İsterseniz kredi/banka kartıyla (iyzico, taksit imkânı) ya da Havale/EFT ile de ödeyebilirsiniz."
+        "text": "Evet, kapıda ödeme seçeneğimiz var: ödeme adımında “Kapıda Ödeme”yi seçin, teslimatta kargo görevlisine nakit ya da kredi/banka kartıyla ödeyin. Kapıda ödeme ücreti (varsa) ödeme adımında sipariş özetinde açıkça gösterilir. İsterseniz online kredi/banka kartıyla (iyzico, tek çekim) ya da Havale/EFT ile de ödeyebilirsiniz."
       }
     },
     {
@@ -1049,7 +1049,7 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
       <span>1 kg <strong>550 TL</strong></span>
       <span>🚚 Ücretsiz kargo</span>
       <span>📦 Kapıda ödeme</span>
-      <span>💳 Taksit imkânı</span>
+      <span>💳 Kapıda kartla ödeme</span>
     </div>
   </div>
 </section>
@@ -1217,7 +1217,7 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
       </details>
       <details class="faq-item">
         <summary>Kapıda ödeme var mı? Hangi ödeme yöntemleri geçerli?</summary>
-        <div class="faq-a">Evet, kapıda ödeme seçeneğimiz var: ödeme adımında “Kapıda Ödeme”yi seçip siparişinizi tamamlayın, tutarı teslimatta kargo görevlisine ödersiniz. Kapıda ödeme ücreti (varsa) ödeme adımında sipariş özetinde açıkça gösterilir. İsterseniz kredi/banka kartıyla (iyzico, taksit imkânı) ya da Havale/EFT ile de ödeyebilirsiniz.</div>
+        <div class="faq-a">Evet, kapıda ödeme seçeneğimiz var: ödeme adımında “Kapıda Ödeme”yi seçin, teslimatta kargo görevlisine nakit ya da kredi/banka kartıyla ödeyin. Kapıda ödeme ücreti (varsa) ödeme adımında sipariş özetinde açıkça gösterilir. İsterseniz online kredi/banka kartıyla (iyzico, tek çekim) ya da Havale/EFT ile de ödeyebilirsiniz.</div>
       </details>
       <details class="faq-item">
         <summary>Ödeme güvenli mi?</summary>
@@ -1398,7 +1398,7 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
     <p class="min-uyari" id="cartMinUyari"></p>
     <ul class="sepet-guven">
       <li>📦 Kapıda ödeme seçeneği</li>
-      <li>💳 Kredi kartına taksit</li>
+      <li>💳 Kapıda nakit veya kartla ödeme</li>
       <li>🏦 Havale / EFT</li>
       <li>🔒 iyzico güvenli ödeme</li>
     </ul>
@@ -1461,7 +1461,7 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
       <div class="pay-methods">
         <label class="pay-method">
           <input type="radio" name="odemeYontemi" value="kart" checked onchange="odemeYontemiDegisti()">
-          <span class="pm-body"><strong>💳 Kredi / Banka Kartı</strong><small>iyzico güvenli ödeme &middot; taksit imkânı</small></span>
+          <span class="pm-body"><strong>💳 Kredi / Banka Kartı</strong><small>iyzico güvenli ödeme &middot; tek çekim</small></span>
         </label>
         <label class="pay-method">
           <input type="radio" name="odemeYontemi" value="havale" onchange="odemeYontemiDegisti()">
@@ -1471,6 +1471,19 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
           <input type="radio" name="odemeYontemi" value="kapida" onchange="odemeYontemiDegisti()">
           <span class="pm-body"><strong>📦 Kapıda Ödeme</strong><small id="kapidaAlt">Teslimatta kargo görevlisine ödersiniz</small></span>
         </label>
+      </div>
+      <div id="kapidaTipKutu" style="display:none;margin:-4px 0 16px;">
+        <div style="font-size:0.85rem;font-weight:600;color:var(--maroon-dark);margin-bottom:8px;">Kapıda nasıl ödeyeceksiniz?</div>
+        <div class="pay-methods" style="margin:0;">
+          <label class="pay-method">
+            <input type="radio" name="kapidaTip" value="nakit" checked>
+            <span class="pm-body"><strong>💵 Nakit</strong><small>Kargo görevlisine nakit</small></span>
+          </label>
+          <label class="pay-method">
+            <input type="radio" name="kapidaTip" value="kart">
+            <span class="pm-body"><strong>💳 Kredi / Banka Kartı</strong><small>Kargo görevlisinin POS cihazıyla</small></span>
+          </label>
+        </div>
       </div>
 
 
@@ -1490,7 +1503,7 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
     <div id="kapidaPanel" style="display:none;">
       <div class="havale-box">
         <h4>Siparişiniz alındı 🎉</h4>
-        <p class="havale-sub">Ödemeyi teslimat sırasında kargo görevlisine yapacaksınız. Siparişiniz hazırlanıp kargoya verilecek.</p>
+        <p class="havale-sub">Ödemeyi teslimat sırasında kargo görevlisine yapacaksınız (<span id="kpTip">nakit</span>). Siparişiniz hazırlanıp kargoya verilecek.</p>
         <div class="havale-rows">
           <div class="hv-row"><span>Sipariş No</span><strong id="kpSiparisNo"></strong></div>
           <div class="hv-row"><span>Kapıda ödenecek tutar</span><strong id="kpTutar"></strong></div>
@@ -2068,15 +2081,17 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
     if(kp) kp.style.display = KAPIDA_ODEME.aktif ? '' : 'none';
     const kpAlt = document.getElementById('kapidaAlt');
     if(kpAlt) kpAlt.textContent = KAPIDA_ODEME.ucret > 0
-      ? `Teslimatta ödersiniz · +${TL(KAPIDA_ODEME.ucret)} TL kapıda ödeme ücreti`
-      : 'Teslimatta kargo görevlisine ödersiniz';
+      ? `Nakit veya kartla · +${TL(KAPIDA_ODEME.ucret)} TL kapıda ödeme ücreti`
+      : 'Teslimatta nakit veya kartla ödersiniz';
+    const kpTip = document.getElementById('kapidaTipKutu');
+    if(kpTip) kpTip.style.display = y === 'kapida' ? 'block' : 'none';
     document.getElementById('checkoutSubmitBtn').textContent =
       y === 'havale' ? 'Siparişi Oluştur'
       : y === 'kapida' ? 'Siparişi Tamamla (Kapıda Öde)'
       : 'iyzico ile Güvenli Ödeme Yap';
     document.getElementById('checkoutNote').innerHTML =
       y === 'havale' ? '🏦 Sipariş oluşturduktan sonra IBAN bilgilerimiz ekranda gösterilir. Ödemeniz hesabımıza geçince siparişiniz kargoya verilir.'
-      : y === 'kapida' ? '📦 Ödemeyi teslimat sırasında kargo görevlisine yaparsınız. Şimdi kart bilgisi istenmez.'
+      : y === 'kapida' ? '📦 Ödemeyi teslimat sırasında kargo görevlisine nakit ya da kartla yaparsınız. Şimdi kart bilgisi istenmez.'
       : "🔒 Kart bilgileriniz iyzico'nun güvenli ödeme sayfasında alınır, sitemizde saklanmaz.";
     ozetCiz();
   }
@@ -2099,6 +2114,11 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
 
   // Sepeti sunucudaki siparis-olustur fonksiyonuna gönderir (fiyatı sunucu yeniden hesaplar,
   // sipariş kutusuna yazar, Basit Kargo'da gönderi açar). Başarısızsa null döner.
+  function seciliKapidaTip(){
+    const r = document.querySelector('input[name="kapidaTip"]:checked');
+    return r && r.value === 'kart' ? 'kart' : 'nakit';
+  }
+
   async function sunucudaSiparisOlustur(yontem, musteri){
     try{
       const res = await fetch('/.netlify/functions/siparis-olustur', {
@@ -2106,6 +2126,7 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           yontem, musteri,
+          kapidaTip: yontem === 'kapida' ? seciliKapidaTip() : undefined,
           sepet: Object.entries(cart).map(([id, q]) => ({ urunKodu: id, adet: q }))
         })
       });
@@ -2256,6 +2277,7 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
       try{ if(window.fbq) fbq('track','Purchase',{value:sunucu.toplam,currency:'TRY',num_items:cartCount(),content_ids:Object.keys(cart),content_type:'product'}); }catch(e){}
       document.getElementById('kpSiparisNo').textContent = sunucu.siparisNo;
       document.getElementById('kpTutar').textContent = TL(sunucu.toplam) + ' TL';
+      document.getElementById('kpTip').textContent = seciliKapidaTip() === 'kart' ? 'kredi/banka kartıyla' : 'nakit';
       document.getElementById('checkoutForm').style.display = 'none';
       document.getElementById('kapidaPanel').style.display = 'block';
       Object.keys(cart).forEach(k => delete cart[k]); renderCart();

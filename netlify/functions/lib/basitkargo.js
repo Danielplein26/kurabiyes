@@ -15,7 +15,7 @@
 //   BASITKARGO_HANDLER       (isteğiyle) otomatik barkod için kargo kodu. Boşsa sadece taslak açılır.
 //   BASITKARGO_ADDRESS_ID    (isteğe bağlı) gönderici adres kimliği; yoksa panelde varsayılan adres kullanılır.
 //   BASITKARGO_BRAND_ID      (isteğe bağlı) marka/mağaza profili kimliği; yoksa varsayılan profil.
-//   BASITKARGO_KAPIDA_TIP    (isteğe bağlı) CASH (varsayılan) ya da CREDIT_CARD — kapıda tahsilat şekli.
+//   (Kapıda tahsilat şekli artık müşterinin seçimine göre: nakit → CASH, kart → CREDIT_CARD)
 //
 // Basit Kargo hatası ASLA siparişi/ödemeyi bozmaz: hata yakalanır, loglanır ve
 // sipariş kutusundaki kayda "KARGO: elle girin" notu düşer.
@@ -80,7 +80,8 @@ async function gonderiOlustur(siparis) {
   if (siparis.odeme === 'kapida') {
     govde.orderPaymentType = 'COLLECT_ON_DELIVERY';
     govde.collect = siparis.toplam;
-    govde.collectOnDeliveryType = process.env.BASITKARGO_KAPIDA_TIP || 'CASH';
+    // Müşterinin seçimi: kapıda kart → CREDIT_CARD, nakit → CASH
+    govde.collectOnDeliveryType = siparis.kapidaTip === 'kart' ? 'CREDIT_CARD' : 'CASH';
   } else if (siparis.odeme === 'havale') {
     govde.orderPaymentType = 'BANK_TRANSFER';
   } else {

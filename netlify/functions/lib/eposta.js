@@ -23,7 +23,7 @@ const kacis = s => String(s == null ? '' : s)
 
 const ODEME_ADI = { kart: 'Kredi / Banka Kartı', kapida: 'Kapıda Ödeme', havale: 'Havale / EFT' };
 
-function icerikOlustur({ siparisNo, musteri, satirlar, toplam, odeme, ucret }) {
+function icerikOlustur({ siparisNo, musteri, satirlar, toplam, odeme, ucret, kapidaTip }) {
   const ad = (musteri.adSoyad || '').split(' ')[0];
   const satirHtml = satirlar.map(s => `
       <tr>
@@ -38,7 +38,7 @@ function icerikOlustur({ siparisNo, musteri, satirlar, toplam, odeme, ucret }) {
   if (odeme === 'kart') {
     durumMetni = 'Ödemeniz başarıyla alındı. Siparişiniz hazırlanıyor ve <strong>1–3 iş günü</strong> içinde kargoya verilecek.';
   } else if (odeme === 'kapida') {
-    durumMetni = `Siparişiniz hazırlanıyor ve <strong>1–3 iş günü</strong> içinde kargoya verilecek. Ödemeyi (<strong>${tl(toplam)}</strong>) teslimatta kargo görevlisine yapacaksınız.`;
+    durumMetni = `Siparişiniz hazırlanıyor ve <strong>1–3 iş günü</strong> içinde kargoya verilecek. Ödemeyi (<strong>${tl(toplam)}</strong>) teslimatta kargo görevlisine ${kapidaTip === 'kart' ? 'kredi/banka kartıyla' : 'nakit'} yapacaksınız.`;
   } else {
     durumMetni = 'Siparişiniz oluşturuldu. Ödemeniz hesabımıza geçtiğinde siparişiniz hazırlanıp <strong>1–3 iş günü</strong> içinde kargoya verilecek.';
     ekBlok = `

@@ -68,7 +68,7 @@ app.post('/api/odeme/baslat', (req, res) => {
     // sayfanıza yönlendirmeniz gerekir.
     callbackUrl: process.env.CALLBACK_URL || 'http://localhost:3000/api/odeme/sonuc',
 
-    enabledInstallments: [1, 2, 3, 6, 9],
+    enabledInstallments: [1],
 
     buyer: {
       id: 'musteri-' + Date.now(),
