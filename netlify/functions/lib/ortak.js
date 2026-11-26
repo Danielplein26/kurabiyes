@@ -79,6 +79,7 @@ function gsmFormatla(tel) {
   return '+90' + s;
 }
 
+// E-posta İSTEĞE BAĞLIDIR: boşsa eposta '' döner (onay e-postası atlanır, iyzico için yedek adres kullanılır).
 // Müşteri bilgilerini doğrular. Hata varsa { hata } döner, tamamsa { musteri } döner.
 function musteriDogrula(m) {
   m = m || {};
@@ -89,10 +90,10 @@ function musteriDogrula(m) {
   const ilce = String(m.ilce || '').trim();
   const adres = String(m.adres || '').trim();
   const not = String(m.not || '').trim().slice(0, 300);
-  if (!adSoyad || !telefonHam || !eposta || !il || !ilce || !adres) {
-    return { hata: 'Ad soyad, telefon, e-posta, il, ilçe ve adres bilgilerinin tamamı gereklidir.' };
+  if (!adSoyad || !telefonHam || !il || !ilce || !adres) {
+    return { hata: 'Ad soyad, telefon, il, ilçe ve adres bilgilerinin tamamı gereklidir.' };
   }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(eposta)) return { hata: 'E-posta adresi geçersiz görünüyor.' };
+  if (eposta && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(eposta)) return { hata: 'E-posta adresi geçersiz görünüyor.' };
   const gsm = gsmFormatla(telefonHam);
   if (!gsm) return { hata: 'Telefon numarası geçersiz görünüyor. Lütfen 05xx xxx xx xx formatında girin.' };
   if (adSoyad.length > 120 || adres.length > 600 || ilce.length > 80) return { hata: 'Girilen bilgiler çok uzun.' };

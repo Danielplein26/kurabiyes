@@ -70,7 +70,7 @@ async function gonderiOlustur(siparis) {
     client: {
       name: m.adSoyad,
       phone: telefon10(m.telefonHam),
-      email: m.eposta,
+      ...(m.eposta ? { email: m.eposta } : {}),
       city: m.il,
       town: m.ilce,
       address: m.adres

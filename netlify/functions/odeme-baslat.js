@@ -88,7 +88,8 @@ exports.handler = async (event) => {
       name: ad,
       surname: soyad,
       gsmNumber: gsm,
-      email: eposta,
+      // iyzico buyer.email zorunlu: müşteri e-posta girmediyse sipariş numarasından benzersiz yedek adres (yalnızca iyzico'ya gider)
+      email: eposta || ('musteri+' + siparisNo + '@kurabiyes.com'),
       identityNumber: '74300864791', // TODO: geçici, gerçek müşteri TC no'su toplanmıyor
       registrationAddress: tamAdres,
       ip: (event.headers['x-forwarded-for'] || '85.34.78.112').split(',')[0].trim(),

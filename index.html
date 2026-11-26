@@ -669,6 +669,11 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
     max-height:90vh;overflow-y:auto;padding:32px;
     box-shadow:0 30px 60px rgba(0,0,0,0.35);
   }
+  @media (max-width:640px){
+    .modal-overlay{padding:0;align-items:stretch;}
+    .modal{max-width:none;max-height:100dvh;height:100dvh;border-radius:0;padding:20px 16px 0;}
+    .modal .submit-bar{position:sticky;bottom:0;z-index:5;background:var(--cream);margin:0 -16px;padding:10px 16px calc(10px + env(safe-area-inset-bottom));box-shadow:0 -6px 16px rgba(51,32,26,0.18);}
+  }
   .modal h3{font-size:1.7rem;margin-bottom:0.4rem;}
   .modal .modal-sub{color:#7a5d4c;font-size:0.92rem;margin-bottom:1.6rem;}
   .modal .modal-close{
@@ -712,6 +717,8 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
   .kargo-satir{font-size:0.84rem;color:#5d4536;font-weight:600;margin:-4px 0 14px;}
   .min-uyari{display:none;background:#fff4e0;border:1px solid #f0c27a;color:#8a4b00;border-radius:10px;padding:9px 12px;font-size:0.84rem;font-weight:600;margin:0 0 12px;}
   .min-uyari.show{display:block;}
+  .kapida-not{display:none;font-size:0.78rem;color:#7a5d4c;line-height:1.4;margin:0 0 8px;}
+  .kapida-not.show{display:block;}
   .kargo-satir.ozet{text-align:right;margin:6px 0 0;font-size:0.8rem;}
   /* Taksit bilgisi (kart seçiliyken) */
   .taksit-box{background:var(--cream);border:1px solid var(--cream2);border-radius:12px;padding:12px 14px;margin:0 0 14px;font-size:0.85rem;color:#5d4536;}
@@ -1394,6 +1401,7 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
       <span class="total-amt" id="cartTotal">0 TL</span>
     </div>
     <p style="font-size:0.82rem;color:#1f9e52;font-weight:600;margin:-8px 0 6px;">🚚 Kargo dahil, ekstra ücret yok</p>
+    <p class="kapida-not" id="cartKapidaNot"></p>
     <p class="kargo-satir" id="cartKargoSatir"></p>
     <p class="min-uyari" id="cartMinUyari"></p>
     <ul class="sepet-guven">
@@ -1432,8 +1440,8 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
           <small class="tel-not">Siparişiniz yarım kalırsa size yardımcı olmak için bu numaradan ulaşabiliriz.</small>
         </div>
         <div class="full">
-          <label for="eposta">E-posta</label>
-          <input type="email" id="eposta" required>
+          <label for="eposta">E-posta <span style="font-weight:400;color:#8a7a66">(isteğe bağlı)</span></label>
+          <input type="email" id="eposta" autocomplete="email">
         </div>
         <div>
           <label for="il">İl</label>
@@ -1459,17 +1467,17 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
       <div class="order-summary" id="orderSummary"></div>
 
       <div class="pay-methods">
+        <label class="pay-method" id="payKapida">
+          <input type="radio" name="odemeYontemi" value="kapida" checked onchange="odemeYontemiDegisti()">
+          <span class="pm-body"><strong>📦 Kapıda Ödeme</strong><small id="kapidaAlt">Teslimatta kargo görevlisine ödersiniz</small></span>
+        </label>
         <label class="pay-method">
-          <input type="radio" name="odemeYontemi" value="kart" checked onchange="odemeYontemiDegisti()">
+          <input type="radio" name="odemeYontemi" value="kart" onchange="odemeYontemiDegisti()">
           <span class="pm-body"><strong>💳 Kredi / Banka Kartı</strong><small>iyzico güvenli ödeme &middot; tek çekim</small></span>
         </label>
         <label class="pay-method">
           <input type="radio" name="odemeYontemi" value="havale" onchange="odemeYontemiDegisti()">
           <span class="pm-body"><strong>🏦 Havale / EFT</strong><small>Banka hesabımıza transfer</small></span>
-        </label>
-        <label class="pay-method" id="payKapida">
-          <input type="radio" name="odemeYontemi" value="kapida" onchange="odemeYontemiDegisti()">
-          <span class="pm-body"><strong>📦 Kapıda Ödeme</strong><small id="kapidaAlt">Teslimatta kargo görevlisine ödersiniz</small></span>
         </label>
       </div>
       <div id="kapidaTipKutu" style="display:none;margin:-4px 0 16px;">
@@ -1492,7 +1500,7 @@ src="https://www.facebook.com/tr?id=1517116999277185&ev=PageView&noscript=1"/></
         <span><a href="mesafeli-satis-sozlesmesi.html" target="_blank">Mesafeli Satış Sözleşmesi</a>'ni, <a href="teslimat-ve-iade.html" target="_blank">Teslimat ve İade</a> şartlarını ve <a href="gizlilik-politikasi.html" target="_blank">Gizlilik Politikası</a>'nı okudum, onaylıyorum.</span>
       </label>
 
-      <button type="submit" class="btn btn-primary btn-block" id="checkoutSubmitBtn">iyzico ile Güvenli Ödeme Yap</button>
+      <div class="submit-bar"><button type="submit" class="btn btn-primary btn-block" id="checkoutSubmitBtn">iyzico ile Güvenli Ödeme Yap</button></div>
       <div class="iyzico-note" id="checkoutNote">
         🔒 Kart bilgileriniz iyzico'nun güvenli ödeme sayfasında alınır, sitemizde saklanmaz.
       </div>
@@ -1822,7 +1830,7 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
   }
   function oneriEkle(id){
     cart[id] = (cart[id] || 0) + 1;
-    try{ if(window.fbq) fbq('track','AddToCart',{content_ids:[id],content_type:'product',value:sepetBirimFiyat(id),currency:'TRY'}); }catch(e){}
+    try{ if(window.fbq) fbq('trackCustom','OneriEkle',{content_ids:[id],content_type:'product',value:sepetBirimFiyat(id),currency:'TRY'}); }catch(e){}
     renderCart();
   }
 
@@ -1858,6 +1866,12 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
     if(wa){ wa.style.display = count ? '' : 'none'; if(count) wa.href = sepetWaLinki(); }
     document.getElementById('cartCount').textContent = count;
     document.getElementById('cartTotal').textContent = cartTotal().toLocaleString('tr-TR') + ' TL';
+    const kn = document.getElementById('cartKapidaNot');
+    if(kn){
+      const goster = KAPIDA_ODEME.aktif && KAPIDA_ODEME.ucret > 0 && count > 0;
+      kn.classList.toggle('show', goster);
+      if(goster) kn.textContent = `Kapıda ödemede +${KAPIDA_ODEME.ucret.toLocaleString('tr-TR')} TL tahsilat bedeli eklenir · Kart ve havalede ek ücret yok`;
+    }
     const eksik = minEksik();
     document.getElementById('checkoutBtn').disabled = count === 0 || eksik > 0;
     const mu = document.getElementById('cartMinUyari');
@@ -1950,12 +1964,18 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
   // =================================================================
   function openCheckout(){
     if(cartCount() === 0) return;
-    if(minEksik() > 0){ openCart(); return; }
+    if(minEksik() > 0){
+      try{ if(window.fbq) fbq('trackCustom','MinSepetEngeli',{value:cartTotal()}); }catch(e){}
+      openCart(); return;
+    }
     siparisTamamlandi = false;
     document.getElementById('paymentResult').textContent = '';
     document.getElementById('kapidaPanel').style.display = 'none';
     document.getElementById('checkoutForm').style.display = '';
     document.getElementById('havalePanel').style.display = 'none';
+    // Varsayılan yöntem: kapıda ödeme (kapalıysa kart)
+    const vr = document.querySelector(`input[name="odemeYontemi"][value="${KAPIDA_ODEME.aktif ? 'kapida' : 'kart'}"]`);
+    if(vr) vr.checked = true;
     odemeYontemiDegisti();
     document.getElementById('checkoutOverlay').classList.add('show');
     closeCart();
@@ -2075,6 +2095,8 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
   }
 
   function odemeYontemiDegisti(){
+    // Kapıda ödeme kapalıysa ve seçiliyse karta dön
+    if(!KAPIDA_ODEME.aktif){ const k = document.querySelector('input[name="odemeYontemi"][value="kart"]'); if(k) k.checked = true; }
     const y = seciliOdemeYontemi();
     // Kapıda ödeme kapalıysa seçeneği gizle
     const kp = document.getElementById('payKapida');
@@ -2274,7 +2296,7 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
           (SITE_DATA && SITE_DATA.contact ? `<a href="tel:+${SITE_DATA.contact.phoneHref}">${SITE_DATA.contact.phoneDisplay}</a>` : 'telefon') + ' numarasından verin.';
         return;
       }
-      try{ if(window.fbq) fbq('track','Purchase',{value:sunucu.toplam,currency:'TRY',num_items:cartCount(),content_ids:Object.keys(cart),content_type:'product'}); }catch(e){}
+      try{ if(window.fbq) fbq('track','Purchase',{value:sunucu.toplam,currency:'TRY',num_items:cartCount(),content_ids:Object.keys(cart),content_type:'product'},{eventID:'kp-'+sunucu.siparisNo}); }catch(e){}
       document.getElementById('kpSiparisNo').textContent = sunucu.siparisNo;
       document.getElementById('kpTutar').textContent = TL(sunucu.toplam) + ' TL';
       document.getElementById('kpTip').textContent = seciliKapidaTip() === 'kart' ? 'kredi/banka kartıyla' : 'nakit';
@@ -2317,6 +2339,8 @@ const EMBEDDED_SITE_DATA = {"hero":{"eyebrow":"Eskişehir Odunpazarı'ndan • 1
   }
 
   loadContent();
+  // Sayfa açılışında ödeme yöntemi görünümünü (varsayılan: kapıda ödeme) kur
+  try{ odemeYontemiDegisti(); }catch(e){}
 </script>
 
 <!-- Netlify Identity: davet / parola sıfırlama bağlantılarını panele yönlendirir -->
